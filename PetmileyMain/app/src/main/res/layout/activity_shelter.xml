@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:textFilterEnabled="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ShelterActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Spinner
+            android:id="@+id/spSi"
+            android:layout_width="148dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="#E6E6E6"
+            android:entries="@array/si"
+            android:gravity="center" />
+
+        <Spinner
+            android:id="@+id/spGun"
+            android:layout_width="147dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="#E6E6E6" />
+
+        <Button
+            android:id="@+id/btnSpSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="시군정렬" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Spinner
+            android:id="@+id/spSpecies"
+            android:layout_width="177dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:background="#E6E6E6"
+            android:entries="@array/species" />
+
+        <Button
+            android:id="@+id/btnSpecies"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="축종검색"/>
+
+        <Button
+            android:id="@+id/btnDate"
+            android:layout_width="130dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="공고마지막날짜순" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/shelterListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    </LinearLayout>
+</LinearLayout>
