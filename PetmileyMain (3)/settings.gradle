@@ -1,0 +1,2 @@
+rootProject.name='PetmileyMain'
+include ':app'

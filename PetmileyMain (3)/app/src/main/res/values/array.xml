@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 20200611 수정사항 -->
+    <string-array name="adoption">
+        <item>미완료</item>
+        <item>완료</item>
+    </string-array>
+    <!-- 20200611 수정사항완료 -->
+
+    <string-array name="type">
+        <item>개</item>
+        <item>고양이</item>
+        <item>기타 동물</item>
+    </string-array>
+
+    <string-array name="categorize">
+        <item>홍보</item>
+        <item>목격/실종</item>
+        <item>보호소</item>
+        <item>자유</item>
+    </string-array>
+
+
+    <string-array name="mfarray">
+        <item>전체</item>
+        <item>실종</item>
+        <item>보호</item>
+        <item>목격</item>
+    </string-array>
+
+    <string-array name="localArray">
+        <item>모든지역</item>
+        <item>경기도</item>
+        <item>대구광역시</item>
+        <item>대전광역시</item>
+        <item>세종특별자치시</item>
+        <item>인천광역시</item>
+        <item>전라남도</item>
+        <item>강원도</item>
+        <item>울산광역시</item>
+        <item>전라북도</item>
+        <item>충청남도</item>
+        <item>제주특별자치도</item>
+        <item>경상남도</item>
+        <item>경상북도</item>
+        <item>충청북도</item>
+        <item>서울특별시</item>
+        <item>광주광역시</item>
+        <item>부산광역시</item>
+    </string-array>
+
+    <string-array name="sexarray">
+        <item>미확인</item>
+        <item>수컷</item>
+        <item>암컷</item>
+    </string-array>
+
+    <string-array name="tnrarray">
+        <item>미확인</item>
+        <item>중성화완료</item>
+        <item>중성화미완료</item>
+    </string-array>
+
+    <string-array name="typearray">
+        <item>모든 동물</item>
+        <item>고양이</item>
+        <item>개</item>
+        <item>기타축종</item>
+    </string-array>
+
+    <string-array name="agearray">
+        <item>나이모름</item>
+        <item>1년미만</item>
+        <item>1살</item>
+        <item>2살</item>
+        <item>3살</item>
+        <item>4살</item>
+        <item>5살</item>
+        <item>6살</item>
+        <item>7살</item>
+        <item>8살</item>
+        <item>9살</item>
+        <item>10살</item>
+        <item>11살</item>
+        <item>12살</item>
+        <item>13살</item>
+        <item>14살</item>
+        <item>15살</item>
+        <item>16살</item>
+        <item>17살</item>
+        <item>18살</item>
+        <item>19살</item>
+        <item>20살</item>
+    </string-array>
+
+    <string-array name="kgarray">
+        <item>몸무게모름</item>
+        <item>1kg미만</item>
+        <item>1kg</item>
+        <item>2kg</item>
+        <item>3kg</item>
+        <item>4kg</item>
+        <item>5kg</item>
+        <item>6kg</item>
+        <item>7kg</item>
+        <item>8kg</item>
+        <item>9kg</item>
+        <item>10kg</item>
+        <item>11kg</item>
+        <item>12kg</item>
+        <item>13kg</item>
+        <item>14kg</item>
+        <item>15kg</item>
+        <item>16kg</item>
+        <item>17kg</item>
+        <item>18kg</item>
+        <item>19kg</item>
+        <item>20kg</item>
+        <item>30kg</item>
+        <item>31kg</item>
+        <item>32kg</item>
+        <item>33kg</item>
+        <item>34kg</item>
+        <item>35kg</item>
+        <item>36kg</item>
+        <item>37kg</item>
+        <item>38kg</item>
+        <item>39kg</item>
+        <item>40kg</item>
+        <item>41kg</item>
+        <item>42kg</item>
+        <item>43kg</item>
+        <item>44kg</item>
+        <item>45kg</item>
+        <item>46kg</item>
+        <item>47kg</item>
+        <item>48kg</item>
+        <item>49kg</item>
+        <item>50kg</item>
+    </string-array>
+
+</resources>
+

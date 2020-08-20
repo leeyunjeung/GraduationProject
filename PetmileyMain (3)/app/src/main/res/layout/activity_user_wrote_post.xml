@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".UserWrotePost">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/spList"
+        android:layout_width="162dp"
+        android:layout_height="match_parent"
+        android:entries="@array/postList"
+        android:gravity="center"
+        android:padding="8dp" />
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="251dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="검색" />
+</LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/userPostList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
