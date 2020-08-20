@@ -37,7 +37,7 @@ public class UserRevise extends AppCompatActivity {
 
     private static final int PICK_FROM_ALBUM = 1;
     private static final int REQUEST_CODE = 0;
-    private static String IP_ADDRESS = "3.34.198.117";
+    private static String IP_ADDRESS = "192.168.219.101";
 
     EditText Editpassword;
     EditText Editnickname;
@@ -86,7 +86,8 @@ public class UserRevise extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(), UserInformation.class);
+                startActivity(intent);
             }
         });
 
@@ -150,12 +151,7 @@ public class UserRevise extends AppCompatActivity {
             }
         }
     }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), UserInformation.class);
-        startActivity(intent);
-    }
+
 
 
 
@@ -184,7 +180,6 @@ public class UserRevise extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
         @Override
         protected String doInBackground(String... params) {
 
@@ -244,8 +239,6 @@ public class UserRevise extends AppCompatActivity {
             super.onPostExecute(result);
             Toast.makeText(UserRevise.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("정보를 저장했습니다.")) {
-                finish();
-
                 Intent intent = new Intent(getApplicationContext(), UserInformation.class);
                 startActivity(intent);
             }

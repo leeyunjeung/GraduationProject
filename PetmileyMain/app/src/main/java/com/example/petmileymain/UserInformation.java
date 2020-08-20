@@ -38,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserInformation extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "3.34.198.117";
+    private static String IP_ADDRESS = "192.168.219.101";
 
     private TextView name;
     private TextView phone;
@@ -61,6 +61,8 @@ public class UserInformation extends AppCompatActivity {
         Button logout = (Button)findViewById(R.id.btnLogout);
         Button userPost = (Button)findViewById(R.id.btnUserPostView);
 
+
+
         Intent intent = getIntent();
         if((intenemail =intent.getStringExtra("email"))!=null) {
             if (!MainList.email.equals(intenemail)) {
@@ -76,7 +78,6 @@ public class UserInformation extends AppCompatActivity {
         revise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
                 Intent intent = new Intent(getApplicationContext(), UserRevise.class);
                 startActivity(intent);
             }
@@ -86,9 +87,7 @@ public class UserInformation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),MainList.class);
-                intent.putExtra("loginEmail",MainList.email);
-                setResult(1, intent);
-                finish();
+                startActivity(intent);
             }
         });
         logout.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +108,10 @@ public class UserInformation extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+
 
 
     }

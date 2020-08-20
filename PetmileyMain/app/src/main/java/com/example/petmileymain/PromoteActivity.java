@@ -46,7 +46,7 @@ import java.util.List;
 
 public class PromoteActivity extends AppCompatActivity {
     private static final  String board = "promote";
-    private static String IP_ADDRESS ="3.34.198.117";
+    private static String IP_ADDRESS ="192.168.219.101";
     private static final String TAG = "test";
 
     private Button btnWrite;

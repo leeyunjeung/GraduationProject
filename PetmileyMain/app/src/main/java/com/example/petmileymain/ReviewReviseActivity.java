@@ -33,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ReviewReviseActivity  extends AppCompatActivity {
-    private static String IP_ADDRESS = "3.34.198.117";
+    private static String IP_ADDRESS = "192.168.219.101";
     private static final String TAG = "test";
     private static final int REQUEST_CODE = 0;
 

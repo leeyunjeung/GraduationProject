@@ -3,7 +3,6 @@ package com.example.petmileymain;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -28,19 +27,19 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class LostAndFoundPost extends AppCompatActivity {
-    public static Activity LostandFoundPostActivity;
+
     private Button btnBack;
     private Button btnDelete;
     private Button btnRevise;
     public String lostandfound_id,m_f,missing_date,place,sex,type,tnr,kg,age,color,feature,etc,email,lostandfound_img;
 
-    private static String IP_ADDRESS = "3.34.198.117";
+    private static String IP_ADDRESS = "192.168.219.101";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_and_found_post);
-        LostandFoundPostActivity=LostAndFoundPost.this;
+
         btnBack = (Button)findViewById(R.id.btnBack);
         btnDelete = (Button)findViewById(R.id.btnDelete);
         btnRevise = (Button)findViewById(R.id.btnRevise);

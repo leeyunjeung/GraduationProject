@@ -35,7 +35,7 @@ import java.net.URLEncoder;
 
 public class PromotePostActivity extends AppCompatActivity {
     private static final String TAG = "PromoePostAcitivity";
-    private static String IP_ADDRESS = "3.34.198.117";
+    private static String IP_ADDRESS = "192.168.219.101";
     private String id="";
     private String note_memo = "";
     private String note_title = "";
@@ -222,8 +222,9 @@ public class PromotePostActivity extends AppCompatActivity {
             super.onPostExecute(result);
             Toast.makeText(PromotePostActivity.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("게시글이 삭제되었습니다.")) {
+                Intent intent = new Intent(getBaseContext(), PromoteActivity.class);
+                startActivity(intent);
                 finish();
-
             }
         }
 

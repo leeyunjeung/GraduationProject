@@ -45,7 +45,7 @@ import java.util.List;
 
 public class PromoteWriteActivity extends AppCompatActivity {
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "3.34.198.117";
+    private static String IP_ADDRESS = "192.168.219.101";
     private int enter = 0;
     private static final int REQUEST_CODE = 0;
     private ImageView imageView;

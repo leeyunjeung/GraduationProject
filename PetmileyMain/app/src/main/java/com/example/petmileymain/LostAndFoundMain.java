@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
@@ -44,11 +43,10 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
 
     private Button btnWrite;
     private Button btnSearch;
-    private Button btnBack;
-    private static String IP_ADDRESS = "3.34.198.117";
+    private static String IP_ADDRESS = "192.168.219.101";
     private static final String TAG = "petmily";
     public String select_local, select_type,select_mf,start_date,end_date;
-
+    private Button btnBack;
     private ArrayList<LostAndFoundData> mArrayList;
     private LostAndFoundAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -72,10 +70,9 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         Log.d("끝:",end_date);
 
         new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date);
-
+        btnBack = findViewById(R.id.btnLost_foundBack);
         btnWrite = (Button)findViewById(R.id.btnWrite);
         btnSearch = (Button)findViewById(R.id.btnSearch);
-        btnBack = (Button)findViewById(R.id.btnLost_foundBack);
         imgview = findViewById(R.id.imgview);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -84,6 +81,13 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         mRecyclerView.setAdapter(mAdapter);
 
 
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),MainList.class);
+                startActivity(intent);
+            }
+        });
 
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,18 +101,6 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             @Override
             public void onClick(View v) {
                 show();
-            }
-        });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainList.class);
-                intent.putExtra("loginEmail",MainList.email);
-                setResult(1, intent);
-                finish();
-                intent = new Intent(getApplicationContext(),MainList.class);
-                startActivity(intent);
             }
         });
 

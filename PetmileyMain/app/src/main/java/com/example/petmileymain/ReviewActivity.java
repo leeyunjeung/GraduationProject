@@ -39,7 +39,7 @@ import java.util.List;
 
 
 public class ReviewActivity extends AppCompatActivity {
-    private static String IP_ADDRESS ="3.34.198.117";
+    private static String IP_ADDRESS ="192.168.219.101";
     private static final String TAG = "review";
     private static final String board = "review";
 
@@ -94,9 +94,6 @@ public class ReviewActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainList.class);
-                intent.putExtra("loginEmail",MainList.email);
-                setResult(1, intent);
                 finish();
             }
         });
