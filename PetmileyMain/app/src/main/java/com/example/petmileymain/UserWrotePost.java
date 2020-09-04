@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import static com.example.petmileymain.MainList.email;
 
 public class UserWrotePost extends AppCompatActivity {
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
     TextView titleText;
     TextView nameText;
     ImageView image;

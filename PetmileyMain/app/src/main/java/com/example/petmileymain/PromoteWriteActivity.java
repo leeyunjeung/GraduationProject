@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -45,9 +46,10 @@ import java.util.List;
 
 public class PromoteWriteActivity extends AppCompatActivity {
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
     private int enter = 0;
     private static final int REQUEST_CODE = 0;
+    private String saveEmail;
     private ImageView imageView;
 
     private File tempFile;
@@ -63,6 +65,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
     private int sigungu=R.array.nullarray;
     ArrayAdapter<CharSequence> sigunguAdapter;
 
+    private SharedPreferences appData;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,9 @@ public class PromoteWriteActivity extends AppCompatActivity {
         editTextTitle=findViewById(R.id.editTextTitle);
         editTextMemo=findViewById(R.id.editTextMemo);
 
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
+
         //스피너 3개
         final Spinner typeSpinner = (Spinner) findViewById(R.id.type);
         final ArrayAdapter<CharSequence> typesAdapter = ArrayAdapter.createFromResource(this, R.array.type, android.R.layout.simple_spinner_dropdown_item);
@@ -85,7 +91,6 @@ public class PromoteWriteActivity extends AppCompatActivity {
         final Spinner sigunguSpinner = (Spinner) findViewById(R.id.sigungu); //시/군/구
         sigunguAdapter = ArrayAdapter.createFromResource(this, sigungu, android.R.layout.simple_spinner_dropdown_item);
 
-        //20200611수정부분
         final Spinner adoptionSpinner = (Spinner) findViewById(R.id.adoption);
         final ArrayAdapter<CharSequence> adoptionAdapter = ArrayAdapter.createFromResource(this, R.array.adoption, android.R.layout.simple_spinner_dropdown_item);
         adoptionSpinner.setAdapter(adoptionAdapter);
@@ -101,9 +106,6 @@ public class PromoteWriteActivity extends AppCompatActivity {
 
             }
         });
-
-        //20200611수정사항 끝
-
 
         //시/도를 설정하지 않으면 사용할수없게끔
         sigunguSpinner.setEnabled(false);
@@ -206,10 +208,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?>  parent, View view, int position, long id) {
-
                 String  itemName= (String) sigunguAdapter.getItem(position);
-                Toast.makeText(PromoteWriteActivity.this, itemName, Toast.LENGTH_SHORT).show();
-
             }
             @Override
             public void onNothingSelected(AdapterView<?>  parent) {
@@ -241,7 +240,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
                     String note_title = editTextTitle.getText().toString();
                     String note_memo = editTextMemo.getText().toString();
                     String type = typeSpinner.getSelectedItem().toString();
-                    String email = MainList.email;
+                    String email = saveEmail;
                     String picture =  BitmapToString(resize(bitmap));
                     String local = siSpinner.getSelectedItem().toString();
                     String adoption = adoptionSpinner.getSelectedItem().toString(); //수정 추가

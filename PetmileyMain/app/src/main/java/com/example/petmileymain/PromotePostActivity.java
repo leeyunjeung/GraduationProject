@@ -3,6 +3,7 @@ package com.example.petmileymain;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -35,7 +36,7 @@ import java.net.URLEncoder;
 
 public class PromotePostActivity extends AppCompatActivity {
     private static final String TAG = "PromoePostAcitivity";
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
     private String id="";
     private String note_memo = "";
     private String note_title = "";
@@ -44,12 +45,21 @@ public class PromotePostActivity extends AppCompatActivity {
     private String promote_picture = "";
     private String promote_email = "";
     private String type = "";
-    private String adoption=""; //추가
+    private String adoption="";
     private String user = "";
+    private String saveEmail; //현재 로그인한 이메일
+    private SharedPreferences appData;
     public static Activity promotePostActivity;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promote_post);
+
+
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
+
+
         promotePostActivity=PromotePostActivity.this;
         TextView TextViewTitle = (TextView) findViewById(R.id.textViewTitle);
         TextView TextViewMemo = (TextView) findViewById(R.id.textViewMemo);
@@ -91,14 +101,13 @@ public class PromotePostActivity extends AppCompatActivity {
         TextViewAdoption.setText(adoption);
         imguser.setImageBitmap(userImg);
 
-        if (!MainList.email.equals(promote_email) ) {
+        if (!saveEmail.equals(promote_email) ) {
             btnDelete.setVisibility(View.GONE);
             btnRevise.setVisibility(View.GONE);
         }
         else {
             btnDelete.setVisibility(View.VISIBLE);
             btnRevise.setVisibility(View.VISIBLE);
-            Log.d(TAG,"후..."+MainList.email+"하..."+promote_email);
         }
 
 
@@ -150,6 +159,8 @@ public class PromotePostActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        Intent intent = new Intent(getApplicationContext(), PromoteActivity.class);
+        startActivity(intent);
         finish();
     }
     public Bitmap StringToBitmap(String encodedString) {

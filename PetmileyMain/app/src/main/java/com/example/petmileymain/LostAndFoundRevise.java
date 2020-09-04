@@ -45,7 +45,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
 
 
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
     private static final int REQUEST_CODE = 0;
     private ImageView imageView;
     int serverResponseCode = 0;

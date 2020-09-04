@@ -30,7 +30,7 @@ import java.net.URL;
 
 public class SignupActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 0;
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
     private static String TAG = "petmily";
 
     private EditText mEditTextNickname;
@@ -52,9 +52,6 @@ public class SignupActivity extends AppCompatActivity {
         mEditTextPassword = (EditText)findViewById(R.id.editText_main_password);
         mEditTextPasswordCheck = (EditText)findViewById(R.id.editText_main_passwordcheck);
         user = (ImageView)findViewById(R.id.signupImg);
-        //mTextViewResult = (TextView)findViewById(R.id.textView_main_result);
-
-        //mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
 
 
         Button buttonInsert = (Button)findViewById(R.id.button_main_insert);

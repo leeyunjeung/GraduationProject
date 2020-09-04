@@ -49,7 +49,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 public class PromoteReviseActivity  extends AppCompatActivity {
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
     private static final String TAG = "test";
     private static final int REQUEST_CODE = 0;
 
@@ -92,7 +92,6 @@ public class PromoteReviseActivity  extends AppCompatActivity {
 
 
 
-        //20200611수정부분
         adoptionSpinner = (Spinner) findViewById(R.id.adoption);
         adoptionAdapter = ArrayAdapter.createFromResource(this, R.array.adoption, android.R.layout.simple_spinner_dropdown_item);
         adoptionSpinner.setAdapter(adoptionAdapter);
@@ -109,7 +108,6 @@ public class PromoteReviseActivity  extends AppCompatActivity {
             }
         });
 
-        //20200611수정사항 끝
 
         //스피너 배열 설정해주기
         typeSpinner = (Spinner) findViewById(R.id.type);
@@ -182,7 +180,6 @@ public class PromoteReviseActivity  extends AppCompatActivity {
         //받은 지역 나눠서 스피너에 넣어주기
         localArray = local.split(" ");
 
-        Log.d(TAG,"array!!!!!!!"+localArray);
 
 
         if(localArray.length==1){  //시도만 입력받았을 때
@@ -243,7 +240,7 @@ public class PromoteReviseActivity  extends AppCompatActivity {
                     Log.d(TAG,"local:"+local);
 
                     PromoteRevise task = new PromoteRevise();
-                    task.execute(note_title,note_memo,local,picture,type,adoption); //수정
+                    task.execute(note_title,note_memo,local,picture,type,adoption);
 
                     /*new Thread(new Runnable() {
                         public void run() {
@@ -469,8 +466,7 @@ public class PromoteReviseActivity  extends AppCompatActivity {
             String local = (String)params[2];
             String picture = (String)params[3];
             String type = (String)params[4];
-            String adoption = (String)params[5]; //수정 추가
-            //String fileName = tempFile.getName();
+            String adoption = (String)params[5];
             String postParameters ="note_title=" + note_title + "&note_memo=" + note_memo+ "&local=" + local + "&picture=" + picture+"&type="+type+"&adoption="+adoption; //수정
 
             try {

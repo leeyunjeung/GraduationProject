@@ -37,7 +37,7 @@ public class UserRevise extends AppCompatActivity {
 
     private static final int PICK_FROM_ALBUM = 1;
     private static final int REQUEST_CODE = 0;
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
 
     EditText Editpassword;
     EditText Editnickname;
@@ -53,17 +53,12 @@ public class UserRevise extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_revise);
 
-
-
-
         Editpassword = (EditText)findViewById(R.id.etPw);
         Editnickname = (EditText)findViewById(R.id.etNick);
         Edittelephone = (EditText)findViewById(R.id.etPhone);
         btnOk = (Button)findViewById(R.id.btnOk);
         btnBack = (Button)findViewById(R.id.btnBack);
         user = findViewById(R.id.imageView);
-
-
 
         btnOk.setOnClickListener(new View.OnClickListener() {
 
@@ -128,6 +123,22 @@ public class UserRevise extends AppCompatActivity {
         return bm;
     }
 
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            encodedString = encodedString.replace(" ","+");
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+
+            return bitmap;
+
+        } catch (Exception e) {
+            Log.e("exception",e.getMessage());
+            //e.getMessage();
+            return null;
+
+        }
+
+    }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         if(requestCode == REQUEST_CODE)

@@ -2,6 +2,7 @@ package com.example.petmileymain;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -26,7 +27,7 @@ import java.net.URL;
 
 public class ReviewPostActivity extends AppCompatActivity {
     private static final String TAG = "ReviewPostAcitivity";
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
     private String id="";
     private String note_memo = "";
     private String note_title = "";
@@ -36,9 +37,16 @@ public class ReviewPostActivity extends AppCompatActivity {
     private String categorize = "";
     private String userimg;
     public static Activity reviewPostActivity;
+    private SharedPreferences appData;
+    private String saveEmail;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_post);
+
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
+
         reviewPostActivity=ReviewPostActivity.this;
         TextView TextViewTitle = (TextView) findViewById(R.id.textViewTitle);
         TextView TextViewMemo = (TextView) findViewById(R.id.textViewMemo);
@@ -73,7 +81,7 @@ public class ReviewPostActivity extends AppCompatActivity {
         imauser.setImageBitmap(StringToBitmap(userimg));
         TextViewCategorize.setText(categorize);
 
-        if (!MainList.email.equals(review_email) ) {
+        if (!saveEmail.equals(review_email) ) {
             btnDelete.setVisibility(View.GONE);
             btnRevise.setVisibility(View.GONE);
         } else {

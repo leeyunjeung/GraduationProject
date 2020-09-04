@@ -38,20 +38,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserInformation extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
+
 
     private TextView name;
     private TextView phone;
     private ImageView userimg;
     private SharedPreferences appData;
-    String useremail =MainList.email;
+    //String useremail=MainList.email;
+    String useremail;
     String intenemail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_information);
-
-        appData = getSharedPreferences("appData", MODE_PRIVATE);
 
         name = (TextView) findViewById(R.id.txtUserNickname);
         phone = (TextView) findViewById(R.id.txtPhone);
@@ -61,8 +61,9 @@ public class UserInformation extends AppCompatActivity {
         Button logout = (Button)findViewById(R.id.btnLogout);
         Button userPost = (Button)findViewById(R.id.btnUserPostView);
 
-
-
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        useremail = appData.getString("saveEmail", "");
+        /*
         Intent intent = getIntent();
         if((intenemail =intent.getStringExtra("email"))!=null) {
             if (!MainList.email.equals(intenemail)) {
@@ -74,6 +75,8 @@ public class UserInformation extends AppCompatActivity {
                 logout.setVisibility(View.VISIBLE);
             }
         }
+
+         */
         new BackgroundTask().execute();
         revise.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -15,7 +15,6 @@ public class MainList extends AppCompatActivity {
     private static String TAG = "petmiley";
     public static String email;
 
-    private int result=0;
     private Button btnSelter;
     private Button btnMissingFind;
     private Button btnPromote;
@@ -27,17 +26,12 @@ public class MainList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(result==0) {
-            email = getIntent().getStringExtra("email");
-        }
         btnSelter = (Button)findViewById(R.id.btnShelter);
         btnMissingFind = (Button)findViewById(R.id.btnMissingFind);
         btnPromote = (Button)findViewById(R.id.btnPromote);
         btnReview =(Button)findViewById(R.id.btnReview);
         btnUserInformation =(Button)findViewById(R.id.btnUserInformation);
-
         this.ButtonListener();
-
 
     }
 
@@ -89,17 +83,5 @@ public class MainList extends AppCompatActivity {
         });
     }
 
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case 1:
-                email = data.getStringExtra("loginEmail");
-                result=1;
-                break;
-            default:
-                break;
-        }
-    }
 
 }

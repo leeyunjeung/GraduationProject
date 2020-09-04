@@ -46,7 +46,7 @@ import java.util.List;
 
 public class PromoteActivity extends AppCompatActivity {
     private static final  String board = "promote";
-    private static String IP_ADDRESS ="192.168.219.101";
+    private static String IP_ADDRESS ="40.40.40.45";
     private static final String TAG = "test";
 
     private Button btnWrite;
@@ -136,10 +136,8 @@ public class PromoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),MainList.class);
-                intent.putExtra("loginEmail",MainList.email);
-                setResult(1, intent);
+                startActivity(intent);
                 finish();
-                Log.d("promoteEamil",MainList.email);
             }
         });
 
@@ -181,10 +179,8 @@ public class PromoteActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(getApplicationContext(),MainList.class);
-        intent.putExtra("loginEmail",MainList.email);
-        setResult(1, intent);
+        startActivity(intent);
         finish();
-        Log.d("promoteEamil",MainList.email);
     }
 
     void typeShow()

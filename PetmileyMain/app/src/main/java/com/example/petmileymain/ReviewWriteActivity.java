@@ -3,6 +3,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -34,7 +35,7 @@ import java.util.List;
 
 public class ReviewWriteActivity extends AppCompatActivity {
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "192.168.219.101";
+    private static String IP_ADDRESS = "40.40.40.45";
     private int enter = 0;
     private static final int REQUEST_CODE = 0;
     private ImageView imageView;
@@ -45,11 +46,15 @@ public class ReviewWriteActivity extends AppCompatActivity {
     private EditText editTextMemo;
     private int itemIndex;
 
-
+    private SharedPreferences appData;
+    private String saveEmail;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review_write );
+
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
 
         imageView = findViewById(R.id.image);
         btnInsert = findViewById(R.id.btnInsert);
@@ -101,7 +106,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
                 String note_title = editTextTitle.getText().toString();
                 String note_memo = editTextMemo.getText().toString();
                 String categorize = spinner.getSelectedItem().toString();
-                String email = MainList.email;
+                String email = saveEmail;
                 String picture =  BitmapToString(resize(bitmap));
                 InsertData task = new InsertData();
                 task.execute("http://" + IP_ADDRESS + "/reviewInsert.php", email,note_title,note_memo,categorize,picture);
