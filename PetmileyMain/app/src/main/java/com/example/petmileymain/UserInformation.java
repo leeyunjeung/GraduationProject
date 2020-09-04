@@ -63,10 +63,10 @@ public class UserInformation extends AppCompatActivity {
 
         appData = getSharedPreferences("appData", MODE_PRIVATE);
         useremail = appData.getString("saveEmail", "");
-        /*
+
         Intent intent = getIntent();
         if((intenemail =intent.getStringExtra("email"))!=null) {
-            if (!MainList.email.equals(intenemail)) {
+            if (!useremail.equals(intenemail)) {
                 useremail = intenemail;
                 revise.setVisibility(View.GONE);
                 logout.setVisibility(View.GONE);
@@ -76,7 +76,7 @@ public class UserInformation extends AppCompatActivity {
             }
         }
 
-         */
+
         new BackgroundTask().execute();
         revise.setOnClickListener(new View.OnClickListener() {
             @Override
