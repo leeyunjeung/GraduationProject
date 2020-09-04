@@ -1,5 +1,6 @@
 package com.example.petmileymain;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -40,14 +42,16 @@ public class UserInformation extends AppCompatActivity {
 
     private static String IP_ADDRESS = "40.40.40.45";
 
-
+    private String img;
     private TextView name;
     private TextView phone;
     private ImageView userimg;
     private SharedPreferences appData;
-    //String useremail=MainList.email;
-    String useremail;
-    String intenemail;
+
+    private String useremail;
+    private String intenemail;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,10 @@ public class UserInformation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), UserRevise.class);
+                intent.putExtra("nickname",name.getText());
+                intent.putExtra("telephone",phone.getText());
+                intent.putExtra("img",img);
+                Log.d("img",img);
                 startActivity(intent);
             }
         });
@@ -199,7 +207,7 @@ public class UserInformation extends AppCompatActivity {
                     nickname = object.getString("nickname");
                     telephone = object.getString("telephone");
                     bitmap = StringToBitMap(object.getString("image"));
-
+                    img=object.getString("image");
 
                     name.setText(nickname);
                     phone.setText(0+telephone);
