@@ -2,6 +2,7 @@ package com.example.petmileymain;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -37,28 +38,48 @@ public class UserRevise extends AppCompatActivity {
 
     private static final int PICK_FROM_ALBUM = 1;
     private static final int REQUEST_CODE = 0;
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "13.125.23.115";
+    private SharedPreferences appData;
+    private String saveEmail;
 
     EditText Editpassword;
     EditText Editnickname;
     EditText Edittelephone;
+    ImageView imageView;
     ImageView user;
     Button btnOk;
     Button btnBack;
 
-
+    private String nickname;
+    private String telephone;
+    private String img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_revise);
 
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
+
         Editpassword = (EditText)findViewById(R.id.etPw);
         Editnickname = (EditText)findViewById(R.id.etNick);
         Edittelephone = (EditText)findViewById(R.id.etPhone);
+        imageView=(ImageView)findViewById(R.id.imageView);
         btnOk = (Button)findViewById(R.id.btnOk);
         btnBack = (Button)findViewById(R.id.btnBack);
         user = findViewById(R.id.imageView);
+
+        Bundle extras = getIntent().getExtras();
+
+        nickname=extras.getString("nickname");
+        telephone=extras.getString("telephone");
+        img=extras.getString("img");
+        Log.d("img",img);
+
+        Editnickname.setText(nickname);
+        Edittelephone.setText(telephone);
+        imageView.setImageBitmap(StringToBitMap(img));
 
         btnOk.setOnClickListener(new View.OnClickListener() {
 
@@ -186,7 +207,7 @@ public class UserRevise extends AppCompatActivity {
 
         protected void onPreExecute(){
             try {
-                target = "http://"+IP_ADDRESS+"/InformationRevise.php?email="+ URLEncoder.encode(MainList.email,"UTF-8");
+                target = "http://"+IP_ADDRESS+"/InformationRevise.php?email="+ URLEncoder.encode(saveEmail,"UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }

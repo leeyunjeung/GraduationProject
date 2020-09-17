@@ -36,7 +36,7 @@ import java.net.URLEncoder;
 
 public class PromotePostActivity extends AppCompatActivity {
     private static final String TAG = "PromoePostAcitivity";
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "13.125.23.115";
     private String id="";
     private String note_memo = "";
     private String note_title = "";
