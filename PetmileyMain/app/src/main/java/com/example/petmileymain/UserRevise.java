@@ -38,7 +38,7 @@ public class UserRevise extends AppCompatActivity {
 
     private static final int PICK_FROM_ALBUM = 1;
     private static final int REQUEST_CODE = 0;
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "13.209.15.89";
     private SharedPreferences appData;
     private String saveEmail;
 

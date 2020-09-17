@@ -46,7 +46,7 @@ import java.util.List;
 
 public class PromoteWriteActivity extends AppCompatActivity {
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "13.209.15.89";
     private int enter = 0;
     private static final int REQUEST_CODE = 0;
     private String saveEmail;
@@ -250,7 +250,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
                     Log.d(TAG,"local:"+local);
                     InsertData task = new InsertData();
 
-                    /*new Thread(new Runnable() {
+                    new Thread(new Runnable() {
                         public void run() {
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -261,7 +261,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
                             uploadFile();
 
                         }
-                    }).start();*/
+                    }).start();
 
                     task.execute("http://" + IP_ADDRESS + "/promoteInsert.php", email,note_title,note_memo,local,picture,type,adoption);  //수정
                 }
@@ -273,6 +273,8 @@ public class PromoteWriteActivity extends AppCompatActivity {
         });
     }
 
+
+    // 이미지 경로명 저장
     public int uploadFile() {
         String fileName = tempFile.getName();
 
@@ -408,7 +410,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-            //progressDialog = ProgressDialog.show(PromoteWriteActivity.this,"Please Wait", null, true, true);
+            progressDialog = ProgressDialog.show(PromoteWriteActivity.this,"Please Wait", null, true, true);
         }
 
 
@@ -439,10 +441,10 @@ public class PromoteWriteActivity extends AppCompatActivity {
             String picture = (String)params[5];
             String type = (String)params[6];
             String adoption = (String)params[7]; //수정 추가
-            //String fileName = tempFile.getName();
+            String fileName = tempFile.getName();
 
             String serverURL = (String)params[0];
-            String postParameters = "email="+ email +"&note_title=" + note_title + "&note_memo=" + note_memo + "&local=" + local+"&picture="+ picture+"&type="+type+"&adoption="+adoption;  //수정
+            String postParameters = "email="+ email +"&note_title=" + note_title + "&note_memo=" + note_memo + "&local=" + local+"&picture="+ picture+"&type="+type+"&adoption="+adoption+"&fileName="+fileName;  //수정
 
 
             try {

@@ -41,7 +41,7 @@ import java.util.List;
 
 public class ShelterActivity extends AppCompatActivity {
 
-    private static String IP_ADDRESS ="192.168.219.101";
+    private static String IP_ADDRESS ="13.209.15.89";
     private ListView shelterListView;
     private ShelterListAdapter adapter;
     private List<Shelter> ShelterList;

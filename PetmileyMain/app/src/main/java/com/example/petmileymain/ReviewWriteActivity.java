@@ -35,7 +35,7 @@ import java.util.List;
 
 public class ReviewWriteActivity extends AppCompatActivity {
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "13.209.15.89";
     private int enter = 0;
     private static final int REQUEST_CODE = 0;
     private ImageView imageView;

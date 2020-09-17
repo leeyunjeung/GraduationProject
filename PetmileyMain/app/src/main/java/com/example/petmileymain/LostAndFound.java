@@ -3,6 +3,7 @@ package com.example.petmileymain;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -48,7 +49,7 @@ import java.util.Locale;
 public class LostAndFound extends AppCompatActivity {
 
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "13.209.15.89";
     private static final int REQUEST_CODE = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private File tempFile;
@@ -64,6 +65,7 @@ public class LostAndFound extends AppCompatActivity {
     private TextView tvtest;
 
     final Calendar myCalendar = Calendar.getInstance();
+    
 
 
 
@@ -111,10 +113,9 @@ public class LostAndFound extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, REQUEST_CODE);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
             }
         });
 
@@ -144,9 +145,9 @@ public class LostAndFound extends AppCompatActivity {
                 LostAndFound.InsertData task = new LostAndFound.InsertData();
                 task.execute("http://" + IP_ADDRESS + "/lostandfound.php", email,sex,missing_date,place,m_f,age,kg,type,tnr,color,etc,feature,picture);
 
-               //dialog = ProgressDialog.show(LostAndFound.this, "", "Uploading file...", true);
+               dialog = ProgressDialog.show(LostAndFound.this, "", "Uploading file...", true);
 
-                /*new Thread(new Runnable() {
+                new Thread(new Runnable() {
                     public void run() {
                         runOnUiThread(new Runnable() {
                             public void run() {
@@ -157,7 +158,7 @@ public class LostAndFound extends AppCompatActivity {
                         uploadFile();
 
                     }
-                }).start();*/
+                }).start();
 
 
 
@@ -168,6 +169,7 @@ public class LostAndFound extends AppCompatActivity {
 
     }
 
+    // 사진
     public int uploadFile() {
         String fileName = tempFile.getName();
 
@@ -205,6 +207,7 @@ public class LostAndFound extends AppCompatActivity {
                 FileInputStream fileInputStream = new FileInputStream(tempFile);
                 URL url = new URL(serverURL);
 
+                // HttpURLConnection 통신
                 conn = (HttpURLConnection) url.openConnection();
                 conn.setDoInput(true); // Allow Inputs
                 conn.setDoOutput(true); // Allow Outputs
@@ -215,6 +218,7 @@ public class LostAndFound extends AppCompatActivity {
                 conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
                 conn.setRequestProperty("uploaded_file", fileName);
 
+                //write data
                 dos = new DataOutputStream(conn.getOutputStream());
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + fileName + "\"" + lineEnd);
@@ -228,6 +232,9 @@ public class LostAndFound extends AppCompatActivity {
                 // read file and write it into form...
                 bytesRead = fileInputStream.read(buffer, 0, bufferSize);
 
+                Log.d("Test","image byte is" + bytesRead);
+
+                // read image
                 while (bytesRead > 0) {
                     dos.write(buffer, 0, bufferSize);
                     bytesAvailable = fileInputStream.available();
@@ -240,6 +247,7 @@ public class LostAndFound extends AppCompatActivity {
                 dos.writeBytes(lineEnd);
                 dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
 
+                Log.e("Test","File is written");
                 // Responses from the server (code and message)
 
                 serverResponseCode = conn.getResponseCode();
@@ -259,10 +267,20 @@ public class LostAndFound extends AppCompatActivity {
 
                 }
 
+
                 //close the streams //
                 fileInputStream.close();
                 dos.flush();
                 dos.close();
+
+                InputStream is = conn.getInputStream();
+
+                StringBuffer b = new StringBuffer();
+                for(int ch = 0; (ch = is.read()) != -1;) {
+                    b.append((char) ch);
+                }
+                is.close();
+                Log.e("Test", b.toString());
 
             } catch (MalformedURLException ex) {
                 dialog.dismiss();
@@ -291,6 +309,7 @@ public class LostAndFound extends AppCompatActivity {
 
             }
             dialog.dismiss();
+
             return serverResponseCode;
         }
 
@@ -303,7 +322,7 @@ public class LostAndFound extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-           // progressDialog = ProgressDialog.show(LostAndFound.this,"Please Wait", null, true, true);
+           progressDialog = ProgressDialog.show(LostAndFound.this,"Please Wait", null, true, true);
         }
 
 
@@ -339,12 +358,12 @@ public class LostAndFound extends AppCompatActivity {
             String etc = (String)params[11];
             String feature = (String)params[12];
             String picture = (String)params[13];
-            //String fileName = tempFile.getName();
+            String fileName = tempFile.getName();
 
 
 
             String serverURL = (String)params[0];
-            String postParameters = "&email="+ email +"&sex=" + sex + "&missing_date=" + missing_date + "&place=" + place +  "&m_f=" + m_f +  "&age=" + age +  "&kg=" + kg +  "&type=" + type +  "&tnr=" + tnr +  "&color=" + color +  "&etc=" + etc +  "&feature=" + feature + "&picture=" + picture ;
+            String postParameters = "&email="+ email +"&sex=" + sex + "&missing_date=" + missing_date + "&place=" + place +  "&m_f=" + m_f +  "&age=" + age +  "&kg=" + kg +  "&type=" + type +  "&tnr=" + tnr +  "&color=" + color +  "&etc=" + etc +  "&feature=" + feature + "&picture=" + picture +"&fileName="+fileName;
 
 
             try {
@@ -427,20 +446,29 @@ public class LostAndFound extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
+        if(requestCode == PICK_FROM_ALBUM){
+            Uri photouri = data.getData();
+            Cursor cursor = null;
+            try{
 
-                    imageView.setImageBitmap(img);
-                } catch (Exception e) {
+                String[] proj = {MediaStore.Images.Media.DATA};
+                assert photouri != null;
+                cursor = getContentResolver().query(photouri,proj,null,null,null);
 
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                cursor.moveToFirst();
+
+                tempFile = new File(cursor.getString(column_index));
+
+            }finally {
+                if (cursor != null) {
+                    cursor.close();
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
+
+            setImage();
         }
     }
 

@@ -45,7 +45,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
 
 
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "13.209.15.89";
     private static final int REQUEST_CODE = 0;
     private ImageView imageView;
     int serverResponseCode = 0;
@@ -177,7 +177,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
                 LostAndFoundRevise.ReviseData task = new LostAndFoundRevise.ReviseData();
                 task.execute("http://" + IP_ADDRESS + "/LostAndFoundRevise.php", email,sex,missing_date,place,m_f,age,kg,type,tnr,color,etc,feature,lostandfound_id,picture);
 
-                /*new Thread(new Runnable() {
+                new Thread(new Runnable() {
                     public void run() {
                         runOnUiThread(new Runnable() {
                             public void run() {
@@ -188,7 +188,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
                         uploadFile();
 
                     }
-                }).start();*/
+                }).start();
 
 
 
@@ -250,19 +250,29 @@ public class LostAndFoundRevise extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
+            Uri photouri = data.getData();
+            Cursor cursor = null;
             if (resultCode == RESULT_OK) {
                 try {
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
+                    String[] proj = {MediaStore.Images.Media.DATA};
+                    assert photouri != null;
+                    cursor = getContentResolver().query(photouri,proj,null,null,null);
 
-                    imageView.setImageBitmap(img);
+                    assert cursor != null;
+                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                    cursor.moveToFirst();
+
+                    tempFile = new File(cursor.getString(column_index));
                 } catch (Exception e) {
 
+                }finally {
+                    if (cursor != null) {
+                        cursor.close();
+                    }
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
+            setImage();
         }
     }
 
@@ -458,11 +468,11 @@ public class LostAndFoundRevise extends AppCompatActivity {
             String id = (String)params[13];
             String picture = (String)params[14];
 
-            //String file_name = tempFile.getName();
-            //Log.d("파일이름:!!!!:",file_name);
+            String file_name = tempFile.getName();
+            Log.d("파일이름:!!!!:",file_name);
 
             String serverURL = (String)params[0];
-            String postParameters = "&email="+ email +"&sex=" + sex + "&missing_date=" + missing_date + "&place=" + place +  "&m_f=" + m_f +  "&age=" + age +  "&kg=" + kg +  "&type=" + type +  "&tnr=" + tnr +  "&color=" + color +  "&etc=" + etc +  "&feature=" + feature + "&id="+id+ "&picture=" + picture;
+            String postParameters = "&email="+ email +"&sex=" + sex + "&missing_date=" + missing_date + "&place=" + place +  "&m_f=" + m_f +  "&age=" + age +  "&kg=" + kg +  "&type=" + type +  "&tnr=" + tnr +  "&color=" + color +  "&etc=" + etc +  "&feature=" + feature + "&id="+id+ "&picture=" + picture+ "&file_name="+ file_name;
 
 
             try {
