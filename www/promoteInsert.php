@@ -17,6 +17,7 @@
 		$local=$_POST['local'];		
 		$picture=$_POST['picture'];	
         $type=$_POST['type'];	
+        $fileName=$_POST['fileName'];
         $adoption=$_POST['adoption'];
 
 		
@@ -38,13 +39,14 @@
         if(!isset($errMSG))
         {
             try{
-                $stmt = $con->prepare('INSERT INTO promote(email, note_title, note_memo, local,picture,type,adoption) VALUES(:email, :note_title,:note_memo, :local,:picture,:type,:adoption)');
+                $stmt = $con->prepare('INSERT INTO promote(email, note_title, note_memo, local,picture,type,adoption,file_name) VALUES(:email, :note_title,:note_memo, :local,:picture,:type,:adoption,:fileName)');
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':note_title', $note_title);
 				$stmt->bindParam(':note_memo', $note_memo);
                 $stmt->bindParam(':local', $local);
 				$stmt->bindParam(':picture',$picture);
                 $stmt->bindParam(':type',$type);
+                $stmt->bindParam(':fileName',$fileName);
                 $stmt->bindParam(':adoption',$adoption);
 
                 if($stmt->execute())

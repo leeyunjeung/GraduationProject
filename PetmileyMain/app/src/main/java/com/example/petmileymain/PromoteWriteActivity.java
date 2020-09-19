@@ -46,7 +46,7 @@ import java.util.List;
 
 public class PromoteWriteActivity extends AppCompatActivity {
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "13.209.15.89";
+    private static String IP_ADDRESS = "3.34.44.142";
     private int enter = 0;
     private static final int REQUEST_CODE = 0;
     private String saveEmail;
@@ -54,7 +54,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
 
     private File tempFile;
     int serverResponseCode = 0;
-    //ProgressDialog dialog = null;
+    ProgressDialog dialog = null;
     private static final int PICK_FROM_ALBUM = 1;
 
     private Button btnInsert;
@@ -125,7 +125,10 @@ public class PromoteWriteActivity extends AppCompatActivity {
             }
         });
 
+        //시/도를 설정하지 않으면 사용할수없게끔
+        sigunguSpinner.setEnabled(false);
 
+        //스피너 클릭이벤트
         siSpinner.setAdapter(siAdapter);
         siSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -218,10 +221,9 @@ public class PromoteWriteActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, REQUEST_CODE);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
             }
         });
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -273,8 +275,6 @@ public class PromoteWriteActivity extends AppCompatActivity {
         });
     }
 
-
-    // 이미지 경로명 저장
     public int uploadFile() {
         String fileName = tempFile.getName();
 
@@ -291,7 +291,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
 
         if (!tempFile.isFile()) {
 
-            //dialog.dismiss();
+            dialog.dismiss();
 
             Log.e("uploadFile", "Source File not exist :" + fileName);
 
@@ -358,7 +358,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
 
-                            //Toast.makeText(PromoteWriteActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(PromoteWriteActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -372,7 +372,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
                 dos.close();
 
             } catch (MalformedURLException ex) {
-                //dialog.dismiss();
+                dialog.dismiss();
                 ex.printStackTrace();
                 runOnUiThread(new Runnable() {
                     public void run() {
@@ -384,7 +384,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
                 Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
 
             } catch (Exception e) {
-                //dialog.dismiss();
+                dialog.dismiss();
                 e.printStackTrace();
                 runOnUiThread(new Runnable() {
                     public void run() {
@@ -529,20 +529,29 @@ public class PromoteWriteActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
+        if(requestCode == PICK_FROM_ALBUM){
+            Uri photouri = data.getData();
+            Cursor cursor = null;
+            try{
 
-                    imageView.setImageBitmap(img);
-                } catch (Exception e) {
+                String[] proj = {MediaStore.Images.Media.DATA};
+                assert photouri != null;
+                cursor = getContentResolver().query(photouri,proj,null,null,null);
 
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                cursor.moveToFirst();
+
+                tempFile = new File(cursor.getString(column_index));
+
+            }finally {
+                if (cursor != null) {
+                    cursor.close();
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
+
+            setImage();
         }
     }
 

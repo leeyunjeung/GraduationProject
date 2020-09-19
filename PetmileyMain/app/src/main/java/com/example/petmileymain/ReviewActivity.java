@@ -39,7 +39,7 @@ import java.util.List;
 
 
 public class ReviewActivity extends AppCompatActivity {
-    private static String IP_ADDRESS ="13.209.15.89";
+    private static String IP_ADDRESS ="3.34.44.142";
     private static final String TAG = "review";
     private static final String board = "review";
 

@@ -49,7 +49,7 @@ import java.util.Locale;
 public class LostAndFound extends AppCompatActivity {
 
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "13.209.15.89";
+    private static String IP_ADDRESS = "3.34.44.142";
     private static final int REQUEST_CODE = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private File tempFile;
@@ -65,7 +65,7 @@ public class LostAndFound extends AppCompatActivity {
     private TextView tvtest;
 
     final Calendar myCalendar = Calendar.getInstance();
-    
+
 
 
 
@@ -145,7 +145,7 @@ public class LostAndFound extends AppCompatActivity {
                 LostAndFound.InsertData task = new LostAndFound.InsertData();
                 task.execute("http://" + IP_ADDRESS + "/lostandfound.php", email,sex,missing_date,place,m_f,age,kg,type,tnr,color,etc,feature,picture);
 
-               dialog = ProgressDialog.show(LostAndFound.this, "", "Uploading file...", true);
+                dialog = ProgressDialog.show(LostAndFound.this, "", "Uploading file...", true);
 
                 new Thread(new Runnable() {
                     public void run() {
@@ -322,7 +322,7 @@ public class LostAndFound extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
-           progressDialog = ProgressDialog.show(LostAndFound.this,"Please Wait", null, true, true);
+            progressDialog = ProgressDialog.show(LostAndFound.this,"Please Wait", null, true, true);
         }
 
 
@@ -330,7 +330,7 @@ public class LostAndFound extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            //progressDialog.dismiss();
+            progressDialog.dismiss();
             Toast.makeText(LostAndFound.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("새로운 글을 추가했습니다.")){
                 Intent intent = new Intent(getApplicationContext(), LostAndFoundMain.class);

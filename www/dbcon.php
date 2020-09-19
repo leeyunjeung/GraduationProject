@@ -1,8 +1,8 @@
 <?php
 
     $host = 'localhost';
-    $username = 'admin'; # MySQL 계정 아이디
-    $password = '123'; # MySQL 계정 패스워드
+    $username = 'gkdidms'; # MySQL 계정 아이디
+    $password = 'pw123'; # MySQL 계정 패스워드
     $dbname = 'petmily';  # DATABASE 이름
 
 

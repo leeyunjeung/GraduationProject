@@ -30,7 +30,7 @@ import java.net.URL;
 
 public class SignupActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 0;
-    private static String IP_ADDRESS = "13.209.15.89";
+    private static String IP_ADDRESS = "3.34.44.142";
     private static String TAG = "petmily";
 
     private EditText mEditTextNickname;

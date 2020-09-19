@@ -13,7 +13,8 @@ try{
     $note_memo= $_POST["note_memo"];
     $categorize= $_POST["categorize"];
     $picture= $_POST["picture"];
-    $stmt = $con->prepare("UPDATE review SET note_title='$note_title', note_memo = '$note_memo', categorize='$categorize',picture='$picture' WHERE id='$id'");
+	$fileName = $_POST["fileName"];
+    $stmt = $con->prepare("UPDATE review SET note_title='$note_title', note_memo = '$note_memo', categorize='$categorize',picture='$picture',file_name='$fileName' WHERE id='$id'");
     
     if($stmt->execute()){
         $successMSG = "수정 완료";

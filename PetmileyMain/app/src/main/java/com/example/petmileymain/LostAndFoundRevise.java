@@ -45,7 +45,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
 
 
     private static String TAG = "petmily";
-    private static String IP_ADDRESS = "13.209.15.89";
+    private static String IP_ADDRESS = "3.34.44.142";
     private static final int REQUEST_CODE = 0;
     private ImageView imageView;
     int serverResponseCode = 0;
@@ -148,10 +148,9 @@ public class LostAndFoundRevise extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, REQUEST_CODE);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
             }
         });
 
@@ -217,7 +216,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
 
         } catch (Exception e) {
             Log.e("exception",e.getMessage());
-            //e.getMessage();
+            e.getMessage();
             return null;
 
         }
@@ -249,29 +248,28 @@ public class LostAndFoundRevise extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
+        if(requestCode == PICK_FROM_ALBUM){
             Uri photouri = data.getData();
             Cursor cursor = null;
-            if (resultCode == RESULT_OK) {
-                try {
-                    String[] proj = {MediaStore.Images.Media.DATA};
-                    assert photouri != null;
-                    cursor = getContentResolver().query(photouri,proj,null,null,null);
+            try{
 
-                    assert cursor != null;
-                    int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                String[] proj = {MediaStore.Images.Media.DATA};
+                assert photouri != null;
+                cursor = getContentResolver().query(photouri,proj,null,null,null);
 
-                    cursor.moveToFirst();
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 
-                    tempFile = new File(cursor.getString(column_index));
-                } catch (Exception e) {
+                cursor.moveToFirst();
 
-                }finally {
-                    if (cursor != null) {
-                        cursor.close();
-                    }
+                tempFile = new File(cursor.getString(column_index));
+
+            }finally {
+                if (cursor != null) {
+                    cursor.close();
                 }
             }
+
             setImage();
         }
     }
@@ -416,7 +414,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
                 Log.e("Exception!", "Exception : " + e.getMessage(), e);
 
             }
-            dialog.dismiss();
+            //dialog.dismiss();
             return serverResponseCode;
         }
 
@@ -472,7 +470,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
             Log.d("파일이름:!!!!:",file_name);
 
             String serverURL = (String)params[0];
-            String postParameters = "&email="+ email +"&sex=" + sex + "&missing_date=" + missing_date + "&place=" + place +  "&m_f=" + m_f +  "&age=" + age +  "&kg=" + kg +  "&type=" + type +  "&tnr=" + tnr +  "&color=" + color +  "&etc=" + etc +  "&feature=" + feature + "&id="+id+ "&picture=" + picture+ "&file_name="+ file_name;
+            String postParameters = "&email="+ email +"&sex=" + sex + "&missing_date=" + missing_date + "&place=" + place +  "&m_f=" + m_f +  "&age=" + age +  "&kg=" + kg +  "&type=" + type +  "&tnr=" + tnr +  "&color=" + color +  "&etc=" + etc +  "&feature=" + feature + "&id="+id+ "&picture=" + picture + "&file_name=" + file_name;
 
 
             try {

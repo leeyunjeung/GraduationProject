@@ -33,7 +33,7 @@ public class LostAndFoundPost extends AppCompatActivity {
     private Button btnRevise;
     public String lostandfound_id,m_f,missing_date,place,sex,type,tnr,kg,age,color,feature,etc,email,lostandfound_img;
 
-    private static String IP_ADDRESS = "13.209.15.89";
+    private static String IP_ADDRESS = "3.34.44.142";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
