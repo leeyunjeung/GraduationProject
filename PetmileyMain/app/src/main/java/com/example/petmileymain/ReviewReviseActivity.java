@@ -33,7 +33,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class ReviewReviseActivity  extends AppCompatActivity {
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "3.34.44.142";
     private static final String TAG = "test";
     private static final int REQUEST_CODE = 0;
 
@@ -52,6 +52,7 @@ public class ReviewReviseActivity  extends AppCompatActivity {
         setContentView(R.layout.activity_review_write);
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
         editTextMemo = (EditText) findViewById(R.id.editTextMemo);
+
 
 
 

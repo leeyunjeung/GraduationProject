@@ -39,7 +39,7 @@ import java.util.List;
 
 
 public class ReviewActivity extends AppCompatActivity {
-    private static String IP_ADDRESS ="40.40.40.45";
+    private static String IP_ADDRESS ="3.34.44.142";
     private static final String TAG = "review";
     private static final String board = "review";
 
@@ -65,6 +65,7 @@ public class ReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_review);
         reviewActivity=ReviewActivity.this;
         new BackgroundTask().execute(select_categorize);
+
         //버튼
         btnWrite = (Button)findViewById(R.id.btnWrite);
         btnBack = (Button)findViewById(R.id.btnBack);

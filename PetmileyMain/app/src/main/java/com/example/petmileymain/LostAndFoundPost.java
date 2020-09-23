@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -31,9 +32,11 @@ public class LostAndFoundPost extends AppCompatActivity {
     private Button btnBack;
     private Button btnDelete;
     private Button btnRevise;
+    private String saveEmail;
+    private SharedPreferences appData;
     public String lostandfound_id,m_f,missing_date,place,sex,type,tnr,kg,age,color,feature,etc,email,lostandfound_img;
 
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "3.34.44.142";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,9 @@ public class LostAndFoundPost extends AppCompatActivity {
         btnBack = (Button)findViewById(R.id.btnBack);
         btnDelete = (Button)findViewById(R.id.btnDelete);
         btnRevise = (Button)findViewById(R.id.btnRevise);
+
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +107,7 @@ public class LostAndFoundPost extends AppCompatActivity {
 
         textViewM_f.setText(m_f);
 
-        if(email.equals(MainList.email)){
+        if(saveEmail.equals(MainList.email)){
             btnRevise.setVisibility(View.VISIBLE);
             btnDelete.setVisibility(View.VISIBLE);
         }

@@ -46,7 +46,7 @@ import java.util.List;
 
 public class PromoteActivity extends AppCompatActivity {
     private static final  String board = "promote";
-    private static String IP_ADDRESS ="40.40.40.45";
+    private static String IP_ADDRESS ="3.34.44.142";
     private static final String TAG = "test";
 
     private Button btnWrite;
@@ -76,6 +76,7 @@ public class PromoteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promote);
+
 
         promoteActivity=PromoteActivity.this;
         new BackgroundTask().execute(select_local,select_type,select_adoption);

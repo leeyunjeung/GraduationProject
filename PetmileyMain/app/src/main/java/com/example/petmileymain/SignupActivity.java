@@ -30,7 +30,7 @@ import java.net.URL;
 
 public class SignupActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 0;
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "3.34.44.142";
     private static String TAG = "petmily";
 
     private EditText mEditTextNickname;
@@ -45,6 +45,7 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        IP_ADDRESS = getString(R.string.my_ip);
 
         mEditTextNickname = (EditText)findViewById(R.id.editText_main_nickname);
         mEditTextEmail = (EditText)findViewById(R.id.editText_main_email);

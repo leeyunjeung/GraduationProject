@@ -7,20 +7,43 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/titleName"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="후기"
-        tools:ignore="MissingConstraints" />
+        android:background="#51AACD"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:id="@+id/titleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="후기"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
 
     <LinearLayout
-        style="@style/horizontalLinerStyle">
+        style="@style/horizontalLinerStyle"
+        android:gravity="right"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp">
 
         <Button
             android:id="@+id/btnCategorize"
             style="@style/btnStyle"
-            android:text="전체 글" />
+            android:layout_width="match_parent"
+            android:background="@drawable/buttonshape"
+            android:text="전체 글"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -37,17 +60,33 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
-        style="@style/horizontalLinerStyle">
+        style="@style/horizontalLinerStyle"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <Button
             android:id="@+id/btnWrite"
             style="@style/btnStyle"
-            android:text="작성" />
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape"
+            android:drawableLeft="@android:drawable/ic_menu_edit"
+            android:paddingLeft="20dp"
+            android:text="작성"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnBack"
             style="@style/btnStyle"
-            android:text="돌아가기" />
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/buttonshape"
+            android:drawableLeft="@android:drawable/ic_menu_revert"
+            android:paddingLeft="20dp"
+            android:text="돌아가기"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>

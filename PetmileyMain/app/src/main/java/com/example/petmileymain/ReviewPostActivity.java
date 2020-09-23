@@ -27,7 +27,7 @@ import java.net.URL;
 
 public class ReviewPostActivity extends AppCompatActivity {
     private static final String TAG = "ReviewPostAcitivity";
-    private static String IP_ADDRESS = "40.40.40.45";
+    private static String IP_ADDRESS = "3.34.44.142";
     private String id="";
     private String note_memo = "";
     private String note_title = "";
