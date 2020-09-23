@@ -43,7 +43,11 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
 
     private Button btnWrite;
     private Button btnSearch;
+<<<<<<< HEAD
     private static String IP_ADDRESS = "13.125.23.115";
+=======
+    private static String IP_ADDRESS = "3.34.44.142";
+>>>>>>> yeeun
     private static final String TAG = "petmily";
     public String select_local, select_type,select_mf,start_date,end_date;
     private Button btnBack;

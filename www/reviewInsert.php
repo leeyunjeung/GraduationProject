@@ -15,7 +15,12 @@
         $note_title=$_POST['note_title'];
 		$note_memo=$_POST['note_memo'];
 		$categorize=$_POST['categorize'];		
+<<<<<<< HEAD
 		$picture=$_POST['picture'];		
+=======
+		$picture=$_POST['picture'];	
+		$fileName=$_POST['fileName'];	
+>>>>>>> yeeun
 
 		
 		if(empty($note_title)){
@@ -34,12 +39,20 @@
         if(!isset($errMSG))
         {
             try{
+<<<<<<< HEAD
                 $stmt = $con->prepare('INSERT INTO review(email, note_title, note_memo,categorize,picture) VALUES(:email, :note_title,:note_memo, :categorize,:picture)');
+=======
+                $stmt = $con->prepare('INSERT INTO review(email, note_title, note_memo,categorize,picture,file_name) VALUES(:email, :note_title,:note_memo, :categorize,:picture,:fileName)');
+>>>>>>> yeeun
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':note_title', $note_title);
 				$stmt->bindParam(':note_memo', $note_memo);
                 $stmt->bindParam(':categorize', $categorize);
 				$stmt->bindParam(':picture',$picture);
+<<<<<<< HEAD
+=======
+		$stmt->bindParam(':fileName', $fileName);
+>>>>>>> yeeun
 
                 if($stmt->execute())
                 {

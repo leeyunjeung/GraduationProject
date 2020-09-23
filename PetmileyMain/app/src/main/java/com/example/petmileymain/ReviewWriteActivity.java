@@ -5,11 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -25,19 +28,33 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ReviewWriteActivity extends AppCompatActivity {
     private static String TAG = "petmily";
+<<<<<<< HEAD
     private static String IP_ADDRESS = "13.125.23.115";
+=======
+    private static String IP_ADDRESS = "3.34.44.142";
+>>>>>>> yeeun
     private int enter = 0;
     private static final int REQUEST_CODE = 0;
+    private static final int PICK_FROM_ALBUM = 1;
+    int serverResponseCode = 0;
+    ProgressDialog dialog = null;
+    private File tempFile;
     private ImageView imageView;
 
     private Button btnInsert;
@@ -84,10 +101,9 @@ public class ReviewWriteActivity extends AppCompatActivity {
         imageView.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, REQUEST_CODE);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
             }
         });
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -112,9 +128,149 @@ public class ReviewWriteActivity extends AppCompatActivity {
                 task.execute("http://" + IP_ADDRESS + "/reviewInsert.php", email,note_title,note_memo,categorize,picture);
 
 
+                new Thread(new Runnable() {
+                    public void run() {
+                        runOnUiThread(new Runnable() {
+                            public void run() {
+                                Log.d("업로드","uploading started.....");
+                            }
+                        });
+
+                        uploadFile();
+
+                    }
+                }).start();
 
             }
         });
+    }
+
+    public int uploadFile() {
+        String fileName = tempFile.getName();
+
+        HttpURLConnection conn = null;
+        DataOutputStream dos = null;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        String serverURL = "http://" + IP_ADDRESS + "/reviewFile.php";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1 * 1024 * 1024;
+
+
+        if (!tempFile.isFile()) {
+
+            dialog.dismiss();
+
+            Log.e("uploadFile", "Source File not exist :" + fileName);
+
+            runOnUiThread(new Runnable() {
+                public void run() {
+
+                }
+            });
+
+            return 0;
+
+        }
+        else
+
+        {
+            try {
+                // open a URL connection to the Servlet
+                FileInputStream fileInputStream = new FileInputStream(tempFile);
+                URL url = new URL(serverURL);
+
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setDoInput(true); // Allow Inputs
+                conn.setDoOutput(true); // Allow Outputs
+                conn.setUseCaches(false); // Don't use a Cached Copy
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Connection", "Keep-Alive");
+                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                conn.setRequestProperty("uploaded_file", fileName);
+
+                dos = new DataOutputStream(conn.getOutputStream());
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\"" + fileName + "\"" + lineEnd);
+                dos.writeBytes(lineEnd);
+
+                // create a buffer of  maximum size
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                buffer = new byte[bufferSize];
+
+                // read file and write it into form...
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                while (bytesRead > 0) {
+                    dos.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                }
+
+                // send multipart form data necesssary after file data...
+
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                // Responses from the server (code and message)
+
+                serverResponseCode = conn.getResponseCode();
+                String serverResponseMessage = conn.getResponseMessage();
+
+                Log.i("uploadFile", "HTTP Response is : " + serverResponseMessage + ": " + serverResponseCode);
+
+                if(serverResponseCode == 200){
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+
+                            Toast.makeText(ReviewWriteActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    });
+
+                }
+
+                //close the streams //
+                fileInputStream.close();
+                dos.flush();
+                dos.close();
+
+            } catch (MalformedURLException ex) {
+                dialog.dismiss();
+                ex.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        Toast.makeText(ReviewWriteActivity.this, "MalformedURLException", Toast.LENGTH_SHORT).show();
+
+                    }
+
+                });
+                Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
+
+            } catch (Exception e) {
+                dialog.dismiss();
+                e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        Toast.makeText(ReviewWriteActivity.this, "Got Exception : see logcat ",Toast.LENGTH_SHORT).show();
+
+                    }
+
+                });
+                Log.e("Exception!", "Exception : " + e.getMessage(), e);
+
+            }
+            //dialog.dismiss();
+            return serverResponseCode;
+        }
+
     }
 
     @Override
@@ -162,9 +318,10 @@ public class ReviewWriteActivity extends AppCompatActivity {
             String note_memo= (String)params[3];
             String categorize = (String)params[4];
             String picture = (String)params[5];
+            String fileName = tempFile.getName();
 
             String serverURL = (String)params[0];
-            String postParameters = "email="+ email +"&note_title=" + note_title + "&note_memo=" + note_memo + "&categorize=" + categorize+"&picture="+ picture ;
+            String postParameters = "email="+ email +"&note_title=" + note_title + "&note_memo=" + note_memo + "&categorize=" + categorize+"&picture="+ picture + "&fileName=" + fileName ;
 
 
             try {
@@ -249,20 +406,40 @@ public class ReviewWriteActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
+        if(requestCode == PICK_FROM_ALBUM){
+            Uri photouri = data.getData();
+            Cursor cursor = null;
+            try{
 
-                    imageView.setImageBitmap(img);
-                } catch (Exception e) {
+                String[] proj = {MediaStore.Images.Media.DATA};
+                assert photouri != null;
+                cursor = getContentResolver().query(photouri,proj,null,null,null);
 
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                cursor.moveToFirst();
+
+                tempFile = new File(cursor.getString(column_index));
+
+            }finally {
+                if (cursor != null) {
+                    cursor.close();
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
+
+            setImage();
         }
+    }
+
+
+
+    private void setImage() {
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
+
+        imageView.setImageBitmap(originalBm);
+
     }
 }

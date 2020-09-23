@@ -14,10 +14,24 @@ try{
     $local= $_POST["local"];
     $picture= $_POST["picture"];
 	$type= $_POST["type"];
+<<<<<<< HEAD
 	$adoption=$_POST['adoption'];
     $stmt = $con->prepare("UPDATE promote SET note_title='$note_title',local='$local', note_memo = '$note_memo', type='$type',adoption='$adoption',picture='$picture' WHERE id='$id'");
     
     if($stmt->execute()){
+=======
+	$fileName= $_POST["fileName"];
+	$adoption=$_POST['adoption'];
+	
+	$stmt = $con->prepare('select file_name from promote where id = :id ');
+    $stmt->bindValue(":id",$id);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        if(sizeof($result)>0){
+			$file_path = $_SERVER['DOCUMENT_ROOT'].'/promote/'.$result['file_name'];
+			$stmt = $con->prepare("UPDATE promote SET note_title='$note_title', note_memo = '$note_memo', local='$local',picture='$picture',type='$type',adoption='$adoption',file_name='$fileName' WHERE id='$id'");
+			if($stmt->execute()){
+>>>>>>> yeeun
 				$successMSG = "수정 완료";
 				$stmt = $con->prepare("select * from promote inner join user on promote.email = user.email where id='$id'order by id desc");
 				$stmt->execute();
@@ -40,11 +54,20 @@ try{
 				echo json_encode(array("response"=>$response));
 		
 
+<<<<<<< HEAD
+=======
+		}
+    
+    
+>>>>>>> yeeun
 	}
     else{
         $errMSG = "정보 저장 에러";
     }
+<<<<<<< HEAD
 	
+=======
+>>>>>>> yeeun
 }catch(PDOException $e){
     die("DATABASE ERROR : " . $e->getMessage());
 }
