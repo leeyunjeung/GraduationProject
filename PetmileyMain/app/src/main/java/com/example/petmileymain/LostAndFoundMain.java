@@ -126,6 +126,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
                 intent.putExtra("etc", lostandfoundData.getEtc());
                 intent.putExtra("email", lostandfoundData.getEmail());
                 intent.putExtra("lostandfound_img", lostandfoundData.getLostandfound_img());
+                intent.putExtra("file_name",lostandfoundData.getFile_name());
                 startActivity(intent);
 
             }
@@ -250,7 +251,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
 
-                String m_f,missing_date,place,sex,lostandfound_id,lostandfound_img,type,tnr,kg,age,color,feature,etc,email;
+                String m_f,missing_date,place,sex,lostandfound_id,lostandfound_img,type,tnr,kg,age,color,feature,etc,email,file_name;
                 Bitmap picture;
 
                 for(int i=0;i<jsonArray.length();i++) {
@@ -269,6 +270,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
                     email = object.getString("email");
                     lostandfound_id = object.getString("id");
                     lostandfound_img=object.getString("picture");
+                    file_name = object.getString("file_name");
                     picture = StringToBitMap(lostandfound_img);
                     LostAndFoundData lostandfoundData = new LostAndFoundData();
 
@@ -287,6 +289,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
                     lostandfoundData.setEtc(etc);
                     lostandfoundData.setEmail(email);
                     lostandfoundData.setLostandfound_img(lostandfound_img);
+                    lostandfoundData.setFile_name(file_name);
 
                     mArrayList.add(lostandfoundData);
                     mAdapter.notifyDataSetChanged();

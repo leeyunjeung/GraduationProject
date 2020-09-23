@@ -165,7 +165,8 @@ public class PromoteActivity extends AppCompatActivity {
                 intent.putExtra("promote_picture", promoteData.getImg());
                 intent.putExtra("promote_email",promoteData.getEmail());
                 intent.putExtra("userimg",promoteData.getUserimg());
-                intent.putExtra("adoption",promoteData.getAdoption()); //수정 추가
+                intent.putExtra("adoption",promoteData.getAdoption());
+                intent.putExtra("file_name",promoteData.getFile_name());//수정 추가
                 Log.d("adoption",promoteData.getAdoption());
                 startActivity(intent);
             }
@@ -407,7 +408,7 @@ public class PromoteActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
 
-                String nickname,note_title,id,note_memo,local,promote_img,email,type,userimg, adoption; //수정
+                String nickname,note_title,id,note_memo,local,promote_img,email,type,userimg, adoption, file_name; //수정
                 Bitmap picture;
 
                 for(int i=0;i<jsonArray.length();i++) {
@@ -422,6 +423,7 @@ public class PromoteActivity extends AppCompatActivity {
                     id = object.getString("id");
                     promote_img=object.getString("picture");
                     email=object.getString("email");
+                    file_name = object.getString("file_name");
                     picture = StringToBitMap(promote_img);
                     BoardData promoteData = new BoardData();
 
@@ -436,6 +438,7 @@ public class PromoteActivity extends AppCompatActivity {
                     promoteData.setImg(promote_img);
                     promoteData.setEmail(email);
                     promoteData.setUserimg(userimg);
+                    promoteData.setFile_name(file_name);
                     mArrayList.add(promoteData);
                     mAdapter.notifyDataSetChanged();
                 }

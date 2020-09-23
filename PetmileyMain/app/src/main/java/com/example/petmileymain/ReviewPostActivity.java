@@ -37,6 +37,7 @@ public class ReviewPostActivity extends AppCompatActivity {
     private String picture = "";
     private String review_email = "";
     private String categorize = "";
+    private String file_name = "";
     private String userimg;
     public static Activity reviewPostActivity;
     private SharedPreferences appData;
@@ -74,6 +75,7 @@ public class ReviewPostActivity extends AppCompatActivity {
         review_email = extras.getString("review_email");
         categorize = extras.getString("categorize");
         userimg = extras.getString("userimg");
+        file_name = extras.getString("file_name");
 
 
         TextViewTitle.setText(note_title);
@@ -159,7 +161,7 @@ public class ReviewPostActivity extends AppCompatActivity {
         String target;
 
         protected void onPreExecute(){
-            target = "http://"+IP_ADDRESS+"/reviewDelete.php?id="+ id;
+            target = "http://"+IP_ADDRESS+"/reviewDelete.php?id="+ id + "&file_name=" + file_name;
         }
         @Override
         protected String doInBackground(String... params) {
@@ -209,6 +211,8 @@ public class ReviewPostActivity extends AppCompatActivity {
             super.onPostExecute(result);
             Toast.makeText(ReviewPostActivity.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("게시글이 삭제되었습니다.")) {
+                Intent intent = new Intent(getBaseContext(), ReviewActivity.class);
+                startActivity(intent);
                 finish();
             }
         }
