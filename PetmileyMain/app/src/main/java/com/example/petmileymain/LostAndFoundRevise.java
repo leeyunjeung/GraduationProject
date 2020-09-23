@@ -56,7 +56,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
     private Button btnInsert;
 
     private EditText editDate;
-    private EditText editPlace;
+
     private EditText editColor,editFeature,editEtc;
     private static final int PICK_FROM_ALBUM = 1;
     private File tempFile;
@@ -81,7 +81,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
         imageView = findViewById(R.id.image);
         btnInsert = findViewById(R.id.btnInsert);
         editDate=findViewById(R.id.etDate);
-        editPlace=findViewById(R.id.etPlace);
+
         editColor=findViewById(R.id.etColor);
         editFeature=findViewById(R.id.etFeature);
         editEtc=findViewById(R.id.etEtc);
@@ -125,6 +125,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
         tnr = extras.getString("tnr");
         lostandfound_img = extras.getString("lostandfound_img");
 
+        final Spinner spinnerLocal = (Spinner)findViewById(R.id.spinnerLocal);
         final Spinner spinnerMF =(Spinner)findViewById(R.id.spinnerMF);
         final Spinner spinnerSex =(Spinner)findViewById(R.id.spinnerSex);
         final Spinner spinnerAge =(Spinner)findViewById(R.id.spinnerAge);
@@ -136,8 +137,9 @@ public class LostAndFoundRevise extends AppCompatActivity {
         editColor.setText(color);
         editEtc.setText(etc);
         editFeature.setText(feature);
-        editPlace.setText(place);
 
+
+        spinnerInit(R.array.localArray,place,spinnerMF);
         spinnerInit(R.array.mfarray,m_f,spinnerMF);
         spinnerInit(R.array.sexarray,sex,spinnerSex);
         spinnerInit(R.array.agearray,age,spinnerAge);
@@ -168,7 +170,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
                 String type = spinnerType.getSelectedItem().toString();
                 String tnr = spinnerTnr.getSelectedItem().toString();
                 String missing_date = editDate.getText().toString();
-                String place = editPlace.getText().toString();
+                String place = spinnerLocal.getSelectedItem().toString();
                 String color = editColor.getText().toString();
                 String etc = editEtc.getText().toString();
                 String feature = editFeature.getText().toString();

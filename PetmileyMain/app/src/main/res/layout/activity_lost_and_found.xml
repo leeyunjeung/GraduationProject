@@ -13,7 +13,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -25,7 +28,8 @@
                     android:layout_width="222dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="상태" />
+                    android:text="상태"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerMF"
@@ -43,19 +47,19 @@
 
                 <TextView
                     android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="43dp"
+                    android:layout_width="222dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="날짜" />
+                    android:text="날짜"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Name" />
+                    android:inputType="textPersonName" />
 
 
             </LinearLayout>
@@ -67,10 +71,11 @@
 
                 <TextView
                     android:id="@+id/textView5"
-                    android:layout_width="227dp"
+                    android:layout_width="222dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="지역" />
+                    android:text="지역"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerLocal"
@@ -88,10 +93,11 @@
 
                 <TextView
                     android:id="@+id/textView7"
-                    android:layout_width="227dp"
+                    android:layout_width="222dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="품종" />
+                    android:text="품종"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerType"
@@ -112,7 +118,8 @@
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="성별" />
+                    android:text="성별"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerSex"
@@ -126,7 +133,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="중성화" />
+                    android:text="중성화"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerTnr"
@@ -147,7 +155,8 @@
                     android:layout_width="222dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="나이" />
+                    android:text="나이"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerAge"
@@ -161,7 +170,8 @@
                     android:layout_width="204dp"
                     android:layout_height="38dp"
                     android:layout_weight="1"
-                    android:text="몸무게" />
+                    android:text="몸무게"
+                    android:textStyle="bold" />
 
                 <Spinner
                     android:id="@+id/spinnerKg"
@@ -179,19 +189,19 @@
 
                 <TextView
                     android:id="@+id/tvColor"
-                    android:layout_width="wrap_content"
+                    android:layout_width="222dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="털색" />
+                    android:text="털색"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etColor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="털색을 설명해주세요." />
+                    android:inputType="textPersonName" />
 
             </LinearLayout>
 
@@ -202,19 +212,19 @@
 
                 <TextView
                     android:id="@+id/tvFeature"
-                    android:layout_width="wrap_content"
+                    android:layout_width="222dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="특징" />
+                    android:text="특징"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etFeature"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="눈에 띄는 특징을 적어주세요." />
+                    android:inputType="textPersonName" />
 
             </LinearLayout>
 
@@ -225,14 +235,15 @@
 
                 <TextView
                     android:id="@+id/tvEtc"
-                    android:layout_width="wrap_content"
+                    android:layout_width="222dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="기타" />
+                    android:text="기타"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etEtc"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
@@ -248,20 +259,21 @@
 
                 <TextView
                     android:id="@+id/textView6"
-                    android:layout_width="164dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="사진" />
+                    android:text="사진"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/image"
-                    android:layout_width="251dp"
+                    android:layout_width="350dp"
                     android:layout_height="138dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/ic_launcher" />
+                    app:srcCompat="@android:drawable/ic_menu_gallery" />
 
             </LinearLayout>
 
@@ -272,10 +284,16 @@
 
                 <Button
                     android:id="@+id/btnInsert"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
                     android:layout_weight="1"
-                    android:text="등록" />
+                    android:background="@drawable/buttonshape"
+                    android:text="등록"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>

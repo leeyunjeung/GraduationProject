@@ -7,6 +7,7 @@ import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -51,13 +52,15 @@ public class LostAndFound extends AppCompatActivity {
     private static String TAG = "petmily";
 
     private static String IP_ADDRESS = "3.34.44.142";
-
+    private String saveEmail;
     private static final int REQUEST_CODE = 0;
     private static final int PICK_FROM_ALBUM = 1;
     private File tempFile;
     private ImageView imageView;
     int serverResponseCode = 0;
     ProgressDialog dialog = null;
+
+    private SharedPreferences appData;
 
     private Button btnInsert;
 
@@ -94,6 +97,9 @@ public class LostAndFound extends AppCompatActivity {
         editColor=findViewById(R.id.etColor);
         editFeature=findViewById(R.id.etFeature);
         editEtc=findViewById(R.id.etEtc);
+
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
 
 
         final Spinner spinnerLocal = (Spinner)findViewById(R.id.spinnerLocal);
@@ -140,7 +146,7 @@ public class LostAndFound extends AppCompatActivity {
                 String color = editColor.getText().toString();
                 String etc = editEtc.getText().toString();
                 String feature = editFeature.getText().toString();
-                String email = MainList.email;
+                String email = saveEmail;
                 String picture =  BitmapToString(resize(bitmap));
 
                 Log.d("HEY!!!!::",editDate.getText().toString());

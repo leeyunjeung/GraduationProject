@@ -7,26 +7,31 @@
     android:orientation="vertical"
     tools:context=".UserWrotePost">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Spinner
-        android:id="@+id/spList"
-        android:layout_width="162dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:entries="@array/postList"
-        android:gravity="center"
-        android:padding="8dp" />
+        android:background="#51AACD"
+        android:padding="5dp">
 
-    <Button
-        android:id="@+id/btnSearch"
-        android:layout_width="251dp"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="검색" />
-</LinearLayout>
+        <Spinner
+            android:id="@+id/spList"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:entries="@array/postList"
+            android:gravity="center"
+            android:padding="8dp" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="검색"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
 
     <LinearLayout

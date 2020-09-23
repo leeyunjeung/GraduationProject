@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -32,6 +33,8 @@ public class LostAndFoundPost extends AppCompatActivity {
     private Button btnDelete;
     private Button btnRevise;
     public String lostandfound_id,m_f,missing_date,place,sex,type,tnr,kg,age,color,feature,etc,email,lostandfound_img;
+    private String saveEmail; //현재 로그인한 이메일
+    private SharedPreferences appData;
 
 
     private static String IP_ADDRESS = "3.34.44.142";
@@ -52,6 +55,9 @@ public class LostAndFoundPost extends AppCompatActivity {
                 finish();
             }
         });
+
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
 
         TextView textViewM_f =(TextView)findViewById(R.id.textViewM_f);
         TextView textViewType =(TextView)findViewById(R.id.textViewType);
@@ -103,7 +109,7 @@ public class LostAndFoundPost extends AppCompatActivity {
 
         textViewM_f.setText(m_f);
 
-        if(email.equals(MainList.email)){
+        if(saveEmail.equals(email)){
             btnRevise.setVisibility(View.VISIBLE);
             btnDelete.setVisibility(View.VISIBLE);
         }
