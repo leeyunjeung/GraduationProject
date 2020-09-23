@@ -25,10 +25,9 @@
         $color=$_POST['color'];	
         $etc=$_POST['etc'];	
         $feature=$_POST['feature'];	
-<<<<<<< HEAD
-=======
+
         $fileName=$_POST['fileName'];	
->>>>>>> yeeun
+
 
 
 		
@@ -57,11 +56,9 @@
         if(!isset($errMSG))
         {
             try{
-<<<<<<< HEAD
-                $stmt = $con->prepare('INSERT INTO missing_find(email, sex, missing_date, place,picture,m_f,age,kg,tnr,color,etc,feature,type) VALUES(:email, :sex,:missing_date, :place,:picture,:m_f,:age,:kg,:tnr,:color,:etc,:feature,:type)');
-=======
+
                 $stmt = $con->prepare('INSERT INTO missing_find(email, sex, missing_date, place,picture,m_f,age,kg,tnr,color,etc,feature,type,file_name) VALUES(:email, :sex,:missing_date, :place,:picture,:m_f,:age,:kg,:tnr,:color,:etc,:feature,:type,:fileName)');
->>>>>>> yeeun
+
                 $stmt->bindParam(':email', $email);
                 $stmt->bindParam(':sex', $sex);
 				$stmt->bindParam(':missing_date', $missing_date);
@@ -75,10 +72,9 @@
                 $stmt->bindParam(':etc',$etc);
                 $stmt->bindParam(':feature',$feature);
                 $stmt->bindParam(':type',$type);
-<<<<<<< HEAD
-=======
+
                 $stmt->bindParam(':fileName',$fileName);
->>>>>>> yeeun
+
 
 
 

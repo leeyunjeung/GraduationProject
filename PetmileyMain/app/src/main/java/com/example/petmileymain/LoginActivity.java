@@ -34,11 +34,9 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences appData;
     private boolean saveLoginData; //로그인한적이 있는지 체크
     private CheckBox checkBox;
-<<<<<<< HEAD
-    private static String IP_ADDRESS = "13.125.23.115";
-=======
+
     private static String IP_ADDRESS = "3.34.44.142";
->>>>>>> yeeun
+
     private static String TAG = "phptest";
 
     private EditText editEmail;

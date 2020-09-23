@@ -49,11 +49,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 public class PromoteReviseActivity  extends AppCompatActivity {
-<<<<<<< HEAD
-    private static String IP_ADDRESS = "13.125.23.115";
-=======
+
     private static String IP_ADDRESS = "3.34.44.142";
->>>>>>> yeeun
+
     private static final String TAG = "test";
     private static final int REQUEST_CODE = 0;
 
