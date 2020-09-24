@@ -57,6 +57,7 @@ public class ShelterActivity extends AppCompatActivity {
     Button spBtn;
     Button dateBtn;
     ImageView image;
+    private Button btnImageSearch;
 
     String local = "";
     String speciesData = "";
@@ -72,6 +73,15 @@ public class ShelterActivity extends AppCompatActivity {
         GunSp = (Spinner)findViewById(R.id.spGun);
         speciesSp =(Spinner)findViewById(R.id.spSpecies);
         new xmlParser().execute();
+        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
+
+        btnImageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                startActivity(intent);
+            }
+        });
 
 
         siSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
