@@ -25,8 +25,8 @@
         $color=$_POST['color'];	
         $etc=$_POST['etc'];	
         $feature=$_POST['feature'];	
-        $fileName=$_POST['fileName'];	
-
+        $id=$_POST['id'];
+        $file_name=$_POST['file_name'];
 
 		
 		//$data=base64_decode($imagedevice);	
@@ -54,32 +54,44 @@
         if(!isset($errMSG))
         {
             try{
-                $stmt = $con->prepare('INSERT INTO missing_find(email, sex, missing_date, place,picture,m_f,age,kg,tnr,color,etc,feature,type,file_name) VALUES(:email, :sex,:missing_date, :place,:picture,:m_f,:age,:kg,:tnr,:color,:etc,:feature,:type,:fileName)');
-                $stmt->bindParam(':email', $email);
-                $stmt->bindParam(':sex', $sex);
-				$stmt->bindParam(':missing_date', $missing_date);
-                $stmt->bindParam(':place', $place);
-                $stmt->bindParam(':picture',$picture);
-                $stmt->bindParam(':m_f',$m_f);
-                $stmt->bindParam(':age',$age);
-                $stmt->bindParam(':kg',$kg);
-                $stmt->bindParam(':tnr',$tnr);
-                $stmt->bindParam(':color',$color);
-                $stmt->bindParam(':etc',$etc);
-                $stmt->bindParam(':feature',$feature);
-                $stmt->bindParam(':type',$type);
-                $stmt->bindParam(':fileName',$fileName);
+                $stmt = $con->prepare('select file_name from missing_find where id = :id ');
+                $stmt->bindValue(":id",$id);
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                if(sizeof($result)>0){
+                    $file_path = $_SERVER['DOCUMENT_ROOT'].'/lostandfound/'.$result['file_name'];
+                    $stmt = $con->prepare('UPDATE missing_find SET email=:email,sex=:sex,missing_date=:missing_date,place=:place,picture=:picture,m_f=:m_f,age=:age,kg=:kg,tnr=:tnr,color=:color,etc=:etc,feature=:feature,type=:type,file_name=:file_name WHERE id=:id');
+                    $stmt->bindParam(':email', $email);
+                    $stmt->bindParam(':sex', $sex);
+			    	$stmt->bindParam(':missing_date', $missing_date);
+                    $stmt->bindParam(':place', $place);
+                    $stmt->bindParam(':picture',$picture);
+                    $stmt->bindParam(':m_f',$m_f);
+                    $stmt->bindParam(':age',$age);
+                    $stmt->bindParam(':kg',$kg);
+                    $stmt->bindParam(':tnr',$tnr);
+                    $stmt->bindParam(':color',$color);
+                    $stmt->bindParam(':etc',$etc);
+                    $stmt->bindParam(':feature',$feature);
+                    $stmt->bindParam(':type',$type);
+                    $stmt->bindParam(':id',$id);
+                    $stmt->bindParam(':file_name',$file_name);
 
-
-
-                if($stmt->execute())
-                {
-                    $successMSG = "새로운 글을 추가했습니다.";
+                    if($stmt->execute())
+                        {
+                            $successMSG = "게시글이 수정 되었습니다.";
+                        }
+                    else
+                        {
+                            $errMSG = "수정 실패";
+                        }
                 }
-                else
-                {
-                    $errMSG = "게시글 추가 에러";
+                else{
+                    $errMSG = "수정 실패";
                 }
+
+                
 
             } catch(PDOException $e) {
                 die("Database error: " . $e->getMessage()); 

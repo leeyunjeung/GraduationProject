@@ -636,41 +636,6 @@ public class ShelterActivity extends AppCompatActivity {
     }
 
 
-/*
-   private class StringToBitMap extends AsyncTask<String, Void, Bitmap>{
-        ArrayList<Shelter> arrayList = new ArrayList<Shelter>();
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            try {
-                String img = (String)params[0];
-                img = img.replace("\\", "");
-                URL urlImg = new URL(img);
-                URLConnection conn = urlImg.openConnection();
-                conn.connect();
-                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                Bitmap bm = BitmapFactory.decodeStream(bis);
-                bis.close();
-                return bm;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-       @Override
-       protected void onPostExecute(Bitmap bitmap) {
-           super.onPostExecute(bitmap);
-       }
-   }
-
-
-*/
 }
 
 
