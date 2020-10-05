@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors',1); 
 include('dbcon.php');
 
-$url  = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?numOfRows=5000&ServiceKey=lkB0hPshvWYvwGC3NtluZa5t716rAF7HHbUYFX6uI3fFDMBlw%2F1PpLlfPZxsR1%2FNFuGtI%2BWfWg%2BWxE87JpnUAw%3D%3D';
+$url  = 'http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?numOfRows=5000&ServiceKey=tAYKbEZoElKC6FZC2J0g67Zg6GD5505OL7EtVUedRPrlEQeRe%2BOFWR77a5erXsoiElwMZsQjREQe5EC9SiZWEw%3D%3D';
 
 $data = file_get_contents($url);
 //$data = json_decode($data,true);
@@ -47,6 +47,14 @@ for($count=0;$count<1000;$count++){
         :specialMark,:careNm,:careTel,:careAddr,:orgNm,:officetel
         from dual
         where not exists(select * from animalList where desertionNo=:desertionNo)');
+
+
+
+	
+	$image_url = $fileName;
+	$image_info = parse_url($image_url);
+	$image_name = basename($image_info['path']);
+	file_put_contents('/home/project/shelter/'.$image_name,file_get_contents($image_url));
 
     $stmt->bindParam(':desertionNo',$desertionNo);
     $stmt->bindParam(':fileName',$fileName);
