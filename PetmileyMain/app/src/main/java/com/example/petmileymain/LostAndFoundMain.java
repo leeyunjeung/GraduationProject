@@ -47,6 +47,8 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
     private static final String TAG = "petmily";
     public String select_local, select_type,select_mf,start_date,end_date;
     private Button btnBack;
+    private Button btnImageSearch;
+    private String lostandfound;
     private ArrayList<LostAndFoundData> mArrayList;
     private LostAndFoundAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -73,12 +75,14 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         btnBack = findViewById(R.id.btnLost_foundBack);
         btnWrite = (Button)findViewById(R.id.btnWrite);
         btnSearch = (Button)findViewById(R.id.btnSearch);
+        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
         imgview = findViewById(R.id.imgview);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mArrayList = new ArrayList<>();
         mAdapter = new LostAndFoundAdapter(this, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
+        lostandfound = "lostandfound";
 
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +97,14 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LostAndFound.class);
+                startActivity(intent);
+            }
+        });
+
+        btnImageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
                 startActivity(intent);
             }
         });

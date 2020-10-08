@@ -50,7 +50,7 @@
 
         <Spinner
             android:id="@+id/spSpecies"
-            android:layout_width="177dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_margin="5dp"
             android:background="#E6E6E6"
@@ -69,12 +69,21 @@
 
         <Button
             android:id="@+id/btnDate"
-            android:layout_width="130dp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
             android:padding="8dp"
             android:text="공고마지막날짜순"
             android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnImgSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="이미지검색"
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -58,6 +58,7 @@ public class PromoteActivity extends AppCompatActivity {
 
     private Button btnAdoption;
     private Button btnInit;
+    private Button btnImageSearch;
 
     String select_local="";
     String select_type="";
@@ -85,6 +86,7 @@ public class PromoteActivity extends AppCompatActivity {
         btnBack = (Button)findViewById(R.id.btnBack);
         btnLocal = (Button)findViewById(R.id.btnLocal);
         btnType = (Button)findViewById(R.id.btnType);
+        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mArrayList = new ArrayList<>();
@@ -147,6 +149,14 @@ public class PromoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PromoteWriteActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnImageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
                 startActivity(intent);
             }
         });
