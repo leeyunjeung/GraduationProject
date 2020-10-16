@@ -81,7 +81,7 @@ public class PromoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_promote);
 
         promoteActivity=PromoteActivity.this;
-        new BackgroundTask().execute(select_local,select_type,select_adoption);
+        new BackgroundTask().execute(select_local,select_type,select_adoption,null);
         btnWrite = (Button)findViewById(R.id.btnWrite);
         btnBack = (Button)findViewById(R.id.btnBack);
         btnLocal = (Button)findViewById(R.id.btnLocal);
@@ -133,7 +133,7 @@ public class PromoteActivity extends AppCompatActivity {
                 adoptionItem = 0;
 
 
-                new BackgroundTask().execute(select_local,select_type,select_adoption);
+                new BackgroundTask().execute(select_local,select_type,select_adoption,null);
             }
         });
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +157,9 @@ public class PromoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
-                startActivity(intent);
+                intent.putExtra("flag","promote");
+                startActivityForResult(intent, 1);
+                //startActivity(intent);
             }
         });
 
@@ -233,7 +235,7 @@ public class PromoteActivity extends AppCompatActivity {
                             select_type=msg;
                         }
                         mArrayList.clear();
-                        new BackgroundTask().execute(select_local,select_type,select_adoption);
+                        new BackgroundTask().execute(select_local,select_type,select_adoption,null);
                         btnType.setText(msg);
                     }
                 });
@@ -283,7 +285,7 @@ public class PromoteActivity extends AppCompatActivity {
                             select_local=msg;
                         }
                         mArrayList.clear();
-                        new BackgroundTask().execute(select_local,select_type,select_adoption);
+                        new BackgroundTask().execute(select_local,select_type,select_adoption,null);
                         btnLocal.setText(msg);
                     }
                 });
@@ -333,7 +335,7 @@ public class PromoteActivity extends AppCompatActivity {
                             select_adoption=msg;
                         }
                         mArrayList.clear();
-                        new BackgroundTask().execute(select_local,select_type,select_adoption);
+                        new BackgroundTask().execute(select_local,select_type,select_adoption,null);
                         btnAdoption.setText(msg);
                     }
                 });
@@ -360,7 +362,8 @@ public class PromoteActivity extends AppCompatActivity {
             String select_local= (String)params[0];
             String select_type= (String)params[1];
             String select_adoption = (String)params[2];
-            String postParameters ="select_local="+select_local +"&select_type="+ select_type+"&select_adoption="+select_adoption ;
+            String search_file = (String)params[3];
+            String postParameters ="select_local="+select_local +"&select_type="+ select_type+"&select_adoption="+select_adoption+"&search_file="+search_file;
 
 
             try{
@@ -528,5 +531,22 @@ public class PromoteActivity extends AppCompatActivity {
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
+    }
+
+    //추가된 내용 이미지검색
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(PromoteActivity.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                mArrayList.clear();
+                new BackgroundTask().execute(select_local, select_type, select_adoption, data.getStringExtra("fileResult"));
+
+            } else {   // RESULT_CANCEL
+                Toast.makeText(PromoteActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
     }
 }

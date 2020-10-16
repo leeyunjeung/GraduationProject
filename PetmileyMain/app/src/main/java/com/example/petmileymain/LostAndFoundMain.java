@@ -71,7 +71,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         Log.d("시작:",start_date);
         Log.d("끝:",end_date);
 
-        new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date);
+        new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,null);
         btnBack = findViewById(R.id.btnLost_foundBack);
         btnWrite = (Button)findViewById(R.id.btnWrite);
         btnSearch = (Button)findViewById(R.id.btnSearch);
@@ -105,7 +105,9 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
-                startActivity(intent);
+                intent.putExtra("flag","lostandfound");
+                startActivityForResult(intent, 1);
+                //startActivity(intent);
             }
         });
 
@@ -178,7 +180,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             select_mf = "";
         }
         mArrayList.clear();
-        new BackgroundTask().execute(select_local,select_type,select_mf,start,end);
+        new BackgroundTask().execute(select_local,select_type,select_mf,start,end,null);
     }
 
 
@@ -199,8 +201,8 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             String select_mf= (String)params[2];
             String start= (String)params[3];
             String end= (String)params[4];
-
-            String postParameters ="select_local="+select_local +"&select_type="+ select_type +"&select_mf="+ select_mf+"&start_date="+start+"&end_date="+end;
+            String search_file = (String)params[5];
+            String postParameters ="select_local="+select_local +"&select_type="+ select_type +"&select_mf="+ select_mf+"&start_date="+start+"&end_date="+end+"&search_file="+search_file;
 
             try{
                 URL url = new URL(target);
@@ -377,5 +379,21 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
 
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(LostAndFoundMain.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                mArrayList.clear();
+                new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,data.getStringExtra("fileResult"));
+
+            } else {   // RESULT_CANCEL
+                Toast.makeText(LostAndFoundMain.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
     }
 }

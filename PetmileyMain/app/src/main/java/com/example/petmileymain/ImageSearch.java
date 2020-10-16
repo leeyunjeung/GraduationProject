@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -17,10 +18,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -41,7 +45,7 @@ public class ImageSearch extends AppCompatActivity {
     ProgressDialog dialog = null;
 
     private Button btnSearch;
-
+    private String flag;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +56,8 @@ public class ImageSearch extends AppCompatActivity {
 
         lostandfound = "";
 
+        Bundle extras = getIntent().getExtras();
+        flag = extras.getString("flag");
 
         imageView.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -86,7 +92,7 @@ public class ImageSearch extends AppCompatActivity {
     }
 
     public int uploadFile() {
-        String fileName = tempFile.getName();
+        final String fileName = tempFile.getName();
 
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
@@ -175,7 +181,7 @@ public class ImageSearch extends AppCompatActivity {
                         public void run() {
 
                             Toast.makeText(ImageSearch.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
-
+                            new runSearch().execute(flag, fileName);
                         }
 
                     });
@@ -264,6 +270,89 @@ public class ImageSearch extends AppCompatActivity {
         Bitmap originalBm = BitmapFactory.decodeFile(tempFile.getAbsolutePath(), options);
 
         imageView.setImageBitmap(originalBm);
+
+    }
+    public class runSearch extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        @Override
+        protected String doInBackground(String...params) {
+            String flag= (String)params[0];
+            String file= (String)params[1];
+            String postParameters ="flag="+flag +"&file="+ file;
+            Log.d("image",file);
+
+            try{
+                URL url = new URL("http://"+IP_ADDRESS+"/runSearch.php");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                InputStream inputStream;
+
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+
+                return sb.toString().trim();
+
+            }catch (Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Intent intent = null;
+            switch (flag) {
+                case "promote":
+                    intent = new Intent(getApplicationContext(), PromoteActivity.class);
+                    break;
+                case "lostandfound":
+                    intent = new Intent(getApplicationContext(), LostAndFoundMain.class);
+                    break;
+                case "shelter":
+                    intent = new Intent(getApplicationContext(), ShelterActivity.class);
+                    break;
+                default:
+                    break;
+            }
+
+            result=result.substring(1,result.length()-1); //가져온 사진이름들 앞뒤에 있는 대괄호 삭제
+            intent.putExtra("fileResult",result);
+            intent.putExtra("flag",flag);
+            setResult(RESULT_OK,intent);
+            finish();
+        }
+
 
     }
 }

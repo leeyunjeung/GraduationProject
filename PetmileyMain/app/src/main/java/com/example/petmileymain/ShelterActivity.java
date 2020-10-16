@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -79,6 +80,8 @@ public class ShelterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                intent.putExtra("flag","shelter");
+                //startActivityForResult(intent, 1);
                 startActivity(intent);
             }
         });
@@ -643,9 +646,27 @@ public class ShelterActivity extends AppCompatActivity {
         }
 
 
+
     }
 
+    /*
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(ShelterActivity.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                //mArrayList.clear();
+                //new xmlParser().execute();
 
+            } else {   // RESULT_CANCEL
+                Toast.makeText(ShelterActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+    }
+
+     */
 }
 
 
