@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -31,9 +32,13 @@ public class LostAndFoundPost extends AppCompatActivity {
     private Button btnBack;
     private Button btnDelete;
     private Button btnRevise;
-    public String lostandfound_id,m_f,missing_date,place,sex,type,tnr,kg,age,color,feature,etc,email,lostandfound_img;
+    public String lostandfound_id,m_f,missing_date,place,sex,type,tnr,kg,age,color,feature,etc,email,lostandfound_img,file_name;
+    private String saveEmail; //현재 로그인한 이메일
+    private SharedPreferences appData;
+
 
     private static String IP_ADDRESS = "3.34.44.142";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,9 @@ public class LostAndFoundPost extends AppCompatActivity {
                 finish();
             }
         });
+
+        appData = getSharedPreferences("appData", MODE_PRIVATE);
+        saveEmail = appData.getString("saveEmail", "");
 
         TextView textViewM_f =(TextView)findViewById(R.id.textViewM_f);
         TextView textViewType =(TextView)findViewById(R.id.textViewType);
@@ -79,7 +87,7 @@ public class LostAndFoundPost extends AppCompatActivity {
         feature = "";
         etc = "";
         email = "";
-        lostandfound_img = "";
+        file_name = "";
 
         Bundle extras = getIntent().getExtras();
 
@@ -97,11 +105,12 @@ public class LostAndFoundPost extends AppCompatActivity {
         email = extras.getString("email");
         tnr = extras.getString("tnr");
         lostandfound_img = extras.getString("lostandfound_img");
+        file_name = extras.getString("file_name");
         String why = "";
 
         textViewM_f.setText(m_f);
 
-        if(email.equals(MainList.email)){
+        if(saveEmail.equals(email)){
             btnRevise.setVisibility(View.VISIBLE);
             btnDelete.setVisibility(View.VISIBLE);
         }
@@ -117,7 +126,7 @@ public class LostAndFoundPost extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DeleteData task = new DeleteData();
-                        task.execute("http://" + IP_ADDRESS + "/LostAndFoundDelete.php", lostandfound_id);
+                        task.execute("http://" + IP_ADDRESS + "/LostAndFoundDelete.php", lostandfound_id,file_name);
                     }
                 });
                 dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
@@ -221,9 +230,10 @@ public class LostAndFoundPost extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String id = (String)params[1];
+            String file_name = (String)params[2];
 
             String serverURL = (String)params[0];
-            String postParameters = "id=" + id ;
+            String postParameters = "id=" + id + "&file_name=" + file_name;
 
 
             try {

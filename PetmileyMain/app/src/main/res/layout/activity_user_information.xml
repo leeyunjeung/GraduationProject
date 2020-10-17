@@ -5,32 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    android:layout_gravity="center">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center">
 
-    <ImageView
-        android:id="@+id/imgUser"
-        android:layout_width="130dp"
-        android:layout_height="127dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blank" />
+        <ImageView
+            android:id="@+id/imgUser"
+            android:layout_width="130dp"
+            android:layout_height="127dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/blank" />
 
-</LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txtUserNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center"
+        android:layout_marginTop="15dp"
         android:text="사용자 이름"
+        android:textColor="#51AACD"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,36 +54,56 @@
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
-        android:text="내가 쓴글 보러가기" />
+        android:background="@drawable/buttonshape"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="내가 쓴글 보러가기"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    android:layout_marginBottom="10dp"
-    android:layout_gravity="center">
-
-        <Button
-        android:id="@+id/btnRevise"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="수정" />
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center">
+
+        <Button
+            android:id="@+id/btnRevise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="수정"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:text="로그아웃" />
+            android:background="@drawable/buttonshape"
+            android:text="로그아웃"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="돌아가기" />
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonshape"
+            android:text="돌아가기"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
-</LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

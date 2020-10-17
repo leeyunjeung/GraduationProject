@@ -39,7 +39,9 @@ import java.util.List;
 
 
 public class ReviewActivity extends AppCompatActivity {
+
     private static String IP_ADDRESS ="3.34.44.142";
+
     private static final String TAG = "review";
     private static final String board = "review";
 
@@ -120,6 +122,7 @@ public class ReviewActivity extends AppCompatActivity {
                 intent.putExtra("review_email",reviewData.getEmail());
                 intent.putExtra("categorize",reviewData.getReview_categorize());
                 intent.putExtra("userimg",reviewData.getUserimg());
+                intent.putExtra("file_name",reviewData.getFile_name());
                 startActivity(intent);
 
 
@@ -253,7 +256,7 @@ public class ReviewActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
 
-                String nickname,note_title,id,note_memo,review_img,email,categorize,user;
+                String nickname,note_title,id,note_memo,review_img,email,categorize,user,file_name;
                 Bitmap picture;
 
                 for(int i=0;i<jsonArray.length();i++) {
@@ -266,6 +269,7 @@ public class ReviewActivity extends AppCompatActivity {
                     review_img=object.getString("picture");
                     email=object.getString("email");
                     user = object.getString("image");
+                    file_name = object.getString("file_name");
                     picture = StringToBitMap(review_img);
                     BoardData reviewData = new BoardData();
 
@@ -278,6 +282,7 @@ public class ReviewActivity extends AppCompatActivity {
                     reviewData.setEmail(email);
                     reviewData.setReview_categorize(categorize);
                     reviewData.setUserimg(user);
+                    reviewData.setFile_name(file_name);
                     mArrayList.add(reviewData);
                     mAdapter.notifyDataSetChanged();
                 }

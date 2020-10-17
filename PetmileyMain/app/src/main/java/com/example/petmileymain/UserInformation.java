@@ -37,7 +37,9 @@ import java.net.URL;
 
 public class UserInformation extends AppCompatActivity {
 
+
     private static String IP_ADDRESS = "3.34.44.142";
+
 
     private String img;
     private TextView name;

@@ -36,7 +36,9 @@ import java.net.URLEncoder;
 
 public class PromotePostActivity extends AppCompatActivity {
     private static final String TAG = "PromoePostAcitivity";
+
     private static String IP_ADDRESS = "3.34.44.142";
+
     private String id="";
     private String note_memo = "";
     private String note_title = "";
@@ -47,6 +49,7 @@ public class PromotePostActivity extends AppCompatActivity {
     private String type = "";
     private String adoption="";
     private String user = "";
+    private String file_name = "";
     private String saveEmail; //현재 로그인한 이메일
     private SharedPreferences appData;
     public static Activity promotePostActivity;
@@ -88,6 +91,7 @@ public class PromotePostActivity extends AppCompatActivity {
         type = extras.getString("type");
         adoption=extras.getString("adoption"); //추가
         user = extras.getString("userimg");
+        file_name = extras.getString("file_name");
 
         img=StringToBitmap(promote_picture);
         userImg = StringToBitmap(user);
@@ -181,7 +185,7 @@ public class PromotePostActivity extends AppCompatActivity {
         String target;
 
         protected void onPreExecute(){
-            target = "http://"+IP_ADDRESS+"/promoteDelete.php?id="+ id;
+            target = "http://"+IP_ADDRESS+"/promoteDelete.php?id="+ id +"&file_name=" +file_name;
         }
         @Override
         protected String doInBackground(String... params) {

@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,6 +58,7 @@ public class ShelterActivity extends AppCompatActivity {
     Button spBtn;
     Button dateBtn;
     ImageView image;
+    private Button btnImageSearch;
 
     String local = "";
     String speciesData = "";
@@ -72,6 +74,17 @@ public class ShelterActivity extends AppCompatActivity {
         GunSp = (Spinner)findViewById(R.id.spGun);
         speciesSp =(Spinner)findViewById(R.id.spSpecies);
         new xmlParser().execute();
+        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
+
+        btnImageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                intent.putExtra("flag","shelter");
+                //startActivityForResult(intent, 1);
+                startActivity(intent);
+            }
+        });
 
 
         siSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -633,44 +646,27 @@ public class ShelterActivity extends AppCompatActivity {
         }
 
 
+
     }
 
+    /*
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(ShelterActivity.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                //mArrayList.clear();
+                //new xmlParser().execute();
 
-/*
-   private class StringToBitMap extends AsyncTask<String, Void, Bitmap>{
-        ArrayList<Shelter> arrayList = new ArrayList<Shelter>();
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            try {
-                String img = (String)params[0];
-                img = img.replace("\\", "");
-                URL urlImg = new URL(img);
-                URLConnection conn = urlImg.openConnection();
-                conn.connect();
-                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                Bitmap bm = BitmapFactory.decodeStream(bis);
-                bis.close();
-                return bm;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+            } else {   // RESULT_CANCEL
+                Toast.makeText(ShelterActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
+
         }
 
-       @Override
-       protected void onPostExecute(Bitmap bitmap) {
-           super.onPostExecute(bitmap);
-       }
-   }
+    }
 
-
-*/
+     */
 }
 
 

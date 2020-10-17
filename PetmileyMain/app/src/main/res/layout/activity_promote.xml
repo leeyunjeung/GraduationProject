@@ -7,12 +7,48 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/titleName"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="홍보"
-        tools:ignore="MissingConstraints" />
+        android:background="#51AACD">
+
+        <Button
+            android:id="@+id/btnImgSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="이미지검색"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:text="홍보"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnImgSearch"
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         style="@style/horizontalLinerStyle"
@@ -21,22 +57,51 @@
         <Button
             android:id="@+id/btnLocal"
             style="@style/btnStyle"
-            android:text="모든 지역" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="모든 지역"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnType"
             style="@style/btnStyle"
-            android:text="모든 동물" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="모든 동물"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnAdoption"
             style="@style/btnStyle"
-            android:text="모든 입양" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="모든 입양"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnInit"
             style="@style/btnStyle"
-            android:text="정렬 초기화" />
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/buttonshape"
+            android:text="정렬 초기화"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -52,17 +117,33 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
-        style="@style/horizontalLinerStyle">
+        style="@style/horizontalLinerStyle"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="10dp">
 
         <Button
             android:id="@+id/btnWrite"
             style="@style/btnStyle"
-            android:text="작성" />
+            android:layout_marginRight="5dp"
+            android:background="@drawable/buttonshape"
+            android:drawableStart="@android:drawable/ic_menu_edit"
+            android:drawableLeft="@android:drawable/ic_menu_edit"
+            android:text="작성"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnBack"
             style="@style/btnStyle"
-            android:text="돌아가기" />
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/buttonshape"
+            android:drawableLeft="@android:drawable/ic_menu_revert"
+            android:text="돌아가기"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 </LinearLayout>
