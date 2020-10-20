@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     private boolean saveLoginData; //로그인한적이 있는지 체크
     private CheckBox checkBox;
 
-    private static String IP_ADDRESS = "3.34.44.142";
+    private static String IP_ADDRESS = "15.164.220.44";
 
     private static String TAG = "phptest";
 

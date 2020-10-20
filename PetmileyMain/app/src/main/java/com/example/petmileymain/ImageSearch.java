@@ -46,6 +46,7 @@ public class ImageSearch extends AppCompatActivity {
 
     private Button btnSearch;
     private String flag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
