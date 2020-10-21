@@ -38,24 +38,24 @@
 
     </LinearLayout>
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="20dp"
-    android:layout_gravity="center">
-
-    <TextView
-        android:id="@+id/txt_nick"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="닉네임"
-        android:textStyle="bold" />
-    <EditText
-        android:id="@+id/etNick"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName" />
-</LinearLayout>
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/txt_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="닉네임"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/etNick"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

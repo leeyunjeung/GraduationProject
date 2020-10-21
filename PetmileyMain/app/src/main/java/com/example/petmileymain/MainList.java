@@ -26,6 +26,7 @@ public class MainList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        email = getIntent().getStringExtra("email");
         btnSelter = (Button)findViewById(R.id.btnShelter);
         btnMissingFind = (Button)findViewById(R.id.btnMissingFind);
         btnPromote = (Button)findViewById(R.id.btnPromote);

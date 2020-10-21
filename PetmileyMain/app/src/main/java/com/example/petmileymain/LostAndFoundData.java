@@ -20,6 +20,15 @@ public class LostAndFoundData {
     private String etc;
     private String type;
     private String lostandfound_img;
+    private String file_name;
+
+    public String getFile_name() {
+        return file_name;
+    }
+
+    public void setFile_name(String file_name) {
+        this.file_name = file_name;
+    }
 
     public String getLostandfound_id() {
         return lostandfound_id;

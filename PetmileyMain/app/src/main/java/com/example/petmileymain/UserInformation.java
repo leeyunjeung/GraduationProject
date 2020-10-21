@@ -13,14 +13,22 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,21 +43,22 @@ import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.net.URL;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
-
 public class UserInformation extends AppCompatActivity {
 
-    private static String IP_ADDRESS = "3.34.44.142";
+
+    private static String IP_ADDRESS = "15.164.220.44";
+
 
     private String img;
     private TextView name;
     private TextView phone;
-    private ImageView userimg;
+    private RoundedImageView userimg;
     private SharedPreferences appData;
 
     private String useremail;
     private String intenemail;
+    Toolbar toolbar;
+
 
 
     @Override
@@ -59,58 +68,20 @@ public class UserInformation extends AppCompatActivity {
 
         name = (TextView) findViewById(R.id.txtUserNickname);
         phone = (TextView) findViewById(R.id.txtPhone);
-        userimg = (ImageView) findViewById(R.id.imgUser);
-        Button revise = (Button) findViewById(R.id.btnRevise);
-        Button back = (Button)findViewById(R.id.btnBack);
-        Button logout = (Button)findViewById(R.id.btnLogout);
+        userimg = (RoundedImageView) findViewById(R.id.imgUser);
         Button userPost = (Button)findViewById(R.id.btnUserPostView);
+
+        toolbar = findViewById(R.id.userInformationToolbar);
+        setSupportActionBar(toolbar);
 
         appData = getSharedPreferences("appData", MODE_PRIVATE);
         useremail = appData.getString("saveEmail", "");
 
-        Intent intent = getIntent();
-        if((intenemail =intent.getStringExtra("email"))!=null) {
-            if (!useremail.equals(intenemail)) {
-                useremail = intenemail;
-                revise.setVisibility(View.GONE);
-                logout.setVisibility(View.GONE);
-            } else {
-                revise.setVisibility(View.VISIBLE);
-                logout.setVisibility(View.VISIBLE);
-            }
-        }
+
 
 
         new BackgroundTask().execute();
-        revise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UserRevise.class);
-                intent.putExtra("nickname",name.getText());
-                intent.putExtra("telephone",phone.getText());
-                intent.putExtra("img",img);
-                Log.d("img",img);
-                startActivity(intent);
-            }
-        });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainList.class);
-                startActivity(intent);
-            }
-        });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences.Editor editor = appData.edit();
-                editor.clear();
-                editor.commit();
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
         userPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +97,61 @@ public class UserInformation extends AppCompatActivity {
 
 
     }
+
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+
+
+            case R.id.btnRevise:
+                Intent intent = new Intent(getApplicationContext(), UserRevise.class);
+                intent.putExtra("nickname",name.getText());
+                intent.putExtra("telephone",phone.getText());
+                intent.putExtra("img",img);
+                Log.d("img",img);
+                startActivity(intent);
+
+
+
+            case R.id.btnLogout:
+                SharedPreferences.Editor editor = appData.edit();
+                editor.clear();
+                editor.commit();
+                Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent1);
+
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.user,menu);
+        Intent intent = getIntent();
+        ActionBar actionBar = getSupportActionBar();
+
+        if((intenemail =intent.getStringExtra("email"))!=null) {
+            if (!useremail.equals(intenemail)) {
+                useremail = intenemail;
+                menu.findItem(R.id.btnRevise).setVisible(false);
+                menu.findItem(R.id.btnLogout).setVisible(false);
+            } else {
+                menu.findItem(R.id.btnRevise).setVisible(true);
+                menu.findItem(R.id.btnLogout).setVisible(true);
+            }
+        }
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
+    }
+
 
 
 

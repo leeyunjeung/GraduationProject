@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -30,7 +36,9 @@ import java.net.URL;
 
 public class SignupActivity extends AppCompatActivity {
     private static final int REQUEST_CODE = 0;
-    private static String IP_ADDRESS = "3.34.44.142";
+
+    private static String IP_ADDRESS = "15.164.220.44";
+
     private static String TAG = "petmily";
 
     private EditText mEditTextNickname;
@@ -39,22 +47,27 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mEditTextTelephone;
     private EditText mEditTextPasswordCheck;
     private TextView mTextViewResult;
-    private ImageView user;
+    private RoundedImageView user;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        IP_ADDRESS = getString(R.string.my_ip);
 
         mEditTextNickname = (EditText)findViewById(R.id.editText_main_nickname);
         mEditTextEmail = (EditText)findViewById(R.id.editText_main_email);
         mEditTextTelephone = (EditText)findViewById(R.id.editText_main_telephone);
         mEditTextPassword = (EditText)findViewById(R.id.editText_main_password);
         mEditTextPasswordCheck = (EditText)findViewById(R.id.editText_main_passwordcheck);
-        user = (ImageView)findViewById(R.id.signupImg);
+        user = (RoundedImageView)findViewById(R.id.signupImg);
+        toolbar = findViewById(R.id.singupToolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
 
-
+        user.setImageResource(R.drawable.blank);
         Button buttonInsert = (Button)findViewById(R.id.button_main_insert);
         buttonInsert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +108,16 @@ public class SignupActivity extends AppCompatActivity {
         });
 
     }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public String BitMapToString(Bitmap bitmap){
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);

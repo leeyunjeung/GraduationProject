@@ -14,11 +14,18 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,33 +36,25 @@ import java.net.URL;
 
 public class LostAndFoundPost extends AppCompatActivity {
 
-    private Button btnBack;
-    private Button btnDelete;
-    private Button btnRevise;
-    private String saveEmail;
+    Toolbar toolbar;
+    public String lostandfound_id,m_f,missing_date,place,sex,type,tnr,kg,age,color,feature,etc,email,lostandfound_img,file_name;
+    private String saveEmail; //현재 로그인한 이메일
     private SharedPreferences appData;
-    public String lostandfound_id,m_f,missing_date,place,sex,type,tnr,kg,age,color,feature,etc,email,lostandfound_img;
 
-    private static String IP_ADDRESS = "3.34.44.142";
+
+    private static String IP_ADDRESS = "15.164.220.44";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_and_found_post);
 
-        btnBack = (Button)findViewById(R.id.btnBack);
-        btnDelete = (Button)findViewById(R.id.btnDelete);
-        btnRevise = (Button)findViewById(R.id.btnRevise);
+        toolbar = findViewById(R.id.lostPostToolbar);
+        setSupportActionBar(toolbar);
 
         appData = getSharedPreferences("appData", MODE_PRIVATE);
         saveEmail = appData.getString("saveEmail", "");
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         TextView textViewM_f =(TextView)findViewById(R.id.textViewM_f);
         TextView textViewType =(TextView)findViewById(R.id.textViewType);
@@ -69,7 +68,7 @@ public class LostAndFoundPost extends AppCompatActivity {
         TextView textViewFeature =(TextView)findViewById(R.id.textViewFeature);
         TextView textViewEtc =(TextView)findViewById(R.id.textVieweEtc);
         TextView textViewEmail =(TextView)findViewById(R.id.textViewEmail);
-        ImageView imgview = (ImageView) findViewById(R.id.imageView2);
+        ImageView imgview = findViewById(R.id.imageView2);
 
 
         lostandfound_id = "";
@@ -85,7 +84,7 @@ public class LostAndFoundPost extends AppCompatActivity {
         feature = "";
         etc = "";
         email = "";
-        lostandfound_img = "";
+        file_name = "";
 
         Bundle extras = getIntent().getExtras();
 
@@ -103,46 +102,36 @@ public class LostAndFoundPost extends AppCompatActivity {
         email = extras.getString("email");
         tnr = extras.getString("tnr");
         lostandfound_img = extras.getString("lostandfound_img");
+        file_name = extras.getString("file_name");
         String why = "";
 
         textViewM_f.setText(m_f);
 
-        if(saveEmail.equals(MainList.email)){
-            btnRevise.setVisibility(View.VISIBLE);
-            btnDelete.setVisibility(View.VISIBLE);
-        }
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(LostAndFoundPost.this);
-                dialog.setTitle("게시글 삭제");
-                dialog.setMessage("게시글을 삭제하시겠습니까?");
-                dialog.setPositiveButton("삭제",new DialogInterface.OnClickListener(){
 
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        DeleteData task = new DeleteData();
-                        task.execute("http://" + IP_ADDRESS + "/LostAndFoundDelete.php", lostandfound_id);
-                    }
-                });
-                dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+        textViewType.setText(type);
+        textViewSex.setText(sex);
+        textViewTnr.setText(tnr);
+        textViewAge.setText(age);
+        textViewKg.setText(kg);
+        textViewColor.setText(color);
+        textViewMissingdate.setText(missing_date);
+        textViewPlace.setText(place);
+        textViewFeature.setText(feature);
+        textViewEtc.setText(etc);
+        textViewEmail.setText(email);
+        imgview.setImageBitmap(StringToBitMap(lostandfound_img));
+        Log.d(type,"룰루랄라~~:" + etc );
+        why = (String) textViewEtc.getText();
+    }
 
-                    }
-                });
-                dialog.create();
-                dialog.show();
-
-            }
-        });
-
-        btnRevise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.btnRevise:
                 Intent intent = new Intent(getBaseContext(), LostAndFoundRevise.class);
-
 
                 intent.putExtra("lostandfound_id", lostandfound_id);
                 intent.putExtra("m_f", m_f);
@@ -159,23 +148,46 @@ public class LostAndFoundPost extends AppCompatActivity {
                 intent.putExtra("email",email);
                 intent.putExtra("lostandfound_img", lostandfound_img);
                 startActivity(intent);
-            }
-        });
 
-        textViewType.setText(type);
-        textViewSex.setText(sex);
-        textViewTnr.setText(tnr);
-        textViewAge.setText(age);
-        textViewKg.setText(kg);
-        textViewColor.setText(color);
-        textViewMissingdate.setText(missing_date);
-        textViewPlace.setText(place);
-        textViewFeature.setText(feature);
-        textViewEtc.setText(etc);
-        textViewEmail.setText(email);
-        imgview.setImageBitmap(StringToBitMap(lostandfound_img));
-        Log.d(type,"룰루랄라~~:" + etc );
-        why = (String) textViewEtc.getText();
+            case R.id.btnDelete:
+                AlertDialog.Builder dialog = new AlertDialog.Builder(LostAndFoundPost.this);
+                dialog.setTitle("게시글 삭제");
+                dialog.setMessage("게시글을 삭제하시겠습니까?");
+                dialog.setPositiveButton("삭제",new DialogInterface.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        DeleteData task = new DeleteData();
+                        task.execute("http://" + IP_ADDRESS + "/LostAndFoundDelete.php", lostandfound_id,file_name);
+                    }
+                });
+                dialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                dialog.create();
+                dialog.show();
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.lost,menu);
+        ActionBar actionBar = getSupportActionBar();
+
+        if(!saveEmail.equals(email)){
+            menu.findItem(R.id.btnRevise).setVisible(false);
+            menu.findItem(R.id.btnDelete).setVisible(false);
+        }
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
     }
 
     public Bitmap StringToBitMap(String encodedString) {
@@ -227,9 +239,10 @@ public class LostAndFoundPost extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String id = (String)params[1];
+            String file_name = (String)params[2];
 
             String serverURL = (String)params[0];
-            String postParameters = "id=" + id ;
+            String postParameters = "id=" + id + "&file_name=" + file_name;
 
 
             try {

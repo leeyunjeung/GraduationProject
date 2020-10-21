@@ -6,66 +6,96 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".LoginActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/loginToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    android:layout_gravity="center">
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="ID(Email)"
-        android:layout_marginTop="10dp" />
+        android:text="환영합니다!"
+        android:textColor="#000000"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"/>
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:inputType="textPersonName" />
-</LinearLayout>
-
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    android:layout_gravity="center">
     <TextView
-        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Password" />
+        android:text="@string/n"
+        android:textSize="12dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"/>
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:inputType="textPersonName" />
-</LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="#E0F8F1"
+                android:hint="이메일"
+                android:textColor="#000000"
+                android:inputType="textPersonName" />
+            <TextView
+                android:id="@+id/txtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FA5858"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#E0F8F1"
+            android:hint="비밀번호"
+            android:layout_gravity="center"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical">
 
         <CheckBox
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="자동 로그인" />
 
         <Button
             android:id="@+id/signup"
-            android:layout_width="110dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
             android:background="@drawable/buttonshape"
             android:text="로그인"
             android:textColor="#FFFFFF"

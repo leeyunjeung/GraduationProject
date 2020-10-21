@@ -5,24 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    android:layout_gravity="center">
 
-    <ImageView
-        android:id="@+id/imgUser"
-        android:layout_width="130dp"
-        android:layout_height="127dp"
-        android:scaleType="fitXY"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blank" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/userInformationToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E0F8F1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내 정보"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:layout_gravity="center"/>
+    </androidx.appcompat.widget.Toolbar>
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imgUser"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+            app:riv_corner_radius="100dp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/txtUserNickname"
@@ -61,49 +72,5 @@
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold" />
-
-    <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="100dp"
-    android:layout_marginBottom="10dp"
-    android:layout_gravity="center">
-
-        <Button
-            android:id="@+id/btnRevise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/buttonshape"
-            android:text="수정"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/buttonshape"
-            android:text="로그아웃"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/buttonshape"
-            android:text="돌아가기"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
-</LinearLayout>
-
 
 </LinearLayout>

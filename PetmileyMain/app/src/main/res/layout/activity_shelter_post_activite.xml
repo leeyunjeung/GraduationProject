@@ -7,58 +7,227 @@
     android:orientation="vertical"
     tools:context=".ShelterPostActivite">
 
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/shelterPostToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"/>
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="146dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            android:scaleType="fitXY"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/txtFeature"
-            android:layout_width="284dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:padding="10dp" />
-    </LinearLayout>
-
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="344dp">
-
-        <TextView
-            android:id="@+id/txtPost"
+        android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="342dp"
-            android:layout_gravity="center"
-            android:padding="8dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="161dp"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="50dp"
-            android:background="@drawable/buttonshape"
-            android:drawableLeft="@android:drawable/ic_menu_revert"
-            android:paddingLeft="10dp"
-            android:paddingRight="20dp"
-            android:text="돌아가기"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#ffffff"
+                android:layout_marginBottom="10dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin ="20dp"
+                    android:layout_gravity="center"
+                    android:layout_centerHorizontal="true"
+                    app:cardCornerRadius="20dp">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        tools:src="@drawable/person" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="동물이름"
+                    android:textColor="#000000"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"/>
+
+                <TextView
+                    android:id="@+id/addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="보호소주소"
+                    android:textSize="15dp"
+                    android:textColor="#000000"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp" />
+
+                <TextView
+                    android:id="@+id/dt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="접수날짜"
+                    android:textSize="15dp"
+                    android:textColor="#000000"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"/>
+                <TextView
+                    android:id="@+id/state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="상태"
+                    android:textSize="15dp"
+                    android:textColor="#000000"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dp"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="나이"
+                        android:textSize="15dp"
+                        android:textColor="#000000"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="/"
+                        android:textSize="15dp"
+                        android:textColor="#000000"/>
+                    <TextView
+                        android:id="@+id/sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:textColor="#000000"
+                        android:textSize="15dp"
+                        android:text="성별"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="/"
+                        android:textSize="15dp"
+                        android:textColor="#000000"/>
+                    <TextView
+                        android:id="@+id/weight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="체중"
+                        android:textColor="#000000"
+                        android:textSize="15dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="/"
+                        android:textSize="15dp"
+                        android:textColor="#000000"/>
+                    <TextView
+                        android:id="@+id/neuter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="중성화"
+                        android:textSize="15dp"
+                        android:textColor="#000000"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:background="#ffffff">
+                    <Button
+                        android:id="@+id/call"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:drawableLeft="@drawable/call"
+                        android:drawablePadding="10dp"
+                        android:text="전화걸기"
+                        android:textSize="20dp"
+                        android:background="#00ff0000"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:background="#E0F8F1"/>
+                    <Button
+                        android:id="@+id/map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/map"
+                        android:drawablePadding="10dp"
+                        android:layout_margin="10dp"
+                        android:text="지도보기"
+                        android:textSize="20dp"
+                        android:background="#00ff0000"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/shelterLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardView"
+                android:orientation="vertical"
+                android:background="#ffffff"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="발견날짜"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:id="@+id/happenDt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="날짜"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="#000000"
+                    android:textSize="13dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="발견위치"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:id="@+id/happenAddr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="위치"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="#000000"
+                    android:textSize="13dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

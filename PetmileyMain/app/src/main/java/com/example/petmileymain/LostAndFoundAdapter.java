@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+
 import java.util.ArrayList;
 
 public class LostAndFoundAdapter extends RecyclerView.Adapter<LostAndFoundAdapter.CustomViewHolder>{
@@ -31,7 +33,7 @@ public class LostAndFoundAdapter extends RecyclerView.Adapter<LostAndFoundAdapte
         protected TextView m_f;
         protected TextView missing_date;
         protected TextView place;
-        protected ImageView imgview;
+        protected RoundedImageView imgview;
 
 
         public CustomViewHolder(View view) {
@@ -40,7 +42,7 @@ public class LostAndFoundAdapter extends RecyclerView.Adapter<LostAndFoundAdapte
             this.m_f = (TextView) view.findViewById(R.id.textView_list_m_f);
             this.missing_date = (TextView) view.findViewById(R.id.textView_list_missingdate);
             this.place = (TextView) view.findViewById(R.id.textView_list_place);
-            this.imgview = (ImageView) view.findViewById(R.id.imgview);
+            this.imgview = (RoundedImageView) view.findViewById(R.id.imgview);
 
 
         }

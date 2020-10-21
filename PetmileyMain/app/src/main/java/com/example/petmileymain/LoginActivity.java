@@ -1,23 +1,34 @@
 package com.example.petmileymain;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.util.Patterns;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +38,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Pattern;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -34,11 +46,14 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences appData;
     private boolean saveLoginData; //로그인한적이 있는지 체크
     private CheckBox checkBox;
-    private static String IP_ADDRESS = "3.34.44.142";
+    Toolbar toolbar;
+    private static String IP_ADDRESS = "15.164.220.44";
     private static String TAG = "phptest";
 
     private EditText editEmail;
     private EditText editPassword;
+    Button buttonSignUp;
+    TextView checkemail;
     //private TextView mTextViewResult;
 
 
@@ -51,27 +66,85 @@ public class LoginActivity extends AppCompatActivity {
         editEmail = (EditText)findViewById(R.id.email);
         editPassword = (EditText)findViewById(R.id.password);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
+        checkemail = findViewById(R.id.txtEmail);
         //mTextViewResult = (TextView)findViewById(R.id.result);
+        toolbar = findViewById(R.id.loginToolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+
+        buttonSignUp = (Button)findViewById(R.id.signup);
 
         //mTextViewResult.setMovementMethod(new ScrollingMovementMethod());
 
-
-        Button buttonSignUp = (Button)findViewById(R.id.signup);
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+        editEmail.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                String email = editEmail.getText().toString();
-                String password = editPassword.getText().toString();
+            }
 
-                InsertData task = new InsertData();
-                task.execute("http://" + IP_ADDRESS + "/login.php", email,password);
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()){
+                    checkemail.setTextColor(Color.parseColor("#FA5858"));
+                    checkemail.setText("올바른 이메일 형식이 아닙니다.");
+                    buttonSignUp.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(),"이메일을 확인해주세요",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    checkemail.setTextColor(Color.parseColor("#A9D0F5"));
+                    checkemail.setText("올바른 이메일입니다.");
+                    buttonSignUp.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            String email = editEmail.getText().toString();
+                            String password = editPassword.getText().toString();
+
+                            InsertData task = new InsertData();
+                            task.execute("http://" + IP_ADDRESS + "/login.php", email,password);
 
 
+                        }
+                    });
+                }
             }
         });
 
+
+
+
+
     }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static final Pattern EMAIL_ADDRESS_PATTERN= Pattern.compile(
+            "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                    "\\@" +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                    "(" +
+                    "\\." +
+                    "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                    ")+"
+    );
 
 
 

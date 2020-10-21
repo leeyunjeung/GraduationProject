@@ -9,12 +9,19 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +34,9 @@ import java.net.URL;
 
 public class ReviewPostActivity extends AppCompatActivity {
     private static final String TAG = "ReviewPostAcitivity";
-    private static String IP_ADDRESS = "3.34.44.142";
+
+    private static String IP_ADDRESS = "15.164.220.44";
+    Toolbar toolbar;
     private String id="";
     private String note_memo = "";
     private String note_title = "";
@@ -35,6 +44,7 @@ public class ReviewPostActivity extends AppCompatActivity {
     private String picture = "";
     private String review_email = "";
     private String categorize = "";
+    private String file_name = "";
     private String userimg;
     public static Activity reviewPostActivity;
     private SharedPreferences appData;
@@ -52,13 +62,11 @@ public class ReviewPostActivity extends AppCompatActivity {
         TextView TextViewMemo = (TextView) findViewById(R.id.textViewMemo);
         TextView TextViewNickname = (TextView) findViewById(R.id.textViewNickname);
         TextView TextViewCategorize = (TextView) findViewById(R.id.textViewCategorize);
+        toolbar = findViewById(R.id.reviewPostToobar);
+        setSupportActionBar(toolbar);
 
         ImageView imgview = (ImageView) findViewById(R.id.imageView2);
         ImageView imauser = (ImageView) findViewById(R.id.reviewUserImg);
-
-        Button btnRevise = (Button) findViewById(R.id.btnRevise);
-        Button btnDelete = (Button) findViewById(R.id.btnDelete);
-        Button btnBack = (Button) findViewById(R.id.btnBack);
 
 
         Bundle extras = getIntent().getExtras();
@@ -72,6 +80,7 @@ public class ReviewPostActivity extends AppCompatActivity {
         review_email = extras.getString("review_email");
         categorize = extras.getString("categorize");
         userimg = extras.getString("userimg");
+        file_name = extras.getString("file_name");
 
 
         TextViewTitle.setText(note_title);
@@ -81,14 +90,6 @@ public class ReviewPostActivity extends AppCompatActivity {
         imauser.setImageBitmap(StringToBitmap(userimg));
         TextViewCategorize.setText(categorize);
 
-        if (!saveEmail.equals(review_email) ) {
-            btnDelete.setVisibility(View.GONE);
-            btnRevise.setVisibility(View.GONE);
-        } else {
-            btnDelete.setVisibility(View.VISIBLE);
-            btnRevise.setVisibility(View.VISIBLE);
-
-        }
 
         TextViewNickname.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,27 +100,17 @@ public class ReviewPostActivity extends AppCompatActivity {
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
                 finish();
-            }
-        });
+                return true;
 
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DeleteData task = new DeleteData();
-                task.execute(id);
-
-            }
-        });
-
-
-        btnRevise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            case R.id.btnRevise:
                 Intent intent = new Intent(getApplicationContext(), ReviewReviseActivity.class);
                 intent.putExtra("id", id);
                 intent.putExtra("note_title", note_title);
@@ -127,11 +118,32 @@ public class ReviewPostActivity extends AppCompatActivity {
                 intent.putExtra("picture", picture);
                 intent.putExtra("categorize", categorize);
                 startActivity(intent);
-            }
-        });
 
 
+            case R.id.btnDelete:
+                DeleteData task = new DeleteData();
+                task.execute(id);
+
+
+        }
+        return super.onOptionsItemSelected(item);
     }
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.lost,menu);
+        ActionBar actionBar = getSupportActionBar();
+
+        if(!saveEmail.equals(review_email)){
+            menu.findItem(R.id.btnRevise).setVisible(false);
+            menu.findItem(R.id.btnDelete).setVisible(false);
+        }
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
+    }
+
 
 
     @Override
@@ -157,7 +169,7 @@ public class ReviewPostActivity extends AppCompatActivity {
         String target;
 
         protected void onPreExecute(){
-            target = "http://"+IP_ADDRESS+"/reviewDelete.php?id="+ id;
+            target = "http://"+IP_ADDRESS+"/reviewDelete.php?id="+ id + "&file_name=" + file_name;
         }
         @Override
         protected String doInBackground(String... params) {
@@ -207,6 +219,8 @@ public class ReviewPostActivity extends AppCompatActivity {
             super.onPostExecute(result);
             Toast.makeText(ReviewPostActivity.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("게시글이 삭제되었습니다.")) {
+                Intent intent = new Intent(getBaseContext(), ReviewActivity.class);
+                startActivity(intent);
                 finish();
             }
         }

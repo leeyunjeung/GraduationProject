@@ -3,13 +3,18 @@ package com.example.petmileymain;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,35 +32,96 @@ import java.net.URLEncoder;
 
 
 public class ShelterPostActivite extends AppCompatActivity {
-    TextView txtFeature;
-    TextView txtPost;
+
+
+    TextView mName, mAddr, mDt, mAge, mSex, mWeight, mNeuter, mState;
+    TextView mHappenDt, mHappenAddr;
+    Button mCall, mMap;
+    Toolbar mToolber;
     ImageView pet;
 
-
+    String name, addr, dt, age, sex,state, weight, neuter,call,map, happenDt, happenAddr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shelter_post_activite);
 
-        txtFeature = (TextView)findViewById(R.id.txtFeature);
-        txtPost =(TextView)findViewById(R.id.txtPost);
+        mName = findViewById(R.id.name);
+        mAddr = findViewById(R.id.addr);
+        mDt = findViewById(R.id.dt);
+        mAge = findViewById(R.id.age);
+        mSex = findViewById(R.id.sex);
+        mWeight = findViewById(R.id.weight);
+        mNeuter = findViewById(R.id.neuter);
+        mState = findViewById(R.id.state);
+        mHappenDt = findViewById(R.id.happenDt);
+        mHappenAddr = findViewById(R.id.happenAddr);
+
+        mCall = findViewById(R.id.call);
+        mMap = findViewById(R.id.map);
+
+        mToolber = findViewById(R.id.shelterPostToolbar);
+        setSupportActionBar(mToolber);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+
+
         pet = (ImageView)findViewById(R.id.imageView2);
-        Button back = (Button)findViewById(R.id.btnBack);
 
         Intent intent = getIntent();
-        txtFeature.setText("시군명: " + intent.getStringExtra("orgNm") + "\n접수일자: " + intent.getStringExtra("happenDt") + "\n공고날짜: " + intent.getStringExtra("noticeSdt") + "~"
-                + intent.getStringExtra("noticeEdt") + "\n보호소명: " + intent.getStringExtra("careNm") + "\n보호소 전화번호: " + intent.getStringExtra("careTel") + "\n보호조 주소: " + intent.getStringExtra("careAddr"));
-        txtPost.setText("상태: " + intent.getStringExtra("specialMark") + "\n품종: " + intent.getStringExtra("kindCd") + "\n색상: " + intent.getStringExtra("colorCd") + "\n나이: "
-                + intent.getStringExtra("age") + "\n체중: " + intent.getStringExtra("weight") + "\n성별: " + intent.getStringExtra("sexCd") + "\n중성화: " + intent.getStringExtra("neuterYn") + "\n특징: " + intent.getStringExtra("noticeComment"));
-        //pet.setImageBitmap((Bitmap)intent.getParcelableExtra("img"));
-        Picasso.get().load(intent.getStringExtra("popfile")).into(pet);
-        back.setOnClickListener(new View.OnClickListener() {
+        name = intent.getStringExtra("kindCd");
+        addr = intent.getStringExtra("careAddr");
+        dt = intent.getStringExtra("noticeSdt") + "~" +intent.getStringExtra("noticeEdt");
+        age = intent.getStringExtra("age");
+        sex = intent.getStringExtra("sexCd");
+        weight = intent.getStringExtra("weight");
+        neuter = intent.getStringExtra("neuterYn");
+        call = intent.getStringExtra("careTel");
+        map = intent.getStringExtra("careAddr");
+        state = intent.getStringExtra("processState");
+        happenAddr = intent.getStringExtra("happenPlace");
+        happenDt = intent.getStringExtra("happenDt");
+
+
+        mName.setText(name);
+        mAddr.setText(addr);
+        mDt.setText(dt);
+        mAge.setText(age);
+        mSex.setText(sex);
+        mWeight.setText(weight);
+        mNeuter.setText(neuter);
+        mState.setText(state);
+        mHappenAddr.setText(happenAddr);
+        mHappenDt.setText(happenDt);
+
+        mCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),ShelterActivity.class);
-                startActivity(intent);
+                Intent intent1 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+call));
+                startActivity(intent1);
             }
         });
+
+        mMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent2 = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0.0?q="+map));
+                startActivity(intent2);
+            }
+        });
+
+        Picasso.get().load(intent.getStringExtra("popfile")).into(pet);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:{
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

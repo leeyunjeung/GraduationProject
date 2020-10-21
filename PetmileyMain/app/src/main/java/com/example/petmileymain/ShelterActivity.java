@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +19,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -41,7 +44,7 @@ import java.util.List;
 
 public class ShelterActivity extends AppCompatActivity {
 
-    private static String IP_ADDRESS ="3.34.44.142";
+    private static String IP_ADDRESS ="15.164.220.44";
     private ListView shelterListView;
     private ShelterListAdapter adapter;
     private List<Shelter> ShelterList;
@@ -56,7 +59,8 @@ public class ShelterActivity extends AppCompatActivity {
     Button speciesBtn;
     Button spBtn;
     Button dateBtn;
-    ImageView image;
+    RoundedImageView image;
+    private Button btnImageSearch;
 
     String local = "";
     String speciesData = "";
@@ -72,6 +76,17 @@ public class ShelterActivity extends AppCompatActivity {
         GunSp = (Spinner)findViewById(R.id.spGun);
         speciesSp =(Spinner)findViewById(R.id.spSpecies);
         new xmlParser().execute();
+        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
+
+        btnImageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                intent.putExtra("flag","shelter");
+                //startActivityForResult(intent, 1);
+                startActivity(intent);
+            }
+        });
 
 
         siSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -229,8 +244,7 @@ public class ShelterActivity extends AppCompatActivity {
             selterText=(TextView)v.findViewById(R.id.shelterText);
             nameText=(TextView)v.findViewById(R.id.nameText);
             dataText=(TextView)v.findViewById(R.id.dataText);
-            image=(ImageView)v.findViewById(R.id.shelterImage);
-
+            image=(RoundedImageView)v.findViewById(R.id.shelterImage);
 
 
             selterText.setText((ShelterList.get(i).getKindCd()));
@@ -633,44 +647,27 @@ public class ShelterActivity extends AppCompatActivity {
         }
 
 
+
     }
 
+    /*
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(ShelterActivity.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                //mArrayList.clear();
+                //new xmlParser().execute();
 
-/*
-   private class StringToBitMap extends AsyncTask<String, Void, Bitmap>{
-        ArrayList<Shelter> arrayList = new ArrayList<Shelter>();
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            try {
-                String img = (String)params[0];
-                img = img.replace("\\", "");
-                URL urlImg = new URL(img);
-                URLConnection conn = urlImg.openConnection();
-                conn.connect();
-                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-                Bitmap bm = BitmapFactory.decodeStream(bis);
-                bis.close();
-                return bm;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+            } else {   // RESULT_CANCEL
+                Toast.makeText(ShelterActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
+
         }
 
-       @Override
-       protected void onPostExecute(Bitmap bitmap) {
-           super.onPostExecute(bitmap);
-       }
-   }
+    }
 
-
-*/
+     */
 }
 
 

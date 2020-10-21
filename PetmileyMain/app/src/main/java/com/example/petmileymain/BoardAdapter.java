@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.makeramen.roundedimageview.RoundedImageView;
+
 import java.util.ArrayList;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.CustomViewHolder>{
@@ -34,7 +36,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.CustomViewHo
         protected TextView nickname;
         protected TextView note_title;
         protected TextView review_categorize;
-        protected ImageView imgview;
+        protected RoundedImageView imgview;
 
 
         public CustomViewHolder(View view) {
@@ -43,7 +45,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.CustomViewHo
             this.nickname = (TextView) view.findViewById(R.id.textView_list_nickname);
 
             this.note_title = (TextView) view.findViewById(R.id.textView_list_note_title);
-            this.imgview = (ImageView) view.findViewById(R.id.imgview);
+            this.imgview = (RoundedImageView) view.findViewById(R.id.imgview);
             this.promote_local = (TextView) view.findViewById(R.id.textView_list_local);
             this.review_categorize = (TextView) view.findViewById(R.id.textView_list_categorize);
 

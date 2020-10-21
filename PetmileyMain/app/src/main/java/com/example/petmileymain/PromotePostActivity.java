@@ -1,7 +1,9 @@
 package com.example.petmileymain;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -11,15 +13,23 @@ import android.os.Bundle;
 
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
 //import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.makeramen.roundedimageview.RoundedImageView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,7 +46,9 @@ import java.net.URLEncoder;
 
 public class PromotePostActivity extends AppCompatActivity {
     private static final String TAG = "PromoePostAcitivity";
-    private static String IP_ADDRESS = "3.34.44.142";
+    Toolbar toolbar;
+    private static String IP_ADDRESS = "15.164.220.44";
+
     private String id="";
     private String note_memo = "";
     private String note_title = "";
@@ -47,6 +59,7 @@ public class PromotePostActivity extends AppCompatActivity {
     private String type = "";
     private String adoption="";
     private String user = "";
+    private String file_name = "";
     private String saveEmail; //현재 로그인한 이메일
     private SharedPreferences appData;
     public static Activity promotePostActivity;
@@ -67,13 +80,11 @@ public class PromotePostActivity extends AppCompatActivity {
         TextView TextViewLocal = (TextView) findViewById(R.id.textViewLocal);
         TextView TextViewType = (TextView) findViewById(R.id.textViewType);
         ImageView imgview = (ImageView) findViewById(R.id.imageView2);
-        ImageView imguser = (ImageView)findViewById(R.id.promoteUserImg);
+        RoundedImageView imguser = (RoundedImageView)findViewById(R.id.promoteUserImg);
+        toolbar = findViewById(R.id.promotePostToolbar);
+        setSupportActionBar(toolbar);
 
         TextView TextViewAdoption = (TextView) findViewById(R.id.textViewAdoption); //추가
-
-        Button btnRevise = (Button) findViewById(R.id.btnRevise);
-        Button btnDelete = (Button) findViewById(R.id.btnDelete);
-        Button btnBack = (Button) findViewById(R.id.btnBack);
 
         Bitmap img,userImg;
         Bundle extras = getIntent().getExtras();
@@ -88,6 +99,7 @@ public class PromotePostActivity extends AppCompatActivity {
         type = extras.getString("type");
         adoption=extras.getString("adoption"); //추가
         user = extras.getString("userimg");
+        file_name = extras.getString("file_name");
 
         img=StringToBitmap(promote_picture);
         userImg = StringToBitmap(user);
@@ -101,49 +113,7 @@ public class PromotePostActivity extends AppCompatActivity {
         TextViewAdoption.setText(adoption);
         imguser.setImageBitmap(userImg);
 
-        if (!saveEmail.equals(promote_email) ) {
-            btnDelete.setVisibility(View.GONE);
-            btnRevise.setVisibility(View.GONE);
-        }
-        else {
-            btnDelete.setVisibility(View.VISIBLE);
-            btnRevise.setVisibility(View.VISIBLE);
-        }
 
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DeleteData task = new DeleteData();
-                task.execute("http://" + IP_ADDRESS + "/promoteDelete.php",id);
-
-
-            }
-        });
-
-        btnRevise.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), PromoteReviseActivity.class);
-                intent.putExtra("id", id);
-                intent.putExtra("local",local);
-                intent.putExtra("type",type);
-                intent.putExtra("note_title", note_title);
-                intent.putExtra("note_memo",note_memo);
-                intent.putExtra("promote_picture", promote_picture);
-                intent.putExtra("adoption",adoption); //추가
-                Log.d("adoption",adoption);
-                startActivity(intent);
-            }
-        });
 
         TextViewNickname.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +125,52 @@ public class PromotePostActivity extends AppCompatActivity {
         });
 
     }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+
+
+            case R.id.btnRevise:
+                Intent intent = new Intent(getApplicationContext(), PromoteReviseActivity.class);
+                intent.putExtra("id", id);
+                intent.putExtra("local",local);
+                intent.putExtra("type",type);
+                intent.putExtra("note_title", note_title);
+                intent.putExtra("note_memo",note_memo);
+                intent.putExtra("promote_picture", promote_picture);
+                intent.putExtra("adoption",adoption); //추가
+                Log.d("adoption",adoption);
+                startActivity(intent);
+
+
+            case R.id.btnDelete:
+                DeleteData task = new DeleteData();
+                task.execute("http://" + IP_ADDRESS + "/promoteDelete.php",id);
+
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.lost,menu);
+        ActionBar actionBar = getSupportActionBar();
+
+        if(!saveEmail.equals(promote_email)){
+            menu.findItem(R.id.btnRevise).setVisible(false);
+            menu.findItem(R.id.btnDelete).setVisible(false);
+        }
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -181,7 +197,7 @@ public class PromotePostActivity extends AppCompatActivity {
         String target;
 
         protected void onPreExecute(){
-            target = "http://"+IP_ADDRESS+"/promoteDelete.php?id="+ id;
+            target = "http://"+IP_ADDRESS+"/promoteDelete.php?id="+ id +"&file_name=" +file_name;
         }
         @Override
         protected String doInBackground(String... params) {

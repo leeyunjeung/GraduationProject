@@ -22,8 +22,7 @@
             android:layout_gravity="center"
             android:background="#E6E6E6"
             android:padding="10dp"
-            android:text="제목"
-            android:textStyle="bold" />
+            android:text="제목" />
 
     </LinearLayout>
 

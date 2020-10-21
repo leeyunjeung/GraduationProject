@@ -43,10 +43,12 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
 
     private Button btnWrite;
     private Button btnSearch;
-    private static String IP_ADDRESS = "3.34.44.142";
+    private static String IP_ADDRESS = "15.164.220.44";
     private static final String TAG = "petmily";
     public String select_local, select_type,select_mf,start_date,end_date;
     private Button btnBack;
+    private Button btnImageSearch;
+    private String lostandfound;
     private ArrayList<LostAndFoundData> mArrayList;
     private LostAndFoundAdapter mAdapter;
     private RecyclerView mRecyclerView;
@@ -69,23 +71,24 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         Log.d("시작:",start_date);
         Log.d("끝:",end_date);
 
-        new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date);
+        new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,null);
         btnBack = findViewById(R.id.btnLost_foundBack);
         btnWrite = (Button)findViewById(R.id.btnWrite);
         btnSearch = (Button)findViewById(R.id.btnSearch);
+        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
         imgview = findViewById(R.id.imgview);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mArrayList = new ArrayList<>();
         mAdapter = new LostAndFoundAdapter(this, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
+        lostandfound = "lostandfound";
 
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainList.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -94,6 +97,16 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LostAndFound.class);
                 startActivity(intent);
+            }
+        });
+
+        btnImageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                intent.putExtra("flag","lostandfound");
+                startActivityForResult(intent, 1);
+                //startActivity(intent);
             }
         });
 
@@ -126,6 +139,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
                 intent.putExtra("etc", lostandfoundData.getEtc());
                 intent.putExtra("email", lostandfoundData.getEmail());
                 intent.putExtra("lostandfound_img", lostandfoundData.getLostandfound_img());
+                intent.putExtra("file_name",lostandfoundData.getFile_name());
                 startActivity(intent);
 
             }
@@ -165,7 +179,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             select_mf = "";
         }
         mArrayList.clear();
-        new BackgroundTask().execute(select_local,select_type,select_mf,start,end);
+        new BackgroundTask().execute(select_local,select_type,select_mf,start,end,null);
     }
 
 
@@ -186,8 +200,8 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             String select_mf= (String)params[2];
             String start= (String)params[3];
             String end= (String)params[4];
-
-            String postParameters ="select_local="+select_local +"&select_type="+ select_type +"&select_mf="+ select_mf+"&start_date="+start+"&end_date="+end;
+            String search_file = (String)params[5];
+            String postParameters ="select_local="+select_local +"&select_type="+ select_type +"&select_mf="+ select_mf+"&start_date="+start+"&end_date="+end+"&search_file="+search_file;
 
             try{
                 URL url = new URL(target);
@@ -250,7 +264,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
 
-                String m_f,missing_date,place,sex,lostandfound_id,lostandfound_img,type,tnr,kg,age,color,feature,etc,email;
+                String m_f,missing_date,place,sex,lostandfound_id,lostandfound_img,type,tnr,kg,age,color,feature,etc,email,file_name;
                 Bitmap picture;
 
                 for(int i=0;i<jsonArray.length();i++) {
@@ -269,6 +283,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
                     email = object.getString("email");
                     lostandfound_id = object.getString("id");
                     lostandfound_img=object.getString("picture");
+                    file_name = object.getString("file_name");
                     picture = StringToBitMap(lostandfound_img);
                     LostAndFoundData lostandfoundData = new LostAndFoundData();
 
@@ -287,6 +302,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
                     lostandfoundData.setEtc(etc);
                     lostandfoundData.setEmail(email);
                     lostandfoundData.setLostandfound_img(lostandfound_img);
+                    lostandfoundData.setFile_name(file_name);
 
                     mArrayList.add(lostandfoundData);
                     mAdapter.notifyDataSetChanged();
@@ -362,5 +378,21 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
 
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(LostAndFoundMain.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                mArrayList.clear();
+                new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,data.getStringExtra("fileResult"));
+
+            } else {   // RESULT_CANCEL
+                Toast.makeText(LostAndFoundMain.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
     }
 }

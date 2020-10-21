@@ -46,7 +46,9 @@ import java.util.List;
 
 public class PromoteActivity extends AppCompatActivity {
     private static final  String board = "promote";
-    private static String IP_ADDRESS ="3.34.44.142";
+
+    private static String IP_ADDRESS ="15.164.220.44";
+
     private static final String TAG = "test";
 
     private Button btnWrite;
@@ -56,6 +58,7 @@ public class PromoteActivity extends AppCompatActivity {
 
     private Button btnAdoption;
     private Button btnInit;
+    private Button btnImageSearch;
 
     String select_local="";
     String select_type="";
@@ -77,13 +80,13 @@ public class PromoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promote);
 
-
         promoteActivity=PromoteActivity.this;
-        new BackgroundTask().execute(select_local,select_type,select_adoption);
+        new BackgroundTask().execute(select_local,select_type,select_adoption,null);
         btnWrite = (Button)findViewById(R.id.btnWrite);
         btnBack = (Button)findViewById(R.id.btnBack);
         btnLocal = (Button)findViewById(R.id.btnLocal);
         btnType = (Button)findViewById(R.id.btnType);
+        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mArrayList = new ArrayList<>();
@@ -130,14 +133,12 @@ public class PromoteActivity extends AppCompatActivity {
                 adoptionItem = 0;
 
 
-                new BackgroundTask().execute(select_local,select_type,select_adoption);
+                new BackgroundTask().execute(select_local,select_type,select_adoption,null);
             }
         });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainList.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -147,6 +148,16 @@ public class PromoteActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PromoteWriteActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        btnImageSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                intent.putExtra("flag","promote");
+                startActivityForResult(intent, 1);
+                //startActivity(intent);
             }
         });
 
@@ -164,7 +175,8 @@ public class PromoteActivity extends AppCompatActivity {
                 intent.putExtra("promote_picture", promoteData.getImg());
                 intent.putExtra("promote_email",promoteData.getEmail());
                 intent.putExtra("userimg",promoteData.getUserimg());
-                intent.putExtra("adoption",promoteData.getAdoption()); //수정 추가
+                intent.putExtra("adoption",promoteData.getAdoption());
+                intent.putExtra("file_name",promoteData.getFile_name());//수정 추가
                 Log.d("adoption",promoteData.getAdoption());
                 startActivity(intent);
             }
@@ -221,7 +233,7 @@ public class PromoteActivity extends AppCompatActivity {
                             select_type=msg;
                         }
                         mArrayList.clear();
-                        new BackgroundTask().execute(select_local,select_type,select_adoption);
+                        new BackgroundTask().execute(select_local,select_type,select_adoption,null);
                         btnType.setText(msg);
                     }
                 });
@@ -271,7 +283,7 @@ public class PromoteActivity extends AppCompatActivity {
                             select_local=msg;
                         }
                         mArrayList.clear();
-                        new BackgroundTask().execute(select_local,select_type,select_adoption);
+                        new BackgroundTask().execute(select_local,select_type,select_adoption,null);
                         btnLocal.setText(msg);
                     }
                 });
@@ -321,7 +333,7 @@ public class PromoteActivity extends AppCompatActivity {
                             select_adoption=msg;
                         }
                         mArrayList.clear();
-                        new BackgroundTask().execute(select_local,select_type,select_adoption);
+                        new BackgroundTask().execute(select_local,select_type,select_adoption,null);
                         btnAdoption.setText(msg);
                     }
                 });
@@ -348,7 +360,8 @@ public class PromoteActivity extends AppCompatActivity {
             String select_local= (String)params[0];
             String select_type= (String)params[1];
             String select_adoption = (String)params[2];
-            String postParameters ="select_local="+select_local +"&select_type="+ select_type+"&select_adoption="+select_adoption ;
+            String search_file = (String)params[3];
+            String postParameters ="select_local="+select_local +"&select_type="+ select_type+"&select_adoption="+select_adoption+"&search_file="+search_file;
 
 
             try{
@@ -406,7 +419,7 @@ public class PromoteActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
 
-                String nickname,note_title,id,note_memo,local,promote_img,email,type,userimg, adoption; //수정
+                String nickname,note_title,id,note_memo,local,promote_img,email,type,userimg, adoption, file_name; //수정
                 Bitmap picture;
 
                 for(int i=0;i<jsonArray.length();i++) {
@@ -421,6 +434,7 @@ public class PromoteActivity extends AppCompatActivity {
                     id = object.getString("id");
                     promote_img=object.getString("picture");
                     email=object.getString("email");
+                    file_name = object.getString("file_name");
                     picture = StringToBitMap(promote_img);
                     BoardData promoteData = new BoardData();
 
@@ -435,6 +449,7 @@ public class PromoteActivity extends AppCompatActivity {
                     promoteData.setImg(promote_img);
                     promoteData.setEmail(email);
                     promoteData.setUserimg(userimg);
+                    promoteData.setFile_name(file_name);
                     mArrayList.add(promoteData);
                     mAdapter.notifyDataSetChanged();
                 }
@@ -514,5 +529,22 @@ public class PromoteActivity extends AppCompatActivity {
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
+    }
+
+    //추가된 내용 이미지검색
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                Toast.makeText(PromoteActivity.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                mArrayList.clear();
+                new BackgroundTask().execute(select_local, select_type, select_adoption, data.getStringExtra("fileResult"));
+
+            } else {   // RESULT_CANCEL
+                Toast.makeText(PromoteActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
     }
 }

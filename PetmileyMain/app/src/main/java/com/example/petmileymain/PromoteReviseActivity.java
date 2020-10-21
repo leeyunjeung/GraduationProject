@@ -49,7 +49,9 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 public class PromoteReviseActivity  extends AppCompatActivity {
-    private static String IP_ADDRESS = "3.34.44.142";
+
+    private static String IP_ADDRESS = "15.164.220.44";
+
     private static final String TAG = "test";
     private static final int REQUEST_CODE = 0;
 
@@ -206,10 +208,9 @@ public class PromoteReviseActivity  extends AppCompatActivity {
         imgview.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, REQUEST_CODE);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
             }
         });
 
@@ -242,7 +243,7 @@ public class PromoteReviseActivity  extends AppCompatActivity {
                     PromoteRevise task = new PromoteRevise();
                     task.execute(note_title,note_memo,local,picture,type,adoption);
 
-                    /*new Thread(new Runnable() {
+                    new Thread(new Runnable() {
                         public void run() {
                             runOnUiThread(new Runnable() {
                                 public void run() {
@@ -253,7 +254,7 @@ public class PromoteReviseActivity  extends AppCompatActivity {
                             uploadFile();
 
                         }
-                    }).start();*/
+                    }).start();
                 }
                 else{
                     Toast.makeText(PromoteReviseActivity.this, "시/도를 선택해주세요.", Toast.LENGTH_SHORT).show();
@@ -339,7 +340,7 @@ public class PromoteReviseActivity  extends AppCompatActivity {
 
         if (!tempFile.isFile()) {
 
-            //dialog.dismiss();
+            dialog.dismiss();
 
             Log.e("uploadFile", "Source File not exist :" + fileName);
 
@@ -467,7 +468,8 @@ public class PromoteReviseActivity  extends AppCompatActivity {
             String picture = (String)params[3];
             String type = (String)params[4];
             String adoption = (String)params[5];
-            String postParameters ="note_title=" + note_title + "&note_memo=" + note_memo+ "&local=" + local + "&picture=" + picture+"&type="+type+"&adoption="+adoption; //수정
+            String fileName = tempFile.getName();
+            String postParameters ="note_title=" + note_title + "&note_memo=" + note_memo+ "&local=" + local + "&picture=" + picture+"&type="+type+"&adoption="+adoption + "&fileName=" + fileName; //수정
 
             try {
 
@@ -609,20 +611,29 @@ public class PromoteReviseActivity  extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    InputStream in = getContentResolver().openInputStream(data.getData());
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
+        if(requestCode == PICK_FROM_ALBUM){
+            Uri photouri = data.getData();
+            Cursor cursor = null;
+            try{
 
-                    imgview.setImageBitmap(img);
-                } catch (Exception e) {
+                String[] proj = {MediaStore.Images.Media.DATA};
+                assert photouri != null;
+                cursor = getContentResolver().query(photouri,proj,null,null,null);
 
+                assert cursor != null;
+                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+                cursor.moveToFirst();
+
+                tempFile = new File(cursor.getString(column_index));
+
+            }finally {
+                if (cursor != null) {
+                    cursor.close();
                 }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
+
+            setImage();
         }
     }
 
