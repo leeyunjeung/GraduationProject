@@ -104,8 +104,7 @@ public class UserRevise extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), UserInformation.class);
-                startActivity(intent);
+                finish();
             }
         });
 

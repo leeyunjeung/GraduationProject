@@ -148,6 +148,7 @@ public class LostAndFoundPost extends AppCompatActivity {
                 intent.putExtra("email",email);
                 intent.putExtra("lostandfound_img", lostandfound_img);
                 startActivity(intent);
+                break;
 
             case R.id.btnDelete:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(LostAndFoundPost.this);
@@ -169,6 +170,7 @@ public class LostAndFoundPost extends AppCompatActivity {
                 });
                 dialog.create();
                 dialog.show();
+                break;
 
 
         }

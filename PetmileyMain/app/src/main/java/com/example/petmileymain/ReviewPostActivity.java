@@ -118,11 +118,13 @@ public class ReviewPostActivity extends AppCompatActivity {
                 intent.putExtra("picture", picture);
                 intent.putExtra("categorize", categorize);
                 startActivity(intent);
+                break;
 
 
             case R.id.btnDelete:
                 DeleteData task = new DeleteData();
                 task.execute(id);
+                break;
 
 
         }

@@ -145,11 +145,13 @@ public class PromotePostActivity extends AppCompatActivity {
                 intent.putExtra("adoption",adoption); //추가
                 Log.d("adoption",adoption);
                 startActivity(intent);
+                break;
 
 
             case R.id.btnDelete:
                 DeleteData task = new DeleteData();
                 task.execute("http://" + IP_ADDRESS + "/promoteDelete.php",id);
+                break;
 
 
         }

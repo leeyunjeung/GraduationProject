@@ -114,6 +114,7 @@ public class UserInformation extends AppCompatActivity {
                 intent.putExtra("img",img);
                 Log.d("img",img);
                 startActivity(intent);
+                break;
 
 
 
@@ -123,6 +124,7 @@ public class UserInformation extends AppCompatActivity {
                 editor.commit();
                 Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent1);
+                break;
 
 
 

@@ -6,11 +6,15 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
+import com.makeramen.roundedimageview.RoundedDrawable;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.BufferedReader;
@@ -48,6 +53,8 @@ public class SignupActivity extends AppCompatActivity {
     private EditText mEditTextPasswordCheck;
     private TextView mTextViewResult;
     private RoundedImageView user;
+    Button buttonInsert;
+    TextView checkemail;
     Toolbar toolbar;
 
     @Override
@@ -60,6 +67,7 @@ public class SignupActivity extends AppCompatActivity {
         mEditTextTelephone = (EditText)findViewById(R.id.editText_main_telephone);
         mEditTextPassword = (EditText)findViewById(R.id.editText_main_password);
         mEditTextPasswordCheck = (EditText)findViewById(R.id.editText_main_passwordcheck);
+        checkemail = findViewById(R.id.signupCheck);
         user = (RoundedImageView)findViewById(R.id.signupImg);
         toolbar = findViewById(R.id.singupToolbar);
         setSupportActionBar(toolbar);
@@ -67,35 +75,66 @@ public class SignupActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
 
+        buttonInsert = (Button)findViewById(R.id.button_main_insert);
         user.setImageResource(R.drawable.blank);
-        Button buttonInsert = (Button)findViewById(R.id.button_main_insert);
-        buttonInsert.setOnClickListener(new View.OnClickListener() {
+
+
+        mEditTextEmail.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-
-                BitmapDrawable drawable = (BitmapDrawable) user.getDrawable();
-                Bitmap bitmap = drawable.getBitmap();
-
-                String nickname = mEditTextNickname.getText().toString();
-                String email = mEditTextEmail.getText().toString();
-                String password = mEditTextPassword.getText().toString();
-                String passwordCheck = mEditTextPasswordCheck.getText().toString();
-                String telephone = mEditTextTelephone.getText().toString();
-                String image = BitMapToString(resize(bitmap));
-
-                if (!password.equals(passwordCheck)){
-                    Toast.makeText(SignupActivity.this,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    InsertData task = new InsertData();
-                    task.execute("http://" + IP_ADDRESS + "/insert.php", email,password,telephone,nickname,image);
-
-                }
-
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
-        });
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()){
+                    checkemail.setTextColor(Color.parseColor("#FA5858"));
+                    checkemail.setText("올바른 이메일 형식이 아닙니다.");
+                    buttonInsert.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(),"이메일을 확인해주세요",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }else{
+                    checkemail.setTextColor(Color.parseColor("#A9D0F5"));
+                    checkemail.setText("올바른 이메일입니다.");
+
+                    buttonInsert.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            RoundedDrawable drawable = (RoundedDrawable) user.getDrawable();
+                            Bitmap bitmap = drawable.getSourceBitmap();
+
+                            String nickname = mEditTextNickname.getText().toString();
+                            String email = mEditTextEmail.getText().toString();
+                            String password = mEditTextPassword.getText().toString();
+                            String passwordCheck = mEditTextPasswordCheck.getText().toString();
+                            String telephone = mEditTextTelephone.getText().toString();
+                            String image = BitMapToString(resize(bitmap));
+
+                            if (!password.equals(passwordCheck)){
+                                Toast.makeText(SignupActivity.this,"비밀번호가 일치하지 않습니다.",Toast.LENGTH_LONG).show();
+                            }
+                            else{
+                                InsertData task = new InsertData();
+                                task.execute("http://" + IP_ADDRESS + "/insert.php", email,password,telephone,nickname,image);
+
+                            }
+
+
+                        }
+                    });
+
+                }
+            }
+        });
         user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
