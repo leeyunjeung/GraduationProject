@@ -1,10 +1,11 @@
 package com.example.petmileymain;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -59,11 +59,28 @@ public class ShelterActivity extends AppCompatActivity {
     Button speciesBtn;
     Button spBtn;
     Button dateBtn;
-    RoundedImageView image;
+
+    Button btnLocal;
+    Button btnType;
+    Button btnGongo;
+    Button btnSigun;
+    ImageView image;
     private Button btnImageSearch;
 
     String local = "";
     String speciesData = "";
+    String sigun = "";
+
+    int typeItem = 0;
+    int localItem = 0;
+    int sigunItem = 0;
+
+    List typeSelectedItems  = new ArrayList();
+    List localSelectedItems  = new ArrayList();
+    List sigunSelectedItems = new ArrayList();
+
+    String[] si;
+    String[] gun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +94,34 @@ public class ShelterActivity extends AppCompatActivity {
         speciesSp =(Spinner)findViewById(R.id.spSpecies);
         new xmlParser().execute();
         btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
+        btnLocal = (Button)findViewById(R.id.btnLocal);
+        btnType = (Button)findViewById(R.id.btnType);
+        btnSigun = (Button)findViewById(R.id.btnSigun);
+
+
+
+        btnLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                localShow();
+
+            }
+        });
+        btnType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speciesShow();
+
+            }
+        });
+        btnSigun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sigunShow();
+
+            }
+        });
+
 
         btnImageSearch.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,6 +257,207 @@ public class ShelterActivity extends AppCompatActivity {
 
     }
 
+    void localShow()
+    {
+        localSelectedItems.add(localItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("지역 선택");
+
+        si = getResources().getStringArray(R.array.localArray);
+        si[0]="모든 지역";
+        builder.setSingleChoiceItems(si, localItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        localSelectedItems.clear();
+                        localSelectedItems.add(which);
+
+                    }
+                });
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg="";
+                        if (!localSelectedItems.isEmpty()) {
+                            int index = (int) localSelectedItems.get(0);
+                            msg = si[index];
+
+                            localItem=index;
+                        }
+                        if(msg.equals("모든 지역")){
+                            local="";
+                        }
+                        else{
+                            local=msg;
+                            switch (msg){
+                                case "서울특별시" :
+                                    gun = getResources().getStringArray(R.array.seoul);
+                                    break;
+                                case "경기도" :
+                                    gun = getResources().getStringArray(R.array.gyeonggi);
+                                    break;
+                                case "인천광역시" :
+                                    gun = getResources().getStringArray(R.array.incheon);
+                                    break;
+                                case "세종특별자치시" :
+                                    gun = getResources().getStringArray(R.array.sejong);
+                                    break;
+                                case "대구광역시" :
+                                    gun = getResources().getStringArray(R.array.daegu);
+                                    break;
+                                case "대전광역시" :
+                                    gun = getResources().getStringArray(R.array.daejeon);
+                                    break;
+                                case "부산광역시" :
+                                    gun = getResources().getStringArray(R.array.busan);
+                                    break;
+                                case "광주광역시" :
+                                    gun = getResources().getStringArray(R.array.gwangju);
+                                    break;
+                                case "울산광역시" :
+                                    gun = getResources().getStringArray(R.array.ulsan);
+                                    break;
+                                case "강원도" :
+                                    gun = getResources().getStringArray(R.array.gangwon);
+                                    break;
+                                case "충청북도" :
+                                    gun = getResources().getStringArray(R.array.chungbuk);
+                                    break;
+                                case "충청남도" :
+                                    gun = getResources().getStringArray(R.array.chungnam);
+                                    break;
+                                case "전라북도" :
+                                    gun = getResources().getStringArray(R.array.jeonbuk);
+                                    break;
+                                case "전라남도" :
+                                    gun = getResources().getStringArray(R.array.jeonnam);
+                                    break;
+                                case "경상북도" :
+                                    gun = getResources().getStringArray(R.array.gyeongbuk);
+                                    break;
+                                case "경상남도" :
+                                    gun = getResources().getStringArray(R.array.gyeonnam);
+                                    break;
+                                case "제주특별자치도" :
+                                    gun = getResources().getStringArray(R.array.jeju);
+                                    break;
+                            }
+                            Log.d("shelter local",local);
+                        }
+                        new xmlParser().execute();
+                        btnLocal.setText(msg);
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+
+    }
+
+    void sigunShow()
+    {
+        sigunSelectedItems.add(sigunItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("시/군 선택");
+
+
+        builder.setSingleChoiceItems(gun, sigunItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        sigunSelectedItems.clear();
+                        sigunSelectedItems.add(which);
+
+                    }
+                });
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg="";
+                        if (!sigunSelectedItems.isEmpty()) {
+                            int index = (int) sigunSelectedItems.get(0);
+                            msg = gun[index];
+
+                            sigunItem=index;
+                        }
+                        if(msg.equals("선택안함")){
+                            local="";
+                        }
+                        else{
+                            local=msg;
+                            Log.d("shelter local",local);
+                        }
+                        new xmlParser().execute();
+                        btnSigun.setText(msg);
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+
+    }
+
+    void speciesShow()
+    {
+        final List<String> typeListItems = new ArrayList<>();
+        typeListItems.add("모든 동물");
+        typeListItems.add("개");
+        typeListItems.add("고양이");
+        typeListItems.add("기타");
+
+        CharSequence[] typeitems =  typeListItems.toArray(new String[ typeListItems.size()]);
+        typeSelectedItems.add(typeItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("품종 선택");
+        builder.setSingleChoiceItems(typeitems, typeItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        typeSelectedItems.clear();
+                        typeSelectedItems.add(which);
+                    }
+                });
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg="";
+                        if (!typeSelectedItems.isEmpty()) {
+                            int index = (int) typeSelectedItems.get(0);
+                            msg = typeListItems.get(index);
+                            typeItem=index;
+                        }
+                        if(msg.equals("모든 동물")){
+                            speciesData="";
+                        }
+                        else{
+                            speciesData=msg;
+                        }
+
+                        new xmlParser().execute();
+                        btnType.setText(msg);
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+
+    }
+
     class ShelterListAdapter extends BaseAdapter{
         private Context context;
         private List<Shelter> ShelterList;
@@ -244,7 +490,8 @@ public class ShelterActivity extends AppCompatActivity {
             selterText=(TextView)v.findViewById(R.id.shelterText);
             nameText=(TextView)v.findViewById(R.id.nameText);
             dataText=(TextView)v.findViewById(R.id.dataText);
-            image=(RoundedImageView)v.findViewById(R.id.shelterImage);
+            image=(ImageView)v.findViewById(R.id.shelterImage);
+
 
 
             selterText.setText((ShelterList.get(i).getKindCd()));
@@ -605,6 +852,23 @@ public class ShelterActivity extends AppCompatActivity {
                         adapter.notifyDataSetChanged();
                     }
                 });
+
+                btnGongo = (Button)findViewById(R.id.btnGongo);
+                btnGongo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Comparator<Shelter> DataAsc = new Comparator<Shelter>() {
+                            @Override
+                            public int compare(Shelter o1, Shelter o2) {
+                                return o1.noticeEdt.compareTo(o2.noticeEdt);
+                            }
+                        };
+                        Collections.sort(arrayList, DataAsc);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+
 
                 shelterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
