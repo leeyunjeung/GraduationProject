@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,21 +39,36 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundDialog.OnCompleteListener {
 
     private Button btnWrite;
-    private Button btnSearch;
+
     private static String IP_ADDRESS = "15.164.220.44";
     private static final String TAG = "petmily";
     public String select_local, select_type,select_mf,start_date,end_date;
     private Button btnBack;
     private Button btnImageSearch;
+    private Button btnLocal;
+    private Button btnType;
+    private Button btnMF;
+    private Button btnReset;
     private String lostandfound;
     private ArrayList<LostAndFoundData> mArrayList;
     private LostAndFoundAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private ImageView imgview;
+
+    int typeItem = 0;
+    int localItem = 0;
+    int MFItem = 0;
+
+    List typeSelectedItems  = new ArrayList();
+    List localSelectedItems  = new ArrayList();
+    List MFSelectedItems  = new ArrayList();
+
+    String[] si;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +90,11 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,null);
         btnBack = findViewById(R.id.btnLost_foundBack);
         btnWrite = (Button)findViewById(R.id.btnWrite);
-        btnSearch = (Button)findViewById(R.id.btnSearch);
+
+        btnLocal = (Button)findViewById(R.id.btnLocal);
+        btnType = (Button)findViewById(R.id.btnType);
+        btnMF = (Button)findViewById(R.id.btnMF);
+        btnReset = (Button)findViewById(R.id.btnReset);
         btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
         imgview = findViewById(R.id.imgview);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
@@ -88,7 +108,8 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent intent = new Intent(getApplicationContext(),MainList.class);
+                startActivity(intent);
             }
         });
 
@@ -110,12 +131,48 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             }
         });
 
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+
+        btnLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show();
+                localShow();
+
             }
         });
+        btnType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                typeShow();
+
+            }
+        });
+        btnMF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MFShow();
+
+            }
+        });
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                select_mf="";
+                select_local="";
+                select_type="";
+                mArrayList.clear();
+
+                btnLocal.setText("모든 지역");
+                btnType.setText("모든 품종");
+                btnMF.setText("전체");
+                typeItem = 0;
+                localItem = 0;
+                MFItem = 0;
+
+
+                new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,null);
+            }
+        });
+
 
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListener() {
             @Override
@@ -150,6 +207,170 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         }));
 
 
+
+    }
+
+    void localShow()
+    {
+        localSelectedItems.add(localItem);
+        start_date = "1990-01-01";
+        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        end_date = mFormat.format(date);
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("지역 선택");
+
+        si = getResources().getStringArray(R.array.si);
+        si[0]="모든 지역";
+        builder.setSingleChoiceItems(si, localItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        localSelectedItems.clear();
+                        localSelectedItems.add(which);
+
+                    }
+                });
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg="";
+                        if (!localSelectedItems.isEmpty()) {
+                            int index = (int) localSelectedItems.get(0);
+                            msg = si[index];
+                            Log.d(TAG,"msg"+msg);
+                            localItem=index;
+                        }
+                        if(msg.equals("모든 지역")){
+                            select_local="";
+                        }
+                        else{
+                            select_local=msg;
+                        }
+                        mArrayList.clear();
+                        new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,null);
+                        btnLocal.setText(msg);
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+
+    }
+
+    void typeShow()
+    {
+        start_date = "1990-01-01";
+        SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd");
+        long now = System.currentTimeMillis();
+        Date date = new Date(now);
+        end_date = mFormat.format(date);
+
+        final List<String> typeListItems = new ArrayList<>();
+        typeListItems.add("모든 동물");
+        typeListItems.add("개");
+        typeListItems.add("고양이");
+        typeListItems.add("기타 동물");
+
+        CharSequence[] typeitems =  typeListItems.toArray(new String[ typeListItems.size()]);
+        typeSelectedItems.add(typeItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("품종 선택");
+        builder.setSingleChoiceItems(typeitems, typeItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        typeSelectedItems.clear();
+                        typeSelectedItems.add(which);
+                    }
+                });
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg="";
+                        if (!typeSelectedItems.isEmpty()) {
+                            int index = (int) typeSelectedItems.get(0);
+                            msg = typeListItems.get(index);
+                            typeItem=index;
+                        }
+                        if(msg.equals("모든 동물")){
+                            select_type="";
+                        }
+                        else{
+                            select_type=msg;
+                        }
+                        mArrayList.clear();
+                        new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,null);
+                        btnType.setText(msg);
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
+
+    }
+
+    void MFShow()
+    {
+        final List<String> MFListItems = new ArrayList<>();
+        MFListItems.add("전체");
+        MFListItems.add("실종");
+        MFListItems.add("보호");
+        MFListItems.add("목격");
+
+        CharSequence[] adoptionitems =   MFListItems.toArray(new String[ MFListItems.size()]);
+        MFSelectedItems.add(MFItem);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("분류 선택");
+        builder.setSingleChoiceItems(adoptionitems, MFItem,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MFSelectedItems.clear();
+                        MFSelectedItems.add(which);
+                    }
+                });
+        builder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String msg="";
+                        if (!MFSelectedItems.isEmpty()) {
+                            int index = (int) MFSelectedItems.get(0);
+                            msg =  MFListItems.get(index);
+                            MFItem=index;
+                        }
+                        if(msg.equals("전체")){
+                            select_mf="";
+                        }
+                        else{
+                            select_mf=msg;
+                        }
+                        mArrayList.clear();
+                        new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,null);
+                        btnMF.setText(msg);
+                    }
+                });
+        builder.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        builder.show();
 
     }
 
