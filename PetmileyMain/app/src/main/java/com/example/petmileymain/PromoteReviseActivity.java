@@ -15,6 +15,8 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,10 +28,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 //import androidx.appcompat.app.AppCompatActivity;
 //import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -86,9 +91,16 @@ public class PromoteReviseActivity  extends AppCompatActivity {
     private Spinner typeSpinner;
     private Spinner siSpinner;
     private Spinner adoptionSpinner;
+    private Toolbar toolbar;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promote_write);
+
+
+        toolbar = findViewById(R.id.promote_write_toolbar);
+        setSupportActionBar(toolbar);
+
+
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
         editTextMemo = (EditText) findViewById(R.id.editTextMemo);
 
@@ -263,6 +275,26 @@ public class PromoteReviseActivity  extends AppCompatActivity {
             }
         });
     }
+
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
+    }
+
 
     void select(String itemName){
         switch (itemName) {

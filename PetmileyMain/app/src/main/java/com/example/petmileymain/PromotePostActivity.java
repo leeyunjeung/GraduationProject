@@ -81,6 +81,7 @@ public class PromotePostActivity extends AppCompatActivity {
         TextView TextViewType = (TextView) findViewById(R.id.textViewType);
         ImageView imgview = (ImageView) findViewById(R.id.imageView2);
         RoundedImageView imguser = (RoundedImageView)findViewById(R.id.promoteUserImg);
+
         toolbar = findViewById(R.id.promotePostToolbar);
         setSupportActionBar(toolbar);
 

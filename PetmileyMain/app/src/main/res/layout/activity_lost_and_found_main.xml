@@ -1,60 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
+
 
     <LinearLayout
-        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints">
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/lostandfind_main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#51AACD">
+            android:background="@color/mainColor">
 
             <TextView
                 android:id="@+id/promote"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_gravity="center"
                 android:text="실종/목격"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints"
-                tools:layout_conversion_absoluteHeight="24dp"
-                tools:layout_conversion_absoluteWidth="293dp" />
-
-            <Button
-                android:id="@+id/btnImgSearch"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="4dp"
-                android:background="@drawable/buttonshape"
-                android:text="이미지검색"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textColor="#000000"
+                android:textSize="24sp" />
+        </androidx.appcompat.widget.Toolbar>
 
 
         <LinearLayout
@@ -64,105 +36,59 @@
 
             <Button
                 android:id="@+id/btnLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/buttonshape"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="모든 지역" />
+                android:background="@drawable/button1"
+                android:text="모든 지역"
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/btnType"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/buttonshape"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="모든 축종" />
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button1"
+                android:text="모든 축종"
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/btnMF"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/buttonshape"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="모든 분류" />
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button1"
+                android:text="모든 분류"
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/btnReset"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/buttonshape"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="정렬 초기화" />
+                android:layout_height="40dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/button1"
+                android:text="정렬초기화"
+                android:textSize="15dp" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView_main_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:layout_weight="6"
             android:background="#007D909C"
             android:numColumns="2"
             android:padding="5dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/btnWrite"
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:background="@drawable/buttonshape"
-                android:drawableStart="@android:drawable/ic_menu_edit"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="작성"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:drawableLeft="@android:drawable/ic_menu_edit" />
-
-            <Button
-                android:id="@+id/btnLost_foundBack"
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/buttonshape"
-                android:drawableLeft="@android:drawable/ic_menu_revert"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:text="돌아가기"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-
-
     </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/lostandfound_main_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/plusadd" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
+

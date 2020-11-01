@@ -1,7 +1,9 @@
 package com.example.petmileymain;
 
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -17,6 +19,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -73,10 +78,14 @@ public class LostAndFoundRevise extends AppCompatActivity {
             updateLabel();
         }
     };
-
+    Toolbar toolbar;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_and_found_revise);
+
+
+        toolbar = findViewById(R.id.lostandfound_reives_toolbar);
+        setSupportActionBar(toolbar);
 
         imageView = findViewById(R.id.image);
         btnInsert = findViewById(R.id.btnInsert);
@@ -199,6 +208,25 @@ public class LostAndFoundRevise extends AppCompatActivity {
         });
 
 
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
     }
 
     public void spinnerInit(int array,String str,Spinner spinner){

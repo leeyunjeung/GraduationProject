@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +23,14 @@ import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -45,10 +52,9 @@ public class ReviewActivity extends AppCompatActivity {
     private static final String TAG = "review";
     private static final String board = "review";
 
-    private Button btnWrite;
-    private Button btnBack;
+    private FloatingActionButton btnWrite;
     private Button btnCategorize;
-
+    private Toolbar toolbar;
     private TextView titleName;
 
     int categorizeItem = 0;
@@ -64,12 +70,16 @@ public class ReviewActivity extends AppCompatActivity {
     public static Activity reviewActivity;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        toolbar = findViewById(R.id.review_main_toolbar);
+        setSupportActionBar(toolbar);
+
         setContentView(R.layout.activity_review);
         reviewActivity=ReviewActivity.this;
         new BackgroundTask().execute(select_categorize);
         //버튼
-        btnWrite = (Button)findViewById(R.id.btnWrite);
-        btnBack = (Button)findViewById(R.id.btnBack);
+        btnWrite = (FloatingActionButton)findViewById(R.id.btnWrite);
         btnCategorize = (Button)findViewById(R.id.btnCategorize);
         btnCategorize.setText("전체 글");
 
@@ -90,13 +100,6 @@ public class ReviewActivity extends AppCompatActivity {
             public void onClick(View v) {
                 categorizeShow();
 
-            }
-        });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
             }
         });
 
@@ -184,6 +187,25 @@ public class ReviewActivity extends AppCompatActivity {
         builder.show();
 
     }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
+    }
+
 
 
     class BackgroundTask extends AsyncTask<String,Void,String> {

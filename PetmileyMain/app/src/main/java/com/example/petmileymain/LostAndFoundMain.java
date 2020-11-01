@@ -1,10 +1,13 @@
 package com.example.petmileymain;
 
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -17,11 +20,16 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,7 +47,7 @@ import java.util.List;
 
 public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundDialog.OnCompleteListener {
 
-    private Button btnWrite;
+    private FloatingActionButton btnWrite;
 
     private static String IP_ADDRESS = "15.164.220.44";
     private static final String TAG = "petmily";
@@ -65,8 +73,9 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
     List MFSelectedItems  = new ArrayList();
 
     String[] si;
+    Toolbar toolbar;
 
-
+    @SuppressLint("WrongViewCast")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lost_and_found_main);
@@ -83,15 +92,17 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         Log.d("시작:",start_date);
         Log.d("끝:",end_date);
 
+        toolbar = findViewById(R.id.lostandfind_main_toolbar);
+        setSupportActionBar(toolbar);
+
         new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,null);
-        btnBack = findViewById(R.id.btnLost_foundBack);
-        btnWrite = (Button)findViewById(R.id.btnWrite);
+
+        btnWrite = (FloatingActionButton)findViewById(R.id.lostandfound_main_write);
 
         btnLocal = (Button)findViewById(R.id.btnLocal);
         btnType = (Button)findViewById(R.id.btnType);
         btnMF = (Button)findViewById(R.id.btnMF);
         btnReset = (Button)findViewById(R.id.btnReset);
-        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
         imgview = findViewById(R.id.imgview);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -117,15 +128,6 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
             }
         });
 
-        btnImageSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
-                intent.putExtra("flag","lostandfound");
-                startActivityForResult(intent, 1);
-                //startActivity(intent);
-            }
-        });
 
 
         btnLocal.setOnClickListener(new View.OnClickListener() {
@@ -376,6 +378,32 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
     {
         DialogFragment newFragment = new LostAndFoundDialog();
         newFragment.show(getFragmentManager(), "dialog");
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.btnImageSearch:
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                intent.putExtra("flag","lostandfound");
+                startActivityForResult(intent, 1);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.image_btn, menu);
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
     }
 
     public void onInputedData(String local, String type, String mf,String start,String end) {

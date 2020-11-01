@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,10 +26,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 //import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -68,10 +71,15 @@ public class PromoteWriteActivity extends AppCompatActivity {
     ArrayAdapter<CharSequence> sigunguAdapter;
 
     private SharedPreferences appData;
-
+    private Toolbar toolbar;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promote_write );
+
+
+        toolbar = findViewById(R.id.promote_write_toolbar);
+        setSupportActionBar(toolbar);
+
 
         imageView = findViewById(R.id.image);
         btnInsert = findViewById(R.id.btnInsert);
@@ -276,6 +284,26 @@ public class PromoteWriteActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
+    }
+
 
     public int uploadFile() {
         String fileName = tempFile.getName();

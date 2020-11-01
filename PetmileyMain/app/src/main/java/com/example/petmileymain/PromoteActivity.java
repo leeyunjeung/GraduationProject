@@ -13,14 +13,21 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -41,7 +48,7 @@ public class PromoteActivity extends AppCompatActivity {
 
     private static final String TAG = "test";
 
-    private Button btnWrite;
+    private FloatingActionButton btnWrite;
     private Button btnBack;
     private Button btnLocal;
     private Button btnType;
@@ -66,17 +73,21 @@ public class PromoteActivity extends AppCompatActivity {
 
     String[] si;
     public static Activity promoteActivity;
+
+    Toolbar toolbar;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_promote);
 
+        toolbar = findViewById(R.id.promote_main_toolbar);
+        setSupportActionBar(toolbar);
+
         promoteActivity=PromoteActivity.this;
         new BackgroundTask().execute(select_local,select_type,select_adoption,null);
-        btnWrite = (Button)findViewById(R.id.btnWrite);
+        btnWrite = (FloatingActionButton)findViewById(R.id.btnWrite);
         btnBack = (Button)findViewById(R.id.btnBack);
         btnLocal = (Button)findViewById(R.id.btnLocal);
         btnType = (Button)findViewById(R.id.btnType);
-        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
         mRecyclerView = (RecyclerView) findViewById(R.id.listView_main_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mArrayList = new ArrayList<>();
@@ -141,16 +152,6 @@ public class PromoteActivity extends AppCompatActivity {
             }
         });
 
-        btnImageSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
-                intent.putExtra("flag","promote");
-                startActivityForResult(intent, 1);
-                //startActivity(intent);
-            }
-        });
-
         mRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -178,6 +179,35 @@ public class PromoteActivity extends AppCompatActivity {
 
 
     }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.btnImageSearch:
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                intent.putExtra("flag","promote");
+                startActivityForResult(intent, 1);
+                //startActivity(intent);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.image_btn, menu);
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
