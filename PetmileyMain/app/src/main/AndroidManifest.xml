@@ -31,7 +31,7 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".UserInformation" />
-        <activity android:name=".MainList" />
+        <activity android:name=".MainListActivity" />
         <activity android:name=".UserWrotePost" />
         <activity android:name=".LostAndFound" />
         <activity android:name=".LostAndFoundMain" />

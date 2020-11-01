@@ -31,8 +31,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import static com.example.petmileymain.MainList.email;
-
 public class UserWrotePost extends AppCompatActivity {
 
     private static String IP_ADDRESS = "15.164.220.44";

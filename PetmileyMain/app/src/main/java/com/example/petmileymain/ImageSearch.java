@@ -33,7 +33,7 @@ public class ImageSearch extends AppCompatActivity {
 
     private static String TAG = "petmily";
 
-    private static String IP_ADDRESS = "3.34.44.142";
+    private static String IP_ADDRESS = "15.164.220.44";
     private String saveEmail;
     private static final int REQUEST_CODE = 0;
     private static final int PICK_FROM_ALBUM = 1;

@@ -74,6 +74,7 @@
             android:layout_height="wrap_content"
             android:textColorHint="#CEF6D8"
             android:backgroundTint="#CEF6D8"
+            android:inputType="textPassword"
             android:layout_marginBottom="10dp"/>
 
         <EditText
@@ -84,6 +85,7 @@
             android:backgroundTint="#CEF6D8"
             android:hint="비밀번호 확인"
             android:textSize="12dp"
+            android:inputType="textPassword"
             android:layout_marginBottom="10dp"/>
 
         <EditText

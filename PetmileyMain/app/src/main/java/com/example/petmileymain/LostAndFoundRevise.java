@@ -174,7 +174,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
                 String color = editColor.getText().toString();
                 String etc = editEtc.getText().toString();
                 String feature = editFeature.getText().toString();
-                String email = MainList.email;
+                String email = MainListActivity.email;
                 String picture =  BitmapToString(resize(bitmap));
 
                 LostAndFoundRevise.ReviseData task = new LostAndFoundRevise.ReviseData();

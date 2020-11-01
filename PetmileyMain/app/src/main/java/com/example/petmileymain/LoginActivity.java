@@ -1,21 +1,14 @@
 package com.example.petmileymain;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.MenuItem;
@@ -169,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, result,Toast.LENGTH_LONG).show();
 
             if(result.equals("로그인 완료.")){
-                Intent intent = new Intent(getApplicationContext(), MainList.class);
+                Intent intent = new Intent(getApplicationContext(), MainListActivity.class);
                 intent.putExtra("email",email);
                 startActivity(intent);
                 save();

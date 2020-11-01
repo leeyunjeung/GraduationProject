@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         load();
 
         if(saveLoginData){  //자동 로그인한 적 있으면
-            Intent intent = new Intent(getApplicationContext(), MainList.class);
+            Intent intent = new Intent(getApplicationContext(), MainListActivity.class);
             intent.putExtra("email",saveEmail);
             startActivity(intent);
         }

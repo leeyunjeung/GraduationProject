@@ -124,6 +124,7 @@ public class UserInformation extends AppCompatActivity {
                 editor.commit();
                 Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent1);
+                finish();
                 break;
 
 
