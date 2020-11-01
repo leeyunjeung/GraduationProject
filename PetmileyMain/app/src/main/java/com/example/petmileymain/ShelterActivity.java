@@ -92,11 +92,12 @@ public class ShelterActivity extends AppCompatActivity {
         siSp = (Spinner)findViewById(R.id.spSi);
         GunSp = (Spinner)findViewById(R.id.spGun);
         speciesSp =(Spinner)findViewById(R.id.spSpecies);
-        new xmlParser().execute();
+
         btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
         btnLocal = (Button)findViewById(R.id.btnLocal);
         btnType = (Button)findViewById(R.id.btnType);
         btnSigun = (Button)findViewById(R.id.btnSigun);
+
 
 
 
@@ -121,6 +122,8 @@ public class ShelterActivity extends AppCompatActivity {
 
             }
         });
+
+        new xmlParser().execute();
 
 
         btnImageSearch.setOnClickListener(new View.OnClickListener() {
