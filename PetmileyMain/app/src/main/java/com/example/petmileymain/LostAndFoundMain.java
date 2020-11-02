@@ -112,14 +112,6 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         lostandfound = "lostandfound";
 
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainListActivity.class);
-                startActivity(intent);
-            }
-        });
-
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

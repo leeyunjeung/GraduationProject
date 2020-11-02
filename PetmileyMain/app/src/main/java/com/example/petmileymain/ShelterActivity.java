@@ -9,6 +9,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,7 +25,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.squareup.picasso.Picasso;
 
@@ -47,18 +53,11 @@ public class ShelterActivity extends AppCompatActivity {
     private static String IP_ADDRESS ="15.164.220.44";
     private ListView shelterListView;
     private ShelterListAdapter adapter;
-    private List<Shelter> ShelterList;
+
 
     TextView selterText;
     TextView nameText;
     TextView dataText;
-    Spinner siSp;
-    private ArrayAdapter GunAdapter;
-    Spinner GunSp;
-    Spinner speciesSp;
-    Button speciesBtn;
-    Button spBtn;
-    Button dateBtn;
 
     Button btnLocal;
     Button btnType;
@@ -66,10 +65,11 @@ public class ShelterActivity extends AppCompatActivity {
     Button btnSigun;
     ImageView image;
     private Button btnImageSearch;
-
+    private Toolbar toolbar;
     String local = "";
     String speciesData = "";
     String sigun = "";
+    String searchFile=null;
 
     int typeItem = 0;
     int localItem = 0;
@@ -89,11 +89,11 @@ public class ShelterActivity extends AppCompatActivity {
         shelterListView = (ListView)findViewById(R.id.shelterListView);
         //ShelterList = new ArrayList<Shelter>();
 
-        siSp = (Spinner)findViewById(R.id.spSi);
-        GunSp = (Spinner)findViewById(R.id.spGun);
-        speciesSp =(Spinner)findViewById(R.id.spSpecies);
 
-        btnImageSearch = (Button)findViewById(R.id.btnImgSearch);
+        toolbar = findViewById(R.id.shelter_toolbar);
+        setSupportActionBar(toolbar);
+
+
         btnLocal = (Button)findViewById(R.id.btnLocal);
         btnType = (Button)findViewById(R.id.btnType);
         btnSigun = (Button)findViewById(R.id.btnSigun);
@@ -126,139 +126,37 @@ public class ShelterActivity extends AppCompatActivity {
         new xmlParser().execute();
 
 
-        btnImageSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
-                intent.putExtra("flag","shelter");
-                //startActivityForResult(intent, 1);
-                startActivity(intent);
-            }
-        });
 
-
-        siSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch (position){
-                    case 1:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.seoul,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 2:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.gyeonggi,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 3:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.incheon,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 4:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.sejong,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 5:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.daegu,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 6:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.daejeon,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 7:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.busan,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 8:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.gwangju,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 9:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.ulsan,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 10:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.gangwon,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 11:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.chungbuk,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 12:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.chungnam,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 13:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.jeonbuk,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 14:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.jeonnam,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 15:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.gyeongbuk,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 16:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.gyeonnam,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-                    case 17:
-                        GunAdapter = ArrayAdapter.createFromResource(getApplicationContext(), R.array.jeju,R.layout.support_simple_spinner_dropdown_item);
-                        GunSp.setAdapter(GunAdapter);
-                        break;
-
-
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        GunSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
-                spBtn = (Button)findViewById(R.id.btnSpSearch);
-                spBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(position == 0){ local = ""; }
-                        else local = GunSp.getSelectedItem().toString();
-                        new xmlParser().execute();
-                    }
-                });
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        speciesSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
-                speciesBtn = (Button)findViewById(R.id.btnSpecies);
-                speciesBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(position == 0){ speciesData = "";}
-                        else{ speciesData = speciesSp.getSelectedItem().toString(); }
-                        new xmlParser().execute();
-                    }
-                });
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
     }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.btnImageSearch:
+                Intent intent = new Intent(getApplicationContext(), ImageSearch.class);
+                intent.putExtra("flag","shelter");
+                startActivityForResult(intent, 1);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.image_btn, menu);
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
+    }
+
 
     void localShow()
     {
@@ -748,7 +646,7 @@ public class ShelterActivity extends AppCompatActivity {
         String target;
 
         protected void onPreExecute() {
-            target = "http://"+IP_ADDRESS+"/ShelterActivite.php?kindCd="+speciesData+"&careAddr="+local;
+            target = "http://"+IP_ADDRESS+"/ShelterActivite.php?kindCd="+speciesData+"&careAddr="+local+"&searchFile="+searchFile;
         }
 
         @Override
@@ -841,20 +739,6 @@ public class ShelterActivity extends AppCompatActivity {
                 adapter = new ShelterListAdapter(getApplicationContext(),arrayList);
                 shelterListView.setAdapter(adapter);
 
-                dateBtn = (Button) findViewById(R.id.btnDate);
-                dateBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Comparator<Shelter> DataAsc = new Comparator<Shelter>() {
-                            @Override
-                            public int compare(Shelter o1, Shelter o2) {
-                                return o1.noticeEdt.compareTo(o2.noticeEdt);
-                            }
-                        };
-                        Collections.sort(arrayList, DataAsc);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
 
                 btnGongo = (Button)findViewById(R.id.btnGongo);
                 btnGongo.setOnClickListener(new View.OnClickListener() {
@@ -917,14 +801,14 @@ public class ShelterActivity extends AppCompatActivity {
 
     }
 
-    /*
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(ShelterActivity.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
-                //mArrayList.clear();
-                //new xmlParser().execute();
+                searchFile=data.getStringExtra("fileResult").replace(",","|").replace("\"" ,"");
+                Toast.makeText(ShelterActivity.this, searchFile, Toast.LENGTH_SHORT).show();
+                Log.d("searchfile",searchFile);
+                new xmlParser().execute();
 
             } else {   // RESULT_CANCEL
                 Toast.makeText(ShelterActivity.this, "Failed", Toast.LENGTH_SHORT).show();
@@ -933,8 +817,6 @@ public class ShelterActivity extends AppCompatActivity {
         }
 
     }
-
-     */
 }
 
 

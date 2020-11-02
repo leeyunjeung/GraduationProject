@@ -80,14 +80,18 @@
             android:numColumns="2"
             android:padding="5dp" />
     </LinearLayout>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/lostandfound_main_write"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/plusadd" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/lostandfound_main_write"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/mainColor"
+        android:src="@drawable/ic_add"
+        app:borderWidth="0dp"/>
+
 
 
 </FrameLayout>

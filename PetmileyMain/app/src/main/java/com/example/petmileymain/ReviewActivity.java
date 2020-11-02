@@ -70,12 +70,15 @@ public class ReviewActivity extends AppCompatActivity {
     public static Activity reviewActivity;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_review);
 
 
         toolbar = findViewById(R.id.review_main_toolbar);
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
 
-        setContentView(R.layout.activity_review);
         reviewActivity=ReviewActivity.this;
         new BackgroundTask().execute(select_categorize);
         //버튼
@@ -188,23 +191,17 @@ public class ReviewActivity extends AppCompatActivity {
 
     }
 
-
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case android.R.id.home:
                 finish();
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    public  boolean onCreateOptionsMenu(Menu menu){
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-        return true;
-    }
 
 
 

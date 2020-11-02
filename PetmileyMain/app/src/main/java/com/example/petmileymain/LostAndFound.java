@@ -148,7 +148,7 @@ public class LostAndFound extends AppCompatActivity {
                 String etc = editEtc.getText().toString();
                 String feature = editFeature.getText().toString();
                 String email = saveEmail;
-                String picture =  BitmapToString(resize(bitmap));
+                String picture =  BitmapToString(bitmap);
 
                 Log.d("HEY!!!!::",editDate.getText().toString());
                 LostAndFound.InsertData task = new LostAndFound.InsertData();

@@ -137,12 +137,6 @@ public class PromoteActivity extends AppCompatActivity {
                 new BackgroundTask().execute(select_local,select_type,select_adoption,null);
             }
         });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         btnWrite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,14 +200,6 @@ public class PromoteActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
         return true;
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), MainListActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     void typeShow()

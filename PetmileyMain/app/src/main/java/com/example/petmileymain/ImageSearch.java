@@ -1,6 +1,8 @@
 package com.example.petmileymain;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,6 +15,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,11 +51,15 @@ public class ImageSearch extends AppCompatActivity {
 
     private Button btnSearch;
     private String flag;
-
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_search);
+
+
+        toolbar = findViewById(R.id.image_search_toolbar);
+        setSupportActionBar(toolbar);
 
         imageView = findViewById(R.id.image);
         btnSearch = findViewById(R.id.btnSearch);
@@ -90,6 +99,26 @@ public class ImageSearch extends AppCompatActivity {
         });
 
 
+    }
+
+
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public  boolean onCreateOptionsMenu(Menu menu){
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        return true;
     }
 
     public int uploadFile() {

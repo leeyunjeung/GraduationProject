@@ -28,25 +28,18 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <LinearLayout
-            style="@style/horizontalLinerStyle"
-            android:gravity="right"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:paddingRight="5dp"
-            android:paddingBottom="5dp">
 
             <Button
                 android:id="@+id/btnCategorize"
-                style="@style/btnStyle"
-                android:layout_width="match_parent"
-                android:background="@drawable/buttonshape"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/button1"
                 android:text="전체 글"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textColor="#000000"
+                android:textSize="18sp" />
 
-        </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listView_main_list"
@@ -66,7 +59,9 @@
         android:layout_gravity="end|bottom"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/plusadd" />
+        android:backgroundTint="@color/mainColor"
+        android:src="@drawable/ic_add"
+        app:borderWidth="0dp"/>
 
 
 </FrameLayout>
