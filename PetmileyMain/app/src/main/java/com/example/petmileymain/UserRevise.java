@@ -270,7 +270,7 @@ public class UserRevise extends AppCompatActivity {
 
         public void onPostExecute(String result){
             super.onPostExecute(result);
-            Toast.makeText(UserRevise.this, result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(UserRevise.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("정보를 저장했습니다.")) {
                 Intent intent = new Intent(getApplicationContext(), UserInformation.class);
                 startActivity(intent);

@@ -219,7 +219,7 @@ public class ReviewPostActivity extends AppCompatActivity {
 
         public void onPostExecute(String result){
             super.onPostExecute(result);
-            Toast.makeText(ReviewPostActivity.this, result,Toast.LENGTH_LONG).show();
+           // Toast.makeText(ReviewPostActivity.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("게시글이 삭제되었습니다.")) {
                 Intent intent = new Intent(getBaseContext(), ReviewActivity.class);
                 startActivity(intent);

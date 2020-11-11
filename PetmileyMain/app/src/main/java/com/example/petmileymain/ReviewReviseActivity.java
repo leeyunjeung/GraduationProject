@@ -257,7 +257,7 @@ public class ReviewReviseActivity  extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
 
-                            Toast.makeText(ReviewReviseActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ReviewReviseActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -410,7 +410,7 @@ public class ReviewReviseActivity  extends AppCompatActivity {
                 e.printStackTrace();
             }
             if (result.contains("수정 완료")) {
-                Toast.makeText(ReviewReviseActivity.this, "게시글이 수정되었습니다.", Toast.LENGTH_LONG).show();
+                //.makeText(ReviewReviseActivity.this, "게시글이 수정되었습니다.", Toast.LENGTH_LONG).show();
                 finish();
                 ReviewPostActivity activity=(ReviewPostActivity)ReviewPostActivity.reviewPostActivity;
                 activity.finish();

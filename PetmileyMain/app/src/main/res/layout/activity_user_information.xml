@@ -68,7 +68,7 @@
         android:background="@drawable/buttonshape"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="내가 쓴글 보러가기"
+        android:text="게시글 보기"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold" />

@@ -121,7 +121,7 @@ public class PromotePostActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),UserInformation.class);
                 intent.putExtra("email",promote_email);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -175,13 +175,7 @@ public class PromotePostActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), PromoteActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
     public Bitmap StringToBitmap(String encodedString) {
         try {
             encodedString = encodedString.replace(" ","+");
@@ -250,7 +244,7 @@ public class PromotePostActivity extends AppCompatActivity {
 
         public void onPostExecute(String result){
             super.onPostExecute(result);
-            Toast.makeText(PromotePostActivity.this, result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(PromotePostActivity.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("게시글이 삭제되었습니다.")) {
                 Intent intent = new Intent(getBaseContext(), PromoteActivity.class);
                 startActivity(intent);

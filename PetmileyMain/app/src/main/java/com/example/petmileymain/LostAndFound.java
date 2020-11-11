@@ -275,7 +275,7 @@ public class LostAndFound extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
 
-                            Toast.makeText(LostAndFound.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LostAndFound.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -347,7 +347,7 @@ public class LostAndFound extends AppCompatActivity {
             super.onPostExecute(result);
 
             progressDialog.dismiss();
-            Toast.makeText(LostAndFound.this, result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(LostAndFound.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("새로운 글을 추가했습니다.")){
                 Intent intent = new Intent(getApplicationContext(), LostAndFoundMain.class);
                 startActivity(intent);

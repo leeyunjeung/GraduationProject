@@ -110,6 +110,7 @@ public class MainListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),UserInformation.class);
+                intent.putExtra("email",email);
                 startActivity(intent);
             }
 

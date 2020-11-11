@@ -210,7 +210,7 @@ public class ImageSearch extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
 
-                            Toast.makeText(ImageSearch.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ImageSearch.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
                             new runSearch().execute(flag, fileName);
                         }
 

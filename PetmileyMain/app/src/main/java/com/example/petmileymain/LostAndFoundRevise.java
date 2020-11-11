@@ -407,7 +407,7 @@ public class LostAndFoundRevise extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
 
-                            Toast.makeText(LostAndFoundRevise.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LostAndFoundRevise.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
 
                         }
 

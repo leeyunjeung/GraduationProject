@@ -226,7 +226,7 @@ public class LostAndFoundPost extends AppCompatActivity {
             super.onPostExecute(result);
 
             progressDialog.dismiss();
-            Toast.makeText(LostAndFoundPost.this, result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(LostAndFoundPost.this, result,Toast.LENGTH_LONG).show();
 
             if(result.equals("삭제되었습니다.")){
                 Intent intent = new Intent(getBaseContext(), LostAndFoundMain.class);

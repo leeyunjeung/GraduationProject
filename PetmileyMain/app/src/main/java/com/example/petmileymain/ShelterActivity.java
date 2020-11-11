@@ -806,7 +806,7 @@ public class ShelterActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
                 searchFile=data.getStringExtra("fileResult").replace(",","|").replace("\"" ,"");
-                Toast.makeText(ShelterActivity.this, searchFile, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ShelterActivity.this, searchFile, Toast.LENGTH_SHORT).show();
                 Log.d("searchfile",searchFile);
                 new xmlParser().execute();
 

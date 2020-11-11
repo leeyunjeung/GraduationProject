@@ -113,7 +113,7 @@ public class PromoteReviseActivity  extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?>  parent, View view, int position, long id) {
-                Toast.makeText(PromoteReviseActivity.this, adoptionAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PromoteReviseActivity.this, adoptionAdapter.getItem(position), Toast.LENGTH_SHORT).show();
 
             }
             @Override
@@ -150,7 +150,7 @@ public class PromoteReviseActivity  extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?>  parent, View view, int position, long id) {
                 String itemName = (String) siAdapter.getItem(position);
-                Toast.makeText(PromoteReviseActivity.this, siAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PromoteReviseActivity.this, siAdapter.getItem(position), Toast.LENGTH_SHORT).show();
                 select(itemName);
                 sigunguAdapter = ArrayAdapter.createFromResource(PromoteReviseActivity.this, sigungu, android.R.layout.simple_spinner_dropdown_item);
                 sigunguSpinner.setAdapter(sigunguAdapter);

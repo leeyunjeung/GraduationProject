@@ -621,7 +621,7 @@ public class LostAndFoundMain extends AppCompatActivity implements LostAndFoundD
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(LostAndFoundMain.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LostAndFoundMain.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
                 mArrayList.clear();
                 new BackgroundTask().execute(select_local,select_type,select_mf,start_date,end_date,data.getStringExtra("fileResult"));
 

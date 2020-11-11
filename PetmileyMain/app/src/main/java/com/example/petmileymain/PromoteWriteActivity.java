@@ -108,7 +108,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?>  parent, View view, int position, long id) {
-                Toast.makeText(PromoteWriteActivity.this, adoptionAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PromoteWriteActivity.this, adoptionAdapter.getItem(position), Toast.LENGTH_SHORT).show();
 
             }
             @Override
@@ -126,7 +126,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?>  parent, View view, int position, long id) {
-                Toast.makeText(PromoteWriteActivity.this, typesAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PromoteWriteActivity.this, typesAdapter.getItem(position), Toast.LENGTH_SHORT).show();
 
             }
             @Override
@@ -149,7 +149,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
                     sigunguSpinner.setEnabled(true);
 
                 }
-                Toast.makeText(PromoteWriteActivity.this, itemName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PromoteWriteActivity.this, itemName, Toast.LENGTH_SHORT).show();
                 switch (itemName) {
                     case "서울":
                         sigungu = R.array.seoul;
@@ -388,7 +388,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
 
-                            Toast.makeText(PromoteWriteActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PromoteWriteActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -448,7 +448,7 @@ public class PromoteWriteActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Toast.makeText(PromoteWriteActivity.this, result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(PromoteWriteActivity.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("새로운 글을 추가했습니다.")){
                 finish();
                 PromoteActivity postActivity= (PromoteActivity) PromoteActivity.promoteActivity;

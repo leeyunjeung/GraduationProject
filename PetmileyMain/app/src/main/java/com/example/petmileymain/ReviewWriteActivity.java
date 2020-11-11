@@ -94,7 +94,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
 
             @Override
             public void onItemSelected(AdapterView<?>  parent, View view, int position, long id) {
-                Toast.makeText(ReviewWriteActivity.this, sAdapter.getItem(position), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ReviewWriteActivity.this, sAdapter.getItem(position), Toast.LENGTH_SHORT).show();
                 itemIndex = position;
                 Log.d(TAG,"인덱스:"+itemIndex);
             }
@@ -252,7 +252,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
 
-                            Toast.makeText(ReviewWriteActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(ReviewWriteActivity.this, "File Upload Complete.", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -321,7 +321,7 @@ public class ReviewWriteActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Toast.makeText(ReviewWriteActivity.this, result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(ReviewWriteActivity.this, result,Toast.LENGTH_LONG).show();
             if(result.equals("새로운 글을 추가했습니다.")){
                 finish();
                 ReviewActivity activity=(ReviewActivity)ReviewActivity.reviewActivity;

@@ -57,9 +57,10 @@ public class UserInformation extends AppCompatActivity {
 
     private String useremail;
     private String intenemail;
+    private String email;
     Toolbar toolbar;
 
-
+    private boolean flag =false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +77,15 @@ public class UserInformation extends AppCompatActivity {
 
         appData = getSharedPreferences("appData", MODE_PRIVATE);
         useremail = appData.getString("saveEmail", "");
+        email= getIntent().getExtras().getString("email","");
+        Log.d("useremail",useremail);
+        Log.d("email",email);
 
-
+        if(!useremail.equals(email)){
+            useremail=email;
+            Log.d("useremail",useremail);
+            Log.d("email",email);
+        }
 
 
         new BackgroundTask().execute();

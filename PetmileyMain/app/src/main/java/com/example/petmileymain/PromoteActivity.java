@@ -542,7 +542,7 @@ public class PromoteActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-                Toast.makeText(PromoteActivity.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(PromoteActivity.this, data.getStringExtra("fileResult"), Toast.LENGTH_SHORT).show();
                 mArrayList.clear();
                 new BackgroundTask().execute(select_local, select_type, select_adoption, data.getStringExtra("fileResult"));
 

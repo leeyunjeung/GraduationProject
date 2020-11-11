@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
                     buttonSignUp.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(),"이메일을 확인해주세요",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"이메일을 확인해주세요",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }else{
@@ -159,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
             final String email = editEmail.getText().toString();
 
             progressDialog.dismiss();
-            Toast.makeText(LoginActivity.this, result,Toast.LENGTH_LONG).show();
+            //Toast.makeText(LoginActivity.this, result,Toast.LENGTH_LONG).show();
 
             if(result.equals("로그인 완료.")){
                 Intent intent = new Intent(getApplicationContext(), MainListActivity.class);
